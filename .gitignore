@@ -229,3 +229,14 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# Cmake
+# =========================
+
+# Cmake generated files
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Makefile
+cmake_install.cmake
+install_manifest.txt
