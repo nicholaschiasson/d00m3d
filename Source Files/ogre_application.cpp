@@ -208,7 +208,7 @@ namespace ogre_application
 			/* Create camera object */
 			Ogre::Camera* ogreCamera = scene_manager->createCamera("MyCamera");
 			Ogre::SceneNode* camera_scene_node = root_scene_node->createChildSceneNode("MyCameraNode");
-			camera_scene_node->attachObject(ogreCamera);
+			
 
 			ogreCamera->setNearClipDistance(camera_near_clip_distance_g);
 			ogreCamera->setFarClipDistance(camera_far_clip_distance_g); 
@@ -228,6 +228,7 @@ namespace ogre_application
 			ogreCamera->setAspectRatio(ratio);
 
 			camera.initCamera(ogreCamera);
+			camera.attachTo(camera_scene_node);
 		}
 		catch (Ogre::Exception &e)
 		{
@@ -361,11 +362,10 @@ namespace ogre_application
 		mouse_->capture();
 
 		Ogre::Node *myCameraNode = root_scene_node->getChild("MyCameraNode");
-		Ogre::Camera *myCamera = scene_manager->getCamera("MyCamera");
-		Ogre::Vector3 cDirection = myCamera->getDirection();
-		Ogre::Vector3 cUp = myCamera->getUp();
-		Ogre::Vector3 cRight = myCamera->getRight();
-		Ogre::Vector3 cPosition = myCamera->getPosition();
+		Ogre::Vector3 cDirection = camera.getDirection();
+		Ogre::Vector3 cUp = camera.getUp();
+		Ogre::Vector3 cRight =camera.getSide();
+		Ogre::Vector3 cPosition = camera.getPosition();
 
 		/* Handle specific key events */
 		if (keyboard_->isKeyDown(OIS::KC_W))
@@ -394,19 +394,19 @@ namespace ogre_application
 		}
 		if (keyboard_->isKeyDown(OIS::KC_UP))
 		{
-			myCamera->pitch(Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
+			camera.pitch(Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
 		}
 		if (keyboard_->isKeyDown(OIS::KC_LEFT))
 		{
-			myCamera->yaw(Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
+			camera.yaw(Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
 		}
 		if (keyboard_->isKeyDown(OIS::KC_DOWN))
 		{
-			myCamera->pitch(-Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
+			camera.pitch(-Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
 		}
 		if (keyboard_->isKeyDown(OIS::KC_RIGHT))
 		{
-			myCamera->yaw(-Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
+			camera.yaw(-Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
 		}
 		if (keyboard_->isKeyDown(OIS::KC_ESCAPE))
 		{
