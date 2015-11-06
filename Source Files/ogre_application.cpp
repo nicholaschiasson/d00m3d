@@ -45,7 +45,7 @@ namespace ogre_application
 
 	}
 
-	void OgreApplication::Init()
+	void OgreApplication::Initialize()
 	{
 		/* Set default values for the variables */
 		input_manager_ = NULL;
@@ -53,7 +53,7 @@ namespace ogre_application
 		mouse_ = NULL;
 		for (int i = 0; i < 256; i++)
 		{
-			keyStates[i] = 0;
+			keys[i] = 0;
 		}
 
 		/* Run all initialization steps */
@@ -66,17 +66,34 @@ namespace ogre_application
 		InitOIS();
 		LoadMaterials();
 
-		MeshFactory::Init(&ogre_root_);
-		MeshFactory::CreateCylinder("Cylinder", "ObjectMaterial");
+		MeshFactory::Initialize(&ogre_root_);
 
 		Ogre::SceneManager* scene_manager = ogre_root_->getSceneManager("MySceneManager");
 		Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
 		
-		Ogre::Entity* entity = scene_manager->createEntity("Cylinder");
-		entity->setMaterialName("ObjectMaterial");
-
-		Ogre::SceneNode* scene_node = root_scene_node->createChildSceneNode("Cylinder");
-		scene_node->attachObject(entity);
+		Ogre::Entity* cubeEntity = scene_manager->createEntity("Cube");
+		cubeEntity->setMaterialName("ObjectMaterial");
+		Ogre::SceneNode* testCube = root_scene_node->createChildSceneNode("testCube");
+		testCube->attachObject(cubeEntity);
+		testCube->translate(1.0f, 0.0f, 0.0f);
+		
+		Ogre::Entity* cylinderEntity = scene_manager->createEntity("Cylinder");
+		cylinderEntity->setMaterialName("ObjectMaterial");
+		Ogre::SceneNode* testCylinder = root_scene_node->createChildSceneNode("testCylinder");
+		testCylinder->attachObject(cylinderEntity);
+		testCylinder->translate(-1.0f, 0.0f, 0.0f);
+		
+		Ogre::Entity* torusEntity = scene_manager->createEntity("Torus");
+		torusEntity->setMaterialName("ObjectMaterial");
+		Ogre::SceneNode* testTorus = root_scene_node->createChildSceneNode("testTorus");
+		testTorus->attachObject(torusEntity);
+		testTorus->translate(0.0f, 0.0f, 1.0f);
+		
+		Ogre::Entity* sphereEntity = scene_manager->createEntity("Sphere");
+		sphereEntity->setMaterialName("ObjectMaterial");
+		Ogre::SceneNode* testSphere = root_scene_node->createChildSceneNode("testSphere");
+		testSphere->attachObject(sphereEntity);
+		testSphere->translate(0.0f, 0.0f, -1.0f);
 	}
 
 	void OgreApplication::InitRootNode()
@@ -362,6 +379,14 @@ namespace ogre_application
 		{
 			myCameraNode->translate(cRight * fe.timeSinceLastFrame);
 		}
+		if (keyboard_->isKeyDown(OIS::KC_Q))
+		{
+			myCameraNode->translate(cUp * fe.timeSinceLastFrame);
+		}
+		if (keyboard_->isKeyDown(OIS::KC_C))
+		{
+			myCameraNode->translate(-cUp * fe.timeSinceLastFrame);
+		}
 		if (keyboard_->isKeyDown(OIS::KC_UP))
 		{
 			myCamera->pitch(Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
@@ -385,7 +410,7 @@ namespace ogre_application
 			return false;
 		}
 
-		keyboard_->copyKeyStates(keyStates);
+		keyboard_->copyKeyStates(keys);
 
 		return true;
 	}

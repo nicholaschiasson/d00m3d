@@ -13,12 +13,17 @@
 class MeshFactory
 {
 public:
-	static void Init(std::auto_ptr<Ogre::Root> *root);
-	static void CreateCylinder(Ogre::String object_name, Ogre::String material_name,
-		Ogre::ColourValue color = Ogre::ColourValue(-1.0f, -1.0f, -1.0f), float cylinder_length = 1.0f,
-		float circle_radius = 0.2f, int num_circle_samples = 30);
-	static void CreateTorus(Ogre::String object_name, Ogre::String material_name, float loop_radius = 0.6,
-		float circle_radius = 0.2, int num_loop_samples = 90, int num_circle_samples = 30);
+	static void Initialize(std::auto_ptr<Ogre::Root> *root);
+	
+	static void CreateCubeGeometry(Ogre::String object_name, float width = 1.0f, float height = 1.0f,
+		float depth = 1.0f);
+	static void CreateCylinderGeometry(Ogre::String object_name, float cylinder_length = 1.0f, 
+		float circle_radius = 0.25f, int num_circle_samples = 64);
+	static void CreateTorusGeometry(Ogre::String object_name, float loop_radius = 0.375f, float circle_radius = 0.125f,
+		int num_loop_samples = 128, int num_circle_samples = 64);
+	static void CreateSphereGeometry(Ogre::String object_name, float radius = 0.5, int num_samples_theta = 64,
+		int num_samples_phi = 32);
+
 private:
 	static std::auto_ptr<Ogre::Root> *ogre_root_;
 };

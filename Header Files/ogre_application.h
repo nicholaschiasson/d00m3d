@@ -27,7 +27,7 @@ namespace ogre_application
 	public:
 		OgreApplication();
 		~OgreApplication();
-		void Init(); // Call Init() before running the main loop
+		void Initialize(); // Call Initialize() before running the main loop
 		void MainLoop(); // Keep application active
 
 	private:
@@ -41,7 +41,7 @@ namespace ogre_application
 		OIS::Mouse *mouse_;
 		OIS::Keyboard *keyboard_;
 
-		char keyStates[256];
+		char keys[256];
 
 		/* Methods to initialize the application */
 		void InitRootNode();

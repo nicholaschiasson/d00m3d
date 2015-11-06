@@ -14,13 +14,13 @@ int main(int argc, char *argv[])
 
 	try
 	{
-		application.Init();
+		application.Initialize();
 		application.MainLoop();
 	}
 	catch (exception &e)
 	{
 		PrintException(e);
-		Sleep(5000);
+		getchar();
 	}
 	
 	return 0;
