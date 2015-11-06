@@ -1,22 +1,36 @@
 #ifndef WORLD_H
 #define WORLD_H
 
-#include "ogre_application.h"
+#include <OgreSceneNode.h>
+
+#include "camera.h"
+#include "input_manager.h"
 
 class World
 {
 public:
-	World(Ogre::SceneNode* rootNode); //only creates a new sceneNode for the World, please use init to setup the world
+	World();
 	~World();
 
 	/*	initWorld()
-	*	Initializes the world to default.
+	*	in:			SceneNode, the root Scene node of ogre
+	*	in:			A Camera that has already been previously initialized
+	*	in:			InputMangaer that has already been initialized
+	*	Purpose:	To give the world all the correct data
 	*/
-	void initWorld();
+	void initWorld(Ogre::SceneNode* rootNode, Camera* cam/*, InputManager* inMan*/);
+	
+	/*	createWorld()
+	*	
+	*/
+	void createWorld();
 
 private:
 	//things in the world go here.
 	Ogre::SceneNode* worldSceneNode;
+	
+	Camera camera;
+	//InputManager inputManager;
 
 };
 

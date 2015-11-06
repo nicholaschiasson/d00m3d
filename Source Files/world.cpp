@@ -2,8 +2,8 @@
 
 #include "world.h"
 
-World::World(Ogre::SceneNode* rootNode/*, Camera* cam, InputManager* inMan*/): 
-	worldSceneNode(rootNode->createChildSceneNode("_worldSceneNode_"))/*, camera(cam), inputManager(inMan) */ //note underscores so someone decided to create earth and label it worldSceneNode, wont have conflicts
+
+World::World(): worldSceneNode(NULL)
 {
 	//lattahdah lattahdah
 }
@@ -13,7 +13,14 @@ World::~World()
 	//TODO memory cleanup
 }
 
-void World::initWorld()
+void World::createWorld()
 {
 	//TODO setup stuff for the world goes here.
+}
+
+void World::initWorld(Ogre::SceneNode* rootNode, Camera* cam/*, InputManager* inMan*/)
+{
+	worldSceneNode = rootNode->createChildSceneNode("_worldSceneNode_");
+	camera = *cam;
+
 }

@@ -5,7 +5,8 @@
 
 #include "ogre_app_exception.h"
 #include "mesh_factory.h"
-
+#include "world.h"
+#include "camera.h"
 #include "OGRE/OgreRoot.h"
 #include "OGRE/OgreRenderSystem.h"
 #include "OGRE/OgreRenderWindow.h"
@@ -56,6 +57,9 @@ namespace ogre_application
 		/* Methods to handle events */
 		bool frameRenderingQueued(const Ogre::FrameEvent& fe);
 		void windowResized(Ogre::RenderWindow* rw);
+		World world;
+		Camera camera;
+		//InputManager inputManager;
 
     }; // class OgreApplication
 } // namespace ogre_application

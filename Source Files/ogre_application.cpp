@@ -70,7 +70,10 @@ namespace ogre_application
 
 		Ogre::SceneManager* scene_manager = ogre_root_->getSceneManager("MySceneManager");
 		Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
-		
+
+		//setting up the world
+		world.initWorld(root_scene_node, &camera);
+
 		Ogre::Entity* cubeEntity = scene_manager->createEntity("Cube");
 		cubeEntity->setMaterialName("ObjectMaterial");
 		Ogre::SceneNode* testCube = root_scene_node->createChildSceneNode("testCube");
@@ -203,26 +206,28 @@ namespace ogre_application
 			Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
 
 			/* Create camera object */
-			Ogre::Camera* camera = scene_manager->createCamera("MyCamera");
+			Ogre::Camera* ogreCamera = scene_manager->createCamera("MyCamera");
 			Ogre::SceneNode* camera_scene_node = root_scene_node->createChildSceneNode("MyCameraNode");
-			camera_scene_node->attachObject(camera);
-			
-			camera->setNearClipDistance(camera_near_clip_distance_g);
-			camera->setFarClipDistance(camera_far_clip_distance_g); 
+			camera_scene_node->attachObject(ogreCamera);
 
-			camera->setPosition(camera_position_g);
-			camera->lookAt(camera_look_at_g);
-			camera->setFixedYawAxis(true, camera_up_g);
+			ogreCamera->setNearClipDistance(camera_near_clip_distance_g);
+			ogreCamera->setFarClipDistance(camera_far_clip_distance_g); 
+
+			ogreCamera->setPosition(camera_position_g);
+			ogreCamera->lookAt(camera_look_at_g);
+			ogreCamera->setFixedYawAxis(true, camera_up_g);			
 
 			/* Create viewport */
-			Ogre::Viewport *viewport = ogre_window_->addViewport(camera, viewport_z_order_g, viewport_left_g, viewport_top_g, viewport_width_g, viewport_height_g);
+			Ogre::Viewport *viewport = ogre_window_->addViewport(ogreCamera, viewport_z_order_g, viewport_left_g, viewport_top_g, viewport_width_g, viewport_height_g);
 
 			viewport->setAutoUpdated(true);
 			viewport->setBackgroundColour(viewport_background_color_g);
 
 			/* Set aspect ratio */
 			float ratio = float(viewport->getActualWidth()) / float(viewport->getActualHeight());
-			camera->setAspectRatio(ratio);
+			ogreCamera->setAspectRatio(ratio);
+
+			camera.initCamera(ogreCamera);
 		}
 		catch (Ogre::Exception &e)
 		{
