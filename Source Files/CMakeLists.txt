@@ -5,12 +5,18 @@ set(HDRS
 	"${HDR_DIR}/mesh_factory.h"
 	"${HDR_DIR}/ogre_app_exception.h"
 	"${HDR_DIR}/ogre_application.h"
+	"${HDR_DIR}/world.h"
+	"${HDR_DIR}/camera.h"
+	"${HDR_DIR}/input_manager.h"
 )
  
 set(SRCS
 	./ogre_application.cpp
 	./main.cpp
 	./mesh_factory.cpp
+	./world.cpp
+	./camera.cpp
+	./input_manager.cpp
 	./MaterialVp.glsl
 	./MaterialFp.glsl
 	MaterialFile.material
