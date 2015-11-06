@@ -1,9 +1,9 @@
-#ifndef PLAYERSPACECRAFT_H
-#define PLAYERSPACECRAFT_H
+#ifndef PLAYER_SPACECRAFT_H
+#define PLAYER_SPACECRAFT_H
 
 #include "spacecraft.h"
 
-class PlayerSpacecraft : Spacecraft
+class PlayerSpacecraft : public Spacecraft
 {
 public:
 	virtual ~PlayerSpacecraft();
@@ -12,4 +12,4 @@ private:
 
 };
 
-#endif // PLAYERSPACECRAFT_H
+#endif // PLAYER_SPACECRAFT_H

@@ -3,7 +3,7 @@
 
 #include "OgreSceneNode.h"
 
-class Spacecraft : Ogre::SceneNode
+class Spacecraft : public Ogre::SceneNode
 {
 public:
 	virtual ~Spacecraft() = 0;

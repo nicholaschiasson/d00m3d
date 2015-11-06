@@ -1,9 +1,9 @@
-#ifndef ENEMYSPACECRAFT_H
-#define ENEMYSPACECRAFT_H
+#ifndef ENEMY_SPACECRAFT_H
+#define ENEMY_SPACECRAFT_H
 
 #include "spacecraft.h"
 
-class EnemySpacecraft : Spacecraft
+class EnemySpacecraft : public Spacecraft
 {
 public:
 	virtual ~EnemySpacecraft();
@@ -12,4 +12,4 @@ private:
 
 };
 
-#endif // !ENEMYSPACECRAFT_H
+#endif // ENEMY_SPACECRAFT_H
