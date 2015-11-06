@@ -1,7 +1,7 @@
 #ifndef ENEMYSPACECRAFT_H
 #define ENEMYSPACECRAFT_H
 
-#include "Spacecraft.h"
+#include "spacecraft.h"
 
 class EnemySpacecraft : Spacecraft
 {

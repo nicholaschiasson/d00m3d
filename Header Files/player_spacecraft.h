@@ -1,7 +1,7 @@
 #ifndef PLAYERSPACECRAFT_H
 #define PLAYERSPACECRAFT_H
 
-#include "Spacecraft.h"
+#include "spacecraft.h"
 
 class PlayerSpacecraft : Spacecraft
 {
