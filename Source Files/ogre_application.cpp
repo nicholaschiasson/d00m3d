@@ -210,7 +210,7 @@ namespace ogre_application
 			/* Create camera object */
 			Ogre::Camera* ogreCamera = scene_manager->createCamera("MyCamera");
 			Ogre::SceneNode* camera_scene_node = root_scene_node->createChildSceneNode("MyCameraNode");
-			camera_scene_node->attachObject(ogreCamera);
+			
 
 			ogreCamera->setNearClipDistance(camera_near_clip_distance_g);
 			ogreCamera->setFarClipDistance(camera_far_clip_distance_g); 
@@ -230,6 +230,7 @@ namespace ogre_application
 			ogreCamera->setAspectRatio(ratio);
 
 			camera.initCamera(ogreCamera);
+			camera.attachTo(camera_scene_node);
 		}
 		catch (Ogre::Exception &e)
 		{
