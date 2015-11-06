@@ -2,19 +2,19 @@
 set(HDR_DIR "${PROJECT_SOURCE_DIR}/Header Files")
 
 set(HDRS
-	"${HDR_DIR}/EnemySpacecraft.h"
+	"${HDR_DIR}/enemy_spacecraft.h"
 	"${HDR_DIR}/mesh_factory.h"
 	"${HDR_DIR}/ogre_app_exception.h"
 	"${HDR_DIR}/ogre_application.h"
 	"${HDR_DIR}/world.h"
 	"${HDR_DIR}/camera.h"
 	"${HDR_DIR}/input_manager.h"
-	"${HDR_DIR}/PlayerSpacecraft.h"
-	"${HDR_DIR}/Spacecraft.h"
+	"${HDR_DIR}/player_spacecraft.h"
+	"${HDR_DIR}/spacecraft.h"
 )
 
 set(SRCS
-    EnemySpacecraft.cpp
+    enemy_spacecraft.cpp
 	main.cpp
 	MaterialFp.glsl
 	MaterialFile.material
@@ -24,8 +24,8 @@ set(SRCS
 	world.cpp
 	camera.cpp
 	input_manager.cpp
-    PlayerSpacecraft.cpp
-    Spacecraft.cpp
+    player_spacecraft.cpp
+    spacecraft.cpp
 )
 
 # The rules here are specific to Windows Systems

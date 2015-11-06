@@ -3,6 +3,8 @@
 
 namespace ogre_application
 {
+	OgreApplication *OgreApplication::application_singleton_ = NULL;
+
 	/* Some configuration constants */
 	/* They are written here as global variables, but ideally they should be loaded from a configuration file */
 
@@ -42,19 +44,18 @@ namespace ogre_application
 
 	OgreApplication::~OgreApplication()
 	{
-
+		delete inputManager;
 	}
 
 	void OgreApplication::Initialize()
 	{
+		application_singleton_ = this;
+
 		/* Set default values for the variables */
-		input_manager_ = NULL;
-		keyboard_ = NULL;
+		ogre_input_manager_ = NULL;
+		inputManager = NULL;
 		mouse_ = NULL;
-		for (int i = 0; i < 256; i++)
-		{
-			keys[i] = 0;
-		}
+		keyboard_ = NULL;
 
 		/* Run all initialization steps */
 		InitRootNode();
@@ -65,6 +66,7 @@ namespace ogre_application
 		InitEvents();
 		InitOIS();
 		LoadMaterials();
+		RegisterInputCallbacks();
 
 		MeshFactory::Initialize(&ogre_root_);
 
@@ -274,22 +276,24 @@ namespace ogre_application
 			pl.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
 			pl.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_FOREGROUND" )));
 			pl.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_NONEXCLUSIVE")));
-			input_manager_ = OIS::InputManager::createInputSystem(pl);
+			ogre_input_manager_ = OIS::InputManager::createInputSystem(pl);
 
 			/*size_t hWnd = 0;
 			ogre_window_->getCustomAttribute("WINDOW", &hWnd);
-			input_manager_ = OIS::InputManager::createInputSystem(hWnd);*/
+			ogre_input_manager_ = OIS::InputManager::createInputSystem(hWnd);*/
 
 			/* Initialize keyboard and mouse */
-			keyboard_ = static_cast<OIS::Keyboard*>(input_manager_->createInputObject(OIS::OISKeyboard, false));
+			keyboard_ = static_cast<OIS::Keyboard*>(ogre_input_manager_->createInputObject(OIS::OISKeyboard, false));
 
-			mouse_ = static_cast<OIS::Mouse*>(input_manager_->createInputObject(OIS::OISMouse, false));
+			mouse_ = static_cast<OIS::Mouse*>(ogre_input_manager_->createInputObject(OIS::OISMouse, false));
 			unsigned int width, height, depth;
 			int top, left;
 			ogre_window_->getMetrics(width, height, depth, left, top);
 			const OIS::MouseState &ms = mouse_->getMouseState();
 			ms.width = width;
 			ms.height = height;
+
+			inputManager = new InputManager(keyboard_, mouse_);
 		}
 		catch(std::exception &e)
 		{
@@ -318,6 +322,21 @@ namespace ogre_application
 		{
 			throw(OgreAppException(std::string("std::Exception: ") + std::string(e.what())));
 		}
+	}
+	
+	void OgreApplication::RegisterInputCallbacks()
+	{
+		inputManager->RegisterCallback(ExitOgreApplication, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_RELEASE, false, (int)OIS::KC_ESCAPE);
+		inputManager->RegisterCallback(CameraMoveForward, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_W);
+		inputManager->RegisterCallback(CameraMoveLeft, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_A);
+		inputManager->RegisterCallback(CameraMoveBackward, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_S);
+		inputManager->RegisterCallback(CameraMoveRight, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_D);
+		inputManager->RegisterCallback(CameraMoveUp, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_Q);
+		inputManager->RegisterCallback(CameraMoveDown, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_C);
+		inputManager->RegisterCallback(CameraPitchUp, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_UP);
+		inputManager->RegisterCallback(CameraYawLeft, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_LEFT);
+		inputManager->RegisterCallback(CameraPitchDown, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_DOWN);
+		inputManager->RegisterCallback(CameraYawRight, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_RIGHT);
 	}
 
 	void OgreApplication::MainLoop()
@@ -358,64 +377,7 @@ namespace ogre_application
 		Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
 
 		/* Capture input */
-		keyboard_->capture();
-		mouse_->capture();
-
-		Ogre::Node *myCameraNode = root_scene_node->getChild("MyCameraNode");
-		Ogre::Vector3 cDirection = camera.getDirection();
-		Ogre::Vector3 cUp = camera.getUp();
-		Ogre::Vector3 cRight =camera.getSide();
-		Ogre::Vector3 cPosition = camera.getPosition();
-
-		/* Handle specific key events */
-		if (keyboard_->isKeyDown(OIS::KC_W))
-		{
-			myCameraNode->translate(cDirection * fe.timeSinceLastFrame);
-		}
-		if (keyboard_->isKeyDown(OIS::KC_A))
-		{
-			myCameraNode->translate(-cRight * fe.timeSinceLastFrame);
-		}
-		if (keyboard_->isKeyDown(OIS::KC_S))
-		{
-			myCameraNode->translate(-cDirection * fe.timeSinceLastFrame);
-		}
-		if (keyboard_->isKeyDown(OIS::KC_D))
-		{
-			myCameraNode->translate(cRight * fe.timeSinceLastFrame);
-		}
-		if (keyboard_->isKeyDown(OIS::KC_Q))
-		{
-			myCameraNode->translate(cUp * fe.timeSinceLastFrame);
-		}
-		if (keyboard_->isKeyDown(OIS::KC_C))
-		{
-			myCameraNode->translate(-cUp * fe.timeSinceLastFrame);
-		}
-		if (keyboard_->isKeyDown(OIS::KC_UP))
-		{
-			camera.pitch(Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
-		}
-		if (keyboard_->isKeyDown(OIS::KC_LEFT))
-		{
-			camera.yaw(Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
-		}
-		if (keyboard_->isKeyDown(OIS::KC_DOWN))
-		{
-			camera.pitch(-Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
-		}
-		if (keyboard_->isKeyDown(OIS::KC_RIGHT))
-		{
-			camera.yaw(-Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
-		}
-		if (keyboard_->isKeyDown(OIS::KC_ESCAPE))
-		{
-			ogre_root_->shutdown();
-			ogre_window_->destroy();
-			return false;
-		}
-
-		keyboard_->copyKeyStates(keys);
+		inputManager->Update(fe);
 
 		return true;
 	}
@@ -441,5 +403,117 @@ namespace ogre_application
 		ogre_window_->resize(width, height);
 		ogre_window_->windowMovedOrResized();
 		ogre_window_->update();
+	}
+
+	void OgreApplication::ExitOgreApplication(const Ogre::FrameEvent& fe)
+	{
+		application_singleton_->ogre_root_->shutdown();
+		application_singleton_->ogre_window_->destroy();
+	}
+
+	void OgreApplication::CameraMoveForward(const Ogre::FrameEvent& fe)
+	{
+		Ogre::SceneManager* scene_manager = application_singleton_->ogre_root_->getSceneManager("MySceneManager");
+		Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
+		Ogre::Node *myCameraNode = root_scene_node->getChild("MyCameraNode");
+		Ogre::Camera *myCamera = scene_manager->getCamera("MyCamera");
+		Ogre::Vector3 cDirection = myCamera->getDirection();
+
+		myCameraNode->translate(cDirection * fe.timeSinceLastFrame);
+	}
+
+	void OgreApplication::CameraMoveLeft(const Ogre::FrameEvent& fe)
+	{
+		Ogre::SceneManager* scene_manager = application_singleton_->ogre_root_->getSceneManager("MySceneManager");
+		Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
+		Ogre::Node *myCameraNode = root_scene_node->getChild("MyCameraNode");
+		Ogre::Camera *myCamera = scene_manager->getCamera("MyCamera");
+		Ogre::Vector3 cRight = myCamera->getRight();
+		
+		myCameraNode->translate(-cRight * fe.timeSinceLastFrame);
+	}
+
+	void OgreApplication::CameraMoveBackward(const Ogre::FrameEvent& fe)
+	{
+		Ogre::SceneManager* scene_manager = application_singleton_->ogre_root_->getSceneManager("MySceneManager");
+		Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
+		Ogre::Node *myCameraNode = root_scene_node->getChild("MyCameraNode");
+		Ogre::Camera *myCamera = scene_manager->getCamera("MyCamera");
+		Ogre::Vector3 cDirection = myCamera->getDirection();
+
+		myCameraNode->translate(-cDirection * fe.timeSinceLastFrame);
+	}
+
+	void OgreApplication::CameraMoveRight(const Ogre::FrameEvent& fe)
+	{
+		Ogre::SceneManager* scene_manager = application_singleton_->ogre_root_->getSceneManager("MySceneManager");
+		Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
+		Ogre::Node *myCameraNode = root_scene_node->getChild("MyCameraNode");
+		Ogre::Camera *myCamera = scene_manager->getCamera("MyCamera");
+		Ogre::Vector3 cRight = myCamera->getRight();
+		
+		myCameraNode->translate(cRight * fe.timeSinceLastFrame);
+	}
+
+	void OgreApplication::CameraMoveUp(const Ogre::FrameEvent& fe)
+	{
+		Ogre::SceneManager* scene_manager = application_singleton_->ogre_root_->getSceneManager("MySceneManager");
+		Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
+		Ogre::Node *myCameraNode = root_scene_node->getChild("MyCameraNode");
+		Ogre::Camera *myCamera = scene_manager->getCamera("MyCamera");
+		Ogre::Vector3 cUp = myCamera->getUp();
+		
+		myCameraNode->translate(cUp * fe.timeSinceLastFrame);
+	}
+
+	void OgreApplication::CameraMoveDown(const Ogre::FrameEvent& fe)
+	{
+		Ogre::SceneManager* scene_manager = application_singleton_->ogre_root_->getSceneManager("MySceneManager");
+		Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
+		Ogre::Node *myCameraNode = root_scene_node->getChild("MyCameraNode");
+		Ogre::Camera *myCamera = scene_manager->getCamera("MyCamera");
+		Ogre::Vector3 cUp = myCamera->getUp();
+		
+		myCameraNode->translate(-cUp * fe.timeSinceLastFrame);
+	}
+
+	void OgreApplication::CameraPitchUp(const Ogre::FrameEvent& fe)
+	{
+		Ogre::SceneManager* scene_manager = application_singleton_->ogre_root_->getSceneManager("MySceneManager");
+		Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
+		Ogre::Node *myCameraNode = root_scene_node->getChild("MyCameraNode");
+		Ogre::Camera *myCamera = scene_manager->getCamera("MyCamera");
+
+		myCamera->pitch(Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
+	}
+
+	void OgreApplication::CameraYawLeft(const Ogre::FrameEvent& fe)
+	{
+		Ogre::SceneManager* scene_manager = application_singleton_->ogre_root_->getSceneManager("MySceneManager");
+		Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
+		Ogre::Node *myCameraNode = root_scene_node->getChild("MyCameraNode");
+		Ogre::Camera *myCamera = scene_manager->getCamera("MyCamera");
+
+		myCamera->yaw(Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
+	}
+
+	void OgreApplication::CameraPitchDown(const Ogre::FrameEvent& fe)
+	{
+		Ogre::SceneManager* scene_manager = application_singleton_->ogre_root_->getSceneManager("MySceneManager");
+		Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
+		Ogre::Node *myCameraNode = root_scene_node->getChild("MyCameraNode");
+		Ogre::Camera *myCamera = scene_manager->getCamera("MyCamera");
+
+		myCamera->pitch(-Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
+	}
+
+	void OgreApplication::CameraYawRight(const Ogre::FrameEvent& fe)
+	{
+		Ogre::SceneManager* scene_manager = application_singleton_->ogre_root_->getSceneManager("MySceneManager");
+		Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
+		Ogre::Node *myCameraNode = (Ogre::SceneNode *)root_scene_node->getChild("MyCameraNode");
+		Ogre::Camera *myCamera = scene_manager->getCamera("MyCamera");
+
+		myCamera->yaw(-Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
 	}
 }

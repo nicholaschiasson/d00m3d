@@ -5,8 +5,10 @@
 
 #include "ogre_app_exception.h"
 #include "mesh_factory.h"
+#include "input_manager.h"
 #include "world.h"
 #include "camera.h"
+
 #include "OGRE/OgreRoot.h"
 #include "OGRE/OgreRenderSystem.h"
 #include "OGRE/OgreRenderWindow.h"
@@ -30,6 +32,8 @@ namespace ogre_application
 		~OgreApplication();
 		void Initialize(); // Call Initialize() before running the main loop
 		void MainLoop(); // Keep application active
+		
+		static OgreApplication *application_singleton_;
 
 	private:
 		// Create root that allows us to access Ogre commands
@@ -38,11 +42,10 @@ namespace ogre_application
 		Ogre::RenderWindow* ogre_window_;
 
 		// Input managers
-		OIS::InputManager *input_manager_;
+		OIS::InputManager *ogre_input_manager_;
+		InputManager *inputManager;
 		OIS::Mouse *mouse_;
 		OIS::Keyboard *keyboard_;
-
-		char keys[256];
 
 		/* Methods to initialize the application */
 		void InitRootNode();
@@ -53,6 +56,7 @@ namespace ogre_application
 		void InitEvents();
 		void InitOIS();
 		void LoadMaterials();
+		void RegisterInputCallbacks();
 
 		/* Methods to handle events */
 		bool frameRenderingQueued(const Ogre::FrameEvent& fe);
@@ -60,6 +64,19 @@ namespace ogre_application
 		World world;
 		Camera camera;
 		//InputManager inputManager;
+
+		/* Input Callbacks */
+		static void ExitOgreApplication(const Ogre::FrameEvent& fe);
+		static void CameraMoveForward(const Ogre::FrameEvent& fe);
+		static void CameraMoveLeft(const Ogre::FrameEvent& fe);
+		static void CameraMoveBackward(const Ogre::FrameEvent& fe);
+		static void CameraMoveRight(const Ogre::FrameEvent& fe);
+		static void CameraMoveUp(const Ogre::FrameEvent& fe);
+		static void CameraMoveDown(const Ogre::FrameEvent& fe);
+		static void CameraPitchUp(const Ogre::FrameEvent& fe);
+		static void CameraYawLeft(const Ogre::FrameEvent& fe);
+		static void CameraPitchDown(const Ogre::FrameEvent& fe);
+		static void CameraYawRight(const Ogre::FrameEvent& fe);
 
     }; // class OgreApplication
 } // namespace ogre_application

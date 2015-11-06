@@ -1,4 +1,4 @@
-#include "Spacecraft.h"
+#include "spacecraft.h"
 
 Spacecraft::~Spacecraft()
 {
