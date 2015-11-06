@@ -12,20 +12,7 @@ set(HDRS
 	"${HDR_DIR}/PlayerSpacecraft.h"
 	"${HDR_DIR}/Spacecraft.h"
 )
- 
-set(SRCS
-	./ogre_application.cpp
-	./main.cpp
-	./mesh_factory.cpp
-	./world.cpp
-	./camera.cpp
-	./input_manager.cpp
-	./MaterialVp.glsl
-	./MaterialFp.glsl
-=======
-	
-)
- 
+
 set(SRCS
     EnemySpacecraft.cpp
 	main.cpp
@@ -34,6 +21,9 @@ set(SRCS
 	MaterialVp.glsl
 	mesh_factory.cpp
 	ogre_application.cpp
+	world.cpp
+	camera.cpp
+	input_manager.cpp
     PlayerSpacecraft.cpp
     Spacecraft.cpp
 )
