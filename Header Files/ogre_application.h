@@ -41,7 +41,7 @@ namespace ogre_application
 
 		// Input managers
 		OIS::InputManager *ogre_input_manager_;
-		InputManager *inputManager;
+		InputManager inputManager;
 		OIS::Mouse *mouse_;
 		OIS::Keyboard *keyboard_;
 

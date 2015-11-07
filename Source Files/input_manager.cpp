@@ -1,22 +1,33 @@
 #include "input_manager.h"
 
-InputManager::InputManager(OIS::Keyboard *k, OIS::Mouse *m)
-{
-	keyboard = k;
-	mouse = m;
-	
+InputManager::InputManager()
+{	
 	shift = INPUT_STATE_UP;
 	ctrl = INPUT_STATE_UP;
 	alt = INPUT_STATE_UP;
-	keyboard->copyKeyStates(keys);
-	OIS::MouseState mouseState = mouse->getMouseState();
-	mouseButtons = mouseState.buttons;
-	mouseLocation = Ogre::Vector3((float)mouseState.X.abs, (float)mouseState.Y.abs, (float)mouseState.Z.abs);
+	for (int i = 0; i < 255; i++)
+	{
+		keys[i] = INPUT_STATE_UP;
+	}
+	mouseButtons = 0;
+	mouseLocation = Ogre::Vector3();
 }
 
 InputManager::~InputManager()
 {
 
+}
+
+void InputManager::Initialize(OIS::Keyboard *k, OIS::Mouse *m)
+{
+	keyboard = k;
+	mouse = m;
+	keyboard->capture();
+	mouse->capture();
+	keyboard->copyKeyStates(keys);
+	OIS::MouseState mouseState = mouse->getMouseState();
+	mouseButtons = mouseState.buttons;
+	mouseLocation = Ogre::Vector3((float)mouseState.X.abs, (float)mouseState.Y.abs, (float)mouseState.Z.abs);
 }
 
 void InputManager::Update(const Ogre::FrameEvent& fe)

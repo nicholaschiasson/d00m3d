@@ -14,9 +14,10 @@ enum INPUT_EVENT { INPUT_EVENT_PRESS, INPUT_EVENT_RELEASE, INPUT_EVENT_HOLD, INP
 class InputManager
 {
 public:
-	InputManager(OIS::Keyboard *k, OIS::Mouse *m);
+	InputManager();
 	~InputManager();
 
+	void Initialize(OIS::Keyboard *k, OIS::Mouse *m);
 	void Update(const Ogre::FrameEvent& fe);
 	
 	void RegisterCallback(void *context, void(*callback)(void *context, const Ogre::FrameEvent& fe), INPUT_SOURCE triggerSource, INPUT_EVENT triggerEvent, bool onMouseMove, int keyOrButtonCode);

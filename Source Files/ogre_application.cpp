@@ -42,14 +42,12 @@ namespace ogre_application
 
 	OgreApplication::~OgreApplication()
 	{
-		delete inputManager;
 	}
 
 	void OgreApplication::Initialize()
 	{
 		/* Set default values for the variables */
 		ogre_input_manager_ = NULL;
-		inputManager = NULL;
 		mouse_ = NULL;
 		keyboard_ = NULL;
 
@@ -289,7 +287,8 @@ namespace ogre_application
 			ms.width = width;
 			ms.height = height;
 
-			inputManager = new InputManager(keyboard_, mouse_);
+			inputManager = InputManager();
+			inputManager.Initialize(keyboard_, mouse_);
 		}
 		catch(std::exception &e)
 		{
@@ -322,17 +321,17 @@ namespace ogre_application
 	
 	void OgreApplication::RegisterInputCallbacks()
 	{
-		inputManager->RegisterCallback(this, ExitOgreApplication, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_RELEASE, false, (int)OIS::KC_ESCAPE);
-		inputManager->RegisterCallback(this, CameraMoveForward, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_W);
-		inputManager->RegisterCallback(this, CameraMoveLeft, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_A);
-		inputManager->RegisterCallback(this, CameraMoveBackward, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_S);
-		inputManager->RegisterCallback(this, CameraMoveRight, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_D);
-		inputManager->RegisterCallback(this, CameraMoveUp, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_Q);
-		inputManager->RegisterCallback(this, CameraMoveDown, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_C);
-		inputManager->RegisterCallback(this, CameraPitchUp, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_UP);
-		inputManager->RegisterCallback(this, CameraYawLeft, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_LEFT);
-		inputManager->RegisterCallback(this, CameraPitchDown, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_DOWN);
-		inputManager->RegisterCallback(this, CameraYawRight, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_RIGHT);
+		inputManager.RegisterCallback(this, ExitOgreApplication, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_RELEASE, false, (int)OIS::KC_ESCAPE);
+		inputManager.RegisterCallback(this, CameraMoveForward, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_W);
+		inputManager.RegisterCallback(this, CameraMoveLeft, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_A);
+		inputManager.RegisterCallback(this, CameraMoveBackward, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_S);
+		inputManager.RegisterCallback(this, CameraMoveRight, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_D);
+		inputManager.RegisterCallback(this, CameraMoveUp, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_Q);
+		inputManager.RegisterCallback(this, CameraMoveDown, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_C);
+		inputManager.RegisterCallback(this, CameraPitchUp, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_UP);
+		inputManager.RegisterCallback(this, CameraYawLeft, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_LEFT);
+		inputManager.RegisterCallback(this, CameraPitchDown, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_DOWN);
+		inputManager.RegisterCallback(this, CameraYawRight, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_RIGHT);
 	}
 
 	void OgreApplication::MainLoop()
@@ -373,7 +372,7 @@ namespace ogre_application
 		Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
 
 		/* Capture input */
-		inputManager->Update(fe);
+		inputManager.Update(fe);
 
 		return true;
 	}
