@@ -18,7 +18,7 @@ public:
 	*	in:			InputMangaer that has already been initialized
 	*	Purpose:	To give the world all the correct data
 	*/
-	void initWorld(Ogre::SceneNode* rootNode, Camera* cam/*, InputManager* inMan*/);
+	void initWorld(Ogre::SceneNode* rootNode, Camera* cam, InputManager* inMan);
 	
 	/*	createWorld()
 	*	
@@ -30,7 +30,7 @@ private:
 	Ogre::SceneNode* worldSceneNode;
 	
 	Camera camera;
-	//InputManager inputManager;
+	InputManager inputManager;
 
 };
 
