@@ -15,6 +15,7 @@ World::~World()
 
 void World::createWorld()
 {
+
 	//TODO setup stuff for the world goes here.
 }
 
@@ -31,6 +32,13 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 
 	//creating the player entitty
 	//TODO REPLACE WITH THE PLAYERSAPCE SHIP
+	Ogre::Entity* playerEntity = sceneManager->createEntity("Sphere");
+	playerEntity->setMaterialName("ObjectMaterial");
+	player = worldSceneNode->createChildSceneNode("testSphere");
+	player->attachObject(playerEntity);
+	player->translate(0.0f, 0.0f, -1.0f);
+	
+
 	
 	//Setting up the basic control scheme
 	initControls();

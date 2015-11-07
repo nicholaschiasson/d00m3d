@@ -2,6 +2,8 @@
 #define WORLD_H
 
 #include <OgreSceneManager.h>
+#include <OgreEntity.h>
+#include <OgreSceneNode.h>
 
 #include "camera.h"
 #include "input_manager.h"
@@ -34,7 +36,7 @@ private:
 	Ogre::SceneManager* sceneManager;
 
 	//TODO REPLACE WITH PLAYERSPACESHIP
-
+	Ogre::SceneNode* player;
 	//setup the control schemes
 	void initControls();
 	void setupAsteroids();
