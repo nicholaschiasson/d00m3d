@@ -287,7 +287,6 @@ namespace ogre_application
 			ms.width = width;
 			ms.height = height;
 
-			inputManager = InputManager();
 			inputManager.Initialize(keyboard_, mouse_);
 		}
 		catch(std::exception &e)
