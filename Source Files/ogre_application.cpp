@@ -68,7 +68,7 @@ namespace ogre_application
 		Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
 
 		//setting up the world
-		world.initWorld(root_scene_node, &camera, inputManager);
+		world.initWorld(root_scene_node, &camera, &inputManager);
 
 		Ogre::Entity* cubeEntity = scene_manager->createEntity("Cube");
 		cubeEntity->setMaterialName("ObjectMaterial");
