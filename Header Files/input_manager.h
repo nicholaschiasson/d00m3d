@@ -19,8 +19,8 @@ public:
 
 	void Update(const Ogre::FrameEvent& fe);
 	
-	void RegisterCallback(void(*callback)(const Ogre::FrameEvent& fe), INPUT_SOURCE triggerSource, INPUT_EVENT triggerEvent, bool onMouseMove, int keyOrButtonCode);
-	void UnregisterCallback(void(*callback)(const Ogre::FrameEvent& fe), INPUT_SOURCE triggerSource, INPUT_EVENT triggerEvent, bool onMouseMove, int keyOrButtonCode);
+	void RegisterCallback(void *context, void(*callback)(void *context, const Ogre::FrameEvent& fe), INPUT_SOURCE triggerSource, INPUT_EVENT triggerEvent, bool onMouseMove, int keyOrButtonCode);
+	void UnregisterCallback(void *context, void(*callback)(void *context, const Ogre::FrameEvent& fe), INPUT_SOURCE triggerSource, INPUT_EVENT triggerEvent, bool onMouseMove, int keyOrButtonCode);
 
 private:
 	OIS::Mouse *mouse;
@@ -34,8 +34,10 @@ private:
 	Ogre::Vector3 mouseLocation;
 	bool mouseMoved;
 	
-	std::map<INPUT_EVENT, std::map<OIS::KeyCode, std::vector<void(*)(const Ogre::FrameEvent& fe)>>> keyboardCallbacks; 
-	std::map<INPUT_EVENT, std::map<OIS::MouseButtonID, std::vector<void(*)(const Ogre::FrameEvent& fe)>>> mouseCallbacks; 
+	std::map<INPUT_EVENT, std::map<OIS::KeyCode, std::vector<void(*)(void *context, const Ogre::FrameEvent& fe)>>> keyboardCallbacks;
+	std::map<INPUT_EVENT, std::map<OIS::KeyCode, std::vector<void *>>> keyboardContexts;
+	std::map<INPUT_EVENT, std::map<OIS::MouseButtonID, std::vector<void(*)(void *context, const Ogre::FrameEvent& fe)>>> mouseCallbacks;
+	std::map<INPUT_EVENT, std::map<OIS::MouseButtonID, std::vector<void *>>> mouseContexts;
 
 	int GetMouseButtonState(OIS::MouseButtonID button) const;
 	void SetMouseButtonState(OIS::MouseButtonID button, INPUT_STATE state);

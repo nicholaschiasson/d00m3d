@@ -32,8 +32,6 @@ namespace ogre_application
 		~OgreApplication();
 		void Initialize(); // Call Initialize() before running the main loop
 		void MainLoop(); // Keep application active
-		
-		static OgreApplication *application_singleton_;
 
 	private:
 		// Create root that allows us to access Ogre commands
@@ -63,20 +61,19 @@ namespace ogre_application
 		void windowResized(Ogre::RenderWindow* rw);
 		World world;
 		Camera camera;
-		//InputManager inputManager;
 
 		/* Input Callbacks */
-		static void ExitOgreApplication(const Ogre::FrameEvent& fe);
-		static void CameraMoveForward(const Ogre::FrameEvent& fe);
-		static void CameraMoveLeft(const Ogre::FrameEvent& fe);
-		static void CameraMoveBackward(const Ogre::FrameEvent& fe);
-		static void CameraMoveRight(const Ogre::FrameEvent& fe);
-		static void CameraMoveUp(const Ogre::FrameEvent& fe);
-		static void CameraMoveDown(const Ogre::FrameEvent& fe);
-		static void CameraPitchUp(const Ogre::FrameEvent& fe);
-		static void CameraYawLeft(const Ogre::FrameEvent& fe);
-		static void CameraPitchDown(const Ogre::FrameEvent& fe);
-		static void CameraYawRight(const Ogre::FrameEvent& fe);
+		static void ExitOgreApplication(void *context, const Ogre::FrameEvent& fe);
+		static void CameraMoveForward(void *context, const Ogre::FrameEvent& fe);
+		static void CameraMoveLeft(void *context, const Ogre::FrameEvent& fe);
+		static void CameraMoveBackward(void *context, const Ogre::FrameEvent& fe);
+		static void CameraMoveRight(void *context, const Ogre::FrameEvent& fe);
+		static void CameraMoveUp(void *context, const Ogre::FrameEvent& fe);
+		static void CameraMoveDown(void *context, const Ogre::FrameEvent& fe);
+		static void CameraPitchUp(void *context, const Ogre::FrameEvent& fe);
+		static void CameraYawLeft(void *context, const Ogre::FrameEvent& fe);
+		static void CameraPitchDown(void *context, const Ogre::FrameEvent& fe);
+		static void CameraYawRight(void *context, const Ogre::FrameEvent& fe);
 
     }; // class OgreApplication
 } // namespace ogre_application
