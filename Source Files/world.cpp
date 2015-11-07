@@ -28,4 +28,21 @@ void World::initWorld(Ogre::SceneNode* rootNode, Camera* cam, InputManager* inMa
 	camera = *cam;
 	inputManager = *inMan;
 
+	//creating the player entitty
+	//TODO REPLACE WITH THE PLAYERSAPCE SHIP
+
+	//Setting up the basic control scheme
+	initControls();
+}
+
+/*
+* Setting up the Controls
+*/
+
+void World::initControls()
+{
+}
+
+void World::setupAsteroids()
+{
 }

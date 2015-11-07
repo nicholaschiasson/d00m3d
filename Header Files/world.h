@@ -32,6 +32,12 @@ private:
 	Camera camera;
 	InputManager inputManager;
 
+	//TODO REPLACE WITH PLAYERSPACESHIP
+
+	//setup the control schemes
+	void initControls();
+	void setupAsteroids();
+
 };
 
 #endif
