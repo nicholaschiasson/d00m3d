@@ -1,9 +1,9 @@
 #ifndef SPACECRAFT_H
 #define SPACECRAFT_H
 
-#include "OgreSceneNode.h"
+#include "physics_entity.h"
 
-class Spacecraft : public Ogre::SceneNode
+class Spacecraft : public PhysicsEntity
 {
 public:
 	virtual ~Spacecraft() = 0;

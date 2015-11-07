@@ -3,8 +3,12 @@
 
 #include "OgreSceneNode.h"
 
-class Entity : Ogre::SceneNode
+class Entity : public Ogre::SceneNode
 {
+public:
+	virtual ~Entity() = 0;
+
+private:
 
 };
 
