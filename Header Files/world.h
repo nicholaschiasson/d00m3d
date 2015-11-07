@@ -1,7 +1,7 @@
 #ifndef WORLD_H
 #define WORLD_H
 
-#include <OgreSceneNode.h>
+#include <OgreSceneManager.h>
 
 #include "camera.h"
 #include "input_manager.h"
@@ -18,7 +18,7 @@ public:
 	*	in:			InputMangaer that has already been initialized
 	*	Purpose:	To give the world all the correct data
 	*/
-	void initWorld(Ogre::SceneNode* rootNode, Camera* cam, InputManager* inMan);
+	void initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* inMan);
 	
 	/*	createWorld()
 	*	
@@ -31,6 +31,7 @@ private:
 	
 	Camera camera;
 	InputManager inputManager;
+	Ogre::SceneManager* sceneManager;
 
 	//TODO REPLACE WITH PLAYERSPACESHIP
 
