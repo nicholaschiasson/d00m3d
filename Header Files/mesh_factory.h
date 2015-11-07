@@ -14,7 +14,7 @@ class MeshFactory
 {
 public:
 	static void Initialize(std::auto_ptr<Ogre::Root> *root);
-	
+	static void CreateIcosahedron(Ogre::String object_name);
 	static void CreateCubeGeometry(Ogre::String object_name, float width = 1.0f, float height = 1.0f,
 		float depth = 1.0f);
 	static void CreateCylinderGeometry(Ogre::String object_name, float cylinder_length = 1.0f, 
