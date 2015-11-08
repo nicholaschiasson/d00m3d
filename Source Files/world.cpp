@@ -6,11 +6,13 @@
 World::World(): worldSceneNode(NULL)
 {
 	//lattahdah lattahdah
+	player = new PlayerSpacecraft();
 }
 
 World::~World()
 {
 	//TODO memory cleanup
+	delete player;
 }
 
 void World::createWorld()
@@ -28,17 +30,11 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 	sceneManager = sceneMan;
 	worldSceneNode = sceneManager->getRootSceneNode()->createChildSceneNode("_worldSceneNode_");
 	camera = *cam;
+	// this won't work - this is creating a copy of the input manager passed in
 	inputManager = *inMan;
 
 	//creating the player entitty
-	//TODO REPLACE WITH THE PLAYERSAPCE SHIP
-	Ogre::Entity* playerEntity = sceneManager->createEntity("Sphere");
-	playerEntity->setMaterialName("ObjectMaterial");
-	player = worldSceneNode->createChildSceneNode("testSphere");
-	player->attachObject(playerEntity);
-	player->translate(0.0f, 0.0f, -1.0f);
-	
-
+	player->Initialize(sceneManager);
 	
 	//Setting up the basic control scheme
 	initControls();

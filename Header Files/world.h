@@ -8,6 +8,8 @@
 #include "camera.h"
 #include "input_manager.h"
 
+#include "player_spacecraft.h"
+
 class World
 {
 public:
@@ -36,7 +38,7 @@ private:
 	Ogre::SceneManager* sceneManager;
 
 	//TODO REPLACE WITH PLAYERSPACESHIP
-	Ogre::SceneNode* player;
+	PlayerSpacecraft* player;
 	//setup the control schemes
 	void initControls();
 	void setupAsteroids();
