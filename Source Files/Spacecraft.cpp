@@ -12,9 +12,13 @@ Spacecraft::~Spacecraft()
 
 void Spacecraft::Initialize(Ogre::SceneManager *sceneManager)
 {
-	Ogre::Entity *spacecraftEntity = sceneManager->createEntity("Sphere");
 	Ogre::SceneNode *rootSceneNode = sceneManager->getRootSceneNode();
-	spacecraftEntity->setMaterialName("ObjectMaterial");
-	sceneNode = rootSceneNode->createChildSceneNode("testCube");
-	sceneNode->attachObject(spacecraftEntity);
+	sceneNode = rootSceneNode->createChildSceneNode("Spacecraft");
+
+	Ogre::Entity *spacecraftBodyEntity = sceneManager->createEntity("Cone");
+	spacecraftBodyEntity->setMaterialName("ObjectMaterial");
+	Ogre::SceneNode *spacecraftBodyNode = sceneNode->createChildSceneNode("SpacecraftBody");
+	spacecraftBodyNode->attachObject(spacecraftBodyEntity);
+	spacecraftBodyNode->scale(1.0f, 1.0f, 0.25f);
+	spacecraftBodyNode->pitch(Ogre::Radian(-Ogre::Math::HALF_PI));
 }
