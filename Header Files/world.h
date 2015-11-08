@@ -37,7 +37,7 @@ private:
 	Camera *camera;
 	InputManager *inputManager;
 
-	PlayerSpacecraft* player;
+	PlayerSpacecraft player;
 	//setup the control schemes
 	void initControls();
 	void setupAsteroids();

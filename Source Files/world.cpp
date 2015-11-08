@@ -3,16 +3,14 @@
 #include "world.h"
 
 
-World::World(): worldSceneNode(NULL)
+World::World(): worldSceneNode(NULL), camera(NULL), sceneManager(NULL), inputManager(NULL)
 {
 	//lattahdah lattahdah
-	player = new PlayerSpacecraft();
 }
 
 World::~World()
 {
 	//TODO memory cleanup
-	delete player;
 }
 
 void World::createWorld()
@@ -33,7 +31,8 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 	inputManager = inMan;
 
 	//creating the player entitty
-	player->Initialize(sceneManager);
+	player.Initialize(sceneManager);
+	//camera->attachTo(player.getSceneNode());
 	
 	//Setting up the basic control scheme
 	initControls();
