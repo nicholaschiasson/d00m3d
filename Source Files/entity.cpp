@@ -135,3 +135,8 @@ void Entity::yaw(const Ogre::Radian &angle, Ogre::Node::TransformSpace relativeT
 		sceneNode->yaw(angle, relativeTo);
 	}
 }
+
+Ogre::SceneNode* Entity::getSceneNode() const
+{
+	return sceneNode;
+}
