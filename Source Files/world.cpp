@@ -3,7 +3,7 @@
 #include "world.h"
 
 
-World::World(): worldSceneNode(NULL), camera(NULL), sceneManager(NULL), inputManager(NULL)
+World::World(): worldSceneNode(NULL), camera(NULL), sceneManager(NULL)
 {
 	//lattahdah lattahdah
 }
@@ -28,21 +28,20 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 	sceneManager = sceneMan;
 	worldSceneNode = sceneManager->getRootSceneNode()->createChildSceneNode("_worldSceneNode_");
 	camera = cam;
-	inputManager = inMan;
 
 	//creating the player entitty
 	player.Initialize(sceneManager);
 	//camera->attachTo(player.getSceneNode());
 	
 	//Setting up the basic control scheme
-	initControls();
+	initControls(inMan);
 }
 
 /*
 * Setting up the Controls
 */
 
-void World::initControls()
+void World::initControls(InputManager *inputManager)
 {
 	inputManager->RegisterCallback(this, PlayerMoveForward, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_W);
 	inputManager->RegisterCallback(this, PlayerMoveLeft, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_A);
@@ -67,145 +66,121 @@ void World::setupAsteroids()
 void World::PlayerMoveForward(void *context, const Ogre::FrameEvent& fe)
 {
 	if (context)
-	{/*
-		PlayerSpacecraft *player = static_cast<PlayerSpacecraft *>(context);
-		
-		Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
-		Ogre::Node *myCameraNode = root_scene_node->getChild("MyCameraNode");
-		Ogre::Player *myCamera = scene_manager->getCamera("MyCamera");
-		Ogre::Vector3 cDirection = myCamera->getDirection();
+	{
+		World *world = static_cast<World *>(context);
+		PlayerSpacecraft *player = &world->player;
+		Ogre::Quaternion playerOrientation = player->getSceneNode()->getOrientation();
+		Ogre::Vector3 playerDirection = playerOrientation * Ogre::Vector3::NEGATIVE_UNIT_Z;
 
-		myCameraNode->translate(cDirection * fe.timeSinceLastFrame);
-	*/}
+		player->translate(playerDirection * fe.timeSinceLastFrame);
+	}
 }
 
 void World::PlayerMoveLeft(void *context, const Ogre::FrameEvent& fe)
 {
 	if (context)
-	{/*
-		PlayerSpacecraft *player = static_cast<PlayerSpacecraft *>(context);
+	{
+		World *world = static_cast<World*>(context);
+		PlayerSpacecraft *player = &world->player;
+		Ogre::Quaternion playerOrientation = player->getSceneNode()->getOrientation();
+		Ogre::Vector3 playerRight = playerOrientation * Ogre::Vector3::UNIT_X;
 		
-		Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
-		Ogre::Node *myCameraNode = root_scene_node->getChild("MyCameraNode");
-		Ogre::Player *myCamera = scene_manager->getCamera("MyCamera");
-		Ogre::Vector3 cRight = myCamera->getRight();
-		
-		myCameraNode->translate(-cRight * fe.timeSinceLastFrame);
-	*/}
+		player->translate(-playerRight * fe.timeSinceLastFrame);
+	}
 }
 
 void World::PlayerMoveBackward(void *context, const Ogre::FrameEvent& fe)
 {
 	if (context)
-	{/*
-		PlayerSpacecraft *player = static_cast<PlayerSpacecraft *>(context);
-		
-		Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
-		Ogre::Node *myCameraNode = root_scene_node->getChild("MyCameraNode");
-		Ogre::Player *myCamera = scene_manager->getCamera("MyCamera");
-		Ogre::Vector3 cDirection = myCamera->getDirection();
+	{
+		World *world = static_cast<World*>(context);
+		PlayerSpacecraft *player = &world->player;
+		Ogre::Quaternion playerOrientation = player->getSceneNode()->getOrientation();
+		Ogre::Vector3 playerDirection = playerOrientation * Ogre::Vector3::NEGATIVE_UNIT_Z;
 
-		myCameraNode->translate(-cDirection * fe.timeSinceLastFrame);
-	*/}
+		player->translate(-playerDirection * fe.timeSinceLastFrame);
+	}
 }
 
 void World::PlayerMoveRight(void *context, const Ogre::FrameEvent& fe)
 {
 	if (context)
-	{/*
-		PlayerSpacecraft *player = static_cast<PlayerSpacecraft *>(context);
+	{
+		World *world = static_cast<World*>(context);
+		PlayerSpacecraft *player = &world->player;
+		Ogre::Quaternion playerOrientation = player->getSceneNode()->getOrientation();
+		Ogre::Vector3 playerRight = playerOrientation * Ogre::Vector3::UNIT_X;
 		
-		Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
-		Ogre::Node *myCameraNode = root_scene_node->getChild("MyCameraNode");
-		Ogre::Player *myCamera = scene_manager->getCamera("MyCamera");
-		Ogre::Vector3 cRight = myCamera->getRight();
-		
-		myCameraNode->translate(cRight * fe.timeSinceLastFrame);
-	*/}
+		player->translate(playerRight * fe.timeSinceLastFrame);
+	}
 }
 
 void World::PlayerMoveUp(void *context, const Ogre::FrameEvent& fe)
 {
 	if (context)
-	{/*
-		PlayerSpacecraft *player = static_cast<PlayerSpacecraft *>(context);
+	{
+		World *world = static_cast<World*>(context);
+		PlayerSpacecraft *player = &world->player;
+		Ogre::Quaternion playerOrientation = player->getSceneNode()->getOrientation();
+		Ogre::Vector3 playerUp = playerOrientation * Ogre::Vector3::UNIT_Y;
 		
-		Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
-		Ogre::Node *myCameraNode = root_scene_node->getChild("MyCameraNode");
-		Ogre::Player *myCamera = scene_manager->getCamera("MyCamera");
-		Ogre::Vector3 cUp = myCamera->getUp();
-		
-		myCameraNode->translate(cUp * fe.timeSinceLastFrame);
-	*/}
+		player->translate(playerUp * fe.timeSinceLastFrame);
+	}
 }
 
 void World::PlayerMoveDown(void *context, const Ogre::FrameEvent& fe)
 {
 	if (context)
-	{/*
-		PlayerSpacecraft *player = static_cast<PlayerSpacecraft *>(context);
+	{
+		World *world = static_cast<World*>(context);
+		PlayerSpacecraft *player = &world->player;
+		Ogre::Quaternion playerOrientation = player->getSceneNode()->getOrientation();
+		Ogre::Vector3 playerUp = playerOrientation * Ogre::Vector3::UNIT_Y;
 		
-		Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
-		Ogre::Node *myCameraNode = root_scene_node->getChild("MyCameraNode");
-		Ogre::Player *myCamera = scene_manager->getCamera("MyCamera");
-		Ogre::Vector3 cUp = myCamera->getUp();
-		
-		myCameraNode->translate(-cUp * fe.timeSinceLastFrame);
-	*/}
+		player->translate(-playerUp * fe.timeSinceLastFrame);
+	}
 }
 
 void World::PlayerPitchUp(void *context, const Ogre::FrameEvent& fe)
 {
 	if (context)
-	{/*
-		PlayerSpacecraft *player = static_cast<PlayerSpacecraft *>(context);
-		
-		Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
-		Ogre::Node *myCameraNode = root_scene_node->getChild("MyCameraNode");
-		Ogre::Player *myCamera = scene_manager->getCamera("MyCamera");
+	{
+		World *world = static_cast<World*>(context);
+		PlayerSpacecraft *player = &world->player;
 
-		myCamera->pitch(Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
-	*/}
+		player->pitch(Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
+	}
 }
 
 void World::PlayerYawLeft(void *context, const Ogre::FrameEvent& fe)
 {
 	if (context)
-	{/*
-		PlayerSpacecraft *player = static_cast<PlayerSpacecraft *>(context);
-		
-		Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
-		Ogre::Node *myCameraNode = root_scene_node->getChild("MyCameraNode");
-		Ogre::Player *myCamera = scene_manager->getCamera("MyCamera");
+	{
+		World *world = static_cast<World*>(context);
+		PlayerSpacecraft *player = &world->player;
 
-		myCamera->yaw(Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
-	*/}
+		player->yaw(Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
+	}
 }
 
 void World::PlayerPitchDown(void *context, const Ogre::FrameEvent& fe)
 {
 	if (context)
-	{/*
-		PlayerSpacecraft *player = static_cast<PlayerSpacecraft *>(context);
-		
-		Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
-		Ogre::Node *myCameraNode = root_scene_node->getChild("MyCameraNode");
-		Ogre::Player *myCamera = scene_manager->getCamera("MyCamera");
+	{
+		World *world = static_cast<World*>(context);
+		PlayerSpacecraft *player = &world->player;
 
-		myCamera->pitch(-Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
-	*/}
+		player->pitch(-Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
+	}
 }
 
 void World::PlayerYawRight(void *context, const Ogre::FrameEvent& fe)
 {
 	if (context)
-	{/*
-		PlayerSpacecraft *player = static_cast<PlayerSpacecraft *>(context);
-		
-		Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
-		Ogre::Node *myCameraNode = (Ogre::SceneNode *)root_scene_node->getChild("MyCameraNode");
-		Ogre::Player *myCamera = scene_manager->getCamera("MyCamera");
+	{
+		World *world = static_cast<World*>(context);
+		PlayerSpacecraft *player = &world->player;
 
-		myCamera->yaw(-Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
-	*/}
+		player->yaw(-Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
+	}
 }

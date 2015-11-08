@@ -35,11 +35,10 @@ private:
 	
 	Ogre::SceneManager* sceneManager;
 	Camera *camera;
-	InputManager *inputManager;
 
 	PlayerSpacecraft player;
 	//setup the control schemes
-	void initControls();
+	void initControls(InputManager *inputManager);
 	void setupAsteroids();
 
 	// InputManager Callbacks
