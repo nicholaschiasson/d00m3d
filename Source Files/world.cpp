@@ -29,6 +29,9 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 	
 	//Setting up the basic control scheme
 	initControls(inMan);
+
+	// TEST CUBE IN THE CENTER OF THE WORLD
+	sceneManager->getRootSceneNode()->createChildSceneNode("shelly")->attachObject(sceneManager->createEntity("Cube"));
 }
 
 /*
