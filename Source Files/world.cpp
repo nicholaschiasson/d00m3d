@@ -13,12 +13,6 @@ World::~World()
 	//TODO memory cleanup
 }
 
-void World::createWorld()
-{
-
-	//TODO setup stuff for the world goes here.
-}
-
 void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* inMan)
 {
 	if(cam == NULL || inMan == NULL)
@@ -58,6 +52,17 @@ void World::initControls()
 
 void World::setupAsteroids()
 {
+}
+
+
+void World::createWorld()
+{
+	//TODO setup stuff for the world goes here.
+}
+
+void World::updateWorld(const Ogre::FrameEvent& fe)
+{
+	//TODO update stuff
 }
 
 /*

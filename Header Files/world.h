@@ -28,6 +28,10 @@ public:
 	*	
 	*/
 	void createWorld();
+	/*	updateWorld()
+	*
+	*/
+	void updateWorld(const Ogre::FrameEvent& fe);
 
 private:
 	//things in the world go here.
