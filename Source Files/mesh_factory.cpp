@@ -9,6 +9,7 @@ void MeshFactory::Initialize(std::auto_ptr<Ogre::Root> *root)
 	CreateCylinderGeometry("Cylinder");
 	CreateTorusGeometry("Torus");
 	CreateSphereGeometry("Sphere");
+	CreateIcosahedron("Icosahedron");
 }
 
 void MeshFactory::CreateCubeGeometry(Ogre::String object_name, float width, float height, float depth)
@@ -353,6 +354,72 @@ void MeshFactory::CreateTorusGeometry(Ogre::String object_name, float loop_radiu
         /* Convert triangle list to a mesh */
         object->convertToMesh(object_name);
     }
+    catch (Ogre::Exception &e){
+        throw(OgreAppException(std::string("Ogre::Exception: ") + std::string(e.what())));
+    }
+    catch(std::exception &e){
+        throw(OgreAppException(std::string("std::Exception: ") + std::string(e.what())));
+    }
+}
+
+void MeshFactory::CreateIcosahedron(Ogre::String object_name){
+
+	try {
+		/* Retrieve scene manager and root scene node */
+		Ogre::SceneManager* scene_manager = (*ogre_root_)->getSceneManager("MySceneManager");
+		Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
+
+		/* Create the 3D object */
+        Ogre::ManualObject* object = NULL;
+        Ogre::String object_name = "Icosahedron";
+        object = scene_manager->createManualObject(object_name);
+        object->setDynamic(false);
+
+        /* Create triangle list for the object */
+		Ogre::String material_name = "ObjectMaterial";
+        object->begin(material_name, Ogre::RenderOperation::OT_TRIANGLE_LIST);
+
+		/* Vertices of an icosahedron */
+		#define X 0.525731112119133606
+		#define Z 0.850650808352039932
+        static float vdata[12][3] = {
+	        {-X, 0.0, Z}, {X, 0.0, Z}, {-X, 0.0, -Z}, {X, 0.0, -Z},
+	        {0.0, Z, X}, {0.0, Z, -X}, {0.0, -Z, X}, {0.0, -Z, -X},
+	        {Z, X, 0.0}, {-Z, X, 0.0}, {Z, -X, 0.0}, {-Z, -X, 0.0}};
+ 
+		/* Vertex colors */
+		static float clr[12][3] = {
+			{1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0}, {1.0, 1.0, 0.0},
+			{1.0, 0.0, 1.0}, {0.0, 1.0, 1.0}, {1.0, 1.0, 1.0}, {0.6, 0.4, 0.2},
+			{1.0, 0.2, 0.8}, {1.0, 0.4, 0.0}, {0.0, 0.6, 0.0}, {0.6, 0.6, 0.6}};
+
+        /* Faces */
+        static int tindices [20][3] = {
+	        {1, 4, 0}, {4, 9, 0}, {4, 5, 9}, {8, 5, 4},	{1, 8, 4}, 
+	        {1, 10, 8}, {10, 3, 8}, {8, 3, 5}, {3, 2, 5}, {3, 7, 2}, 
+	        {3, 10, 7}, {10, 6, 7}, {6, 11, 7}, {6, 0, 11},	{6, 1, 0}, 
+	        {10, 1, 6}, {11, 0, 9}, {2, 11, 9}, {5, 2, 9}, {11, 2, 7}, 
+        };
+		
+		/* Add vertices and faces */
+		for (int i = 0; i < 12; i++){
+			object->position(Ogre::Vector3(vdata[i][0], vdata[i][1], vdata[i][2]));
+			object->normal(Ogre::Vector3(vdata[i][0], vdata[i][1], vdata[i][2]));
+			object->colour(Ogre::ColourValue(clr[i][0], clr[i][1], clr[i][2]));
+		}
+
+		for (int i = 0; i < 20; i++){
+			object->triangle(tindices[i][0], tindices[i][1], tindices[i][2]);
+		}
+   
+		/* We finished the object */
+        object->end();
+		
+        /* Convert triangle list to a mesh */
+        Ogre::String mesh_name = "Icosahedron";
+        object->convertToMesh(mesh_name);
+
+	}
     catch (Ogre::Exception &e){
         throw(OgreAppException(std::string("Ogre::Exception: ") + std::string(e.what())));
     }
