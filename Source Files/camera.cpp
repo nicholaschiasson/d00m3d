@@ -1,6 +1,6 @@
 #include "camera.h"
 
-Camera::Camera(): camera(NULL), cameraNode(NULL), distance(CAMERA_INITIAL_DISTANCE)
+Camera::Camera(): camera(NULL), cameraNode(NULL)
 {
 
 }
@@ -17,6 +17,8 @@ void Camera::initCamera(Ogre::Camera* ogreCamera, Ogre::SceneNode* followNode)
 	camera = ogreCamera;
 	cameraNode = followNode->createChildSceneNode("cameraNode");
 	cameraNode->attachObject(camera);
+	camera->lookAt(cameraNode->_getDerivedPosition());
+	setDistance(Ogre::Vector3(0, 1, 2));
 }
 
 
@@ -31,9 +33,9 @@ void Camera::attachTo(Ogre::SceneNode* followNode)
 	cameraNode->setPosition(0,0,0);
 
 }
-void Camera::setDistance(const float distanceFromNode)
+void Camera::setDistance(const Ogre::Vector3 positionFromNode)
 {
-	distance = distanceFromNode;
+	camera->setPosition(cameraNode->_getDerivedPosition() + positionFromNode);
 }
 
 void Camera::rotate(const Ogre::Quaternion& rot)
@@ -52,6 +54,11 @@ void Camera::pitch(const Ogre::Radian& angle)
 void Camera::roll(const Ogre::Radian& angle)
 {
 	camera->roll(angle);
+}
+
+void Camera::orbit(const Ogre::Quaternion& rot)
+{
+	cameraNode->rotate(rot);
 }
 
 Ogre::Vector3 Camera::getDirection() const

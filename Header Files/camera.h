@@ -4,7 +4,6 @@
 #include <OgreCamera.h>
 #include <OgreSceneNode.h>
 
-#define CAMERA_INITIAL_DISTANCE 2.0
 class Camera
 {
 public:
@@ -25,16 +24,22 @@ public:
 	void attachTo(Ogre::SceneNode* followNode);
 
 	/*	setDistance
-	*	in:			float, the distance you wish to be behind the attached node, can be negative
+	*	in:			The distance you wish to be away from the object
 	*	Purpose:	to set the distnace away from a node you wish the camera to be (0 for first person, negative to turn camera around)
 	*/
-	void setDistance(const float distanceFromNode);
+	void setDistance(const Ogre::Vector3 positionFromNode);
 
 	void rotate(const Ogre::Quaternion& rot);
 
 	void yaw(const Ogre::Radian& angle);
 	void pitch(const Ogre::Radian& angle);
 	void roll(const Ogre::Radian& angle);
+
+	/*	Orbit
+	*	In:			rotation quaternion
+	*	Purpose:	Orbits around the attached point
+	*/
+	void orbit(const Ogre::Quaternion& rot);
 
 	Ogre::Vector3 getDirection() const;
 	Ogre::Vector3 getUp() const;
@@ -46,7 +51,5 @@ public:
 private:
 	Ogre::Camera* camera;
 	Ogre::SceneNode* cameraNode;
-	float distance;
-
 };
 #endif
