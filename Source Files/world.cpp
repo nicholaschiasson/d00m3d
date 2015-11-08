@@ -32,7 +32,7 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 
 	//creating the player entitty
 	player.Initialize(sceneManager);
-	//camera->attachTo(player.getSceneNode());
+	camera->attachTo(player.getSceneNode());
 	
 	//Setting up the basic control scheme
 	initControls();

@@ -13,9 +13,10 @@ public:
 
 	/*	initCamera();
 	*	in:			Ogre's camera object to be built around
+	*	in:			The scene Node the camera should initially be attached to
 	*	Purpose:	To set up the camera for use
 	*/
-	void initCamera(Ogre::Camera* cam);
+	void initCamera(Ogre::Camera* cam, Ogre::SceneNode* followNode);
 
 	/*	attachTo
 	*	in:			SceneNode you wish to attach
@@ -44,6 +45,7 @@ public:
 
 private:
 	Ogre::Camera* camera;
+	Ogre::SceneNode* cameraNode;
 	float distance;
 
 };

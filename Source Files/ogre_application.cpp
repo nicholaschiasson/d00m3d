@@ -225,8 +225,7 @@ namespace ogre_application
 			float ratio = float(viewport->getActualWidth()) / float(viewport->getActualHeight());
 			ogreCamera->setAspectRatio(ratio);
 
-			camera.initCamera(ogreCamera);
-			camera.attachTo(camera_scene_node);
+			camera.initCamera(ogreCamera, camera_scene_node);
 		}
 		catch (Ogre::Exception &e)
 		{
