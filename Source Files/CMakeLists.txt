@@ -14,6 +14,7 @@ set(HDRS
 	"${HDR_DIR}/physics_entity.h"
 	"${HDR_DIR}/player_spacecraft.h"
 	"${HDR_DIR}/spacecraft.h"
+	"${HDR_DIR}/physics_engine.h"
 )
 
 set(SRCS
@@ -29,8 +30,9 @@ set(SRCS
 	camera.cpp
 	input_manager.cpp
 	physics_entity.cpp
-    player_spacecraft.cpp
-    spacecraft.cpp
+    	player_spacecraft.cpp
+    	spacecraft.cpp
+	physics_engine.cpp
 )
 
 # The rules here are specific to Windows Systems
