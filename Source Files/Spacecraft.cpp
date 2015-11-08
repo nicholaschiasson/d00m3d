@@ -10,10 +10,9 @@ Spacecraft::~Spacecraft()
 {
 }
 
-void Spacecraft::Initialize(Ogre::SceneManager *sceneManager)
+void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* worldNode)
 {
-	Ogre::SceneNode *rootSceneNode = sceneManager->getRootSceneNode();
-	sceneNode = rootSceneNode->createChildSceneNode("Spacecraft");
+	sceneNode = worldNode->createChildSceneNode("Spacecraft");
 
 	Ogre::Entity *spacecraftBodyEntity = sceneManager->createEntity("Cone");
 	spacecraftBodyEntity->setMaterialName("ObjectMaterial");

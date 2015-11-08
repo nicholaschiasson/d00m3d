@@ -10,7 +10,7 @@ public:
 	Spacecraft();
 	virtual ~Spacecraft() = 0;
 
-	virtual void Initialize(Ogre::SceneManager *sceneManager);
+	virtual void Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* worldNode);
 
 private:
 

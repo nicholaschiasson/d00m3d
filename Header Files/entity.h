@@ -10,7 +10,7 @@ public:
 	Entity();
 	virtual ~Entity() = 0;
 
-	virtual void Initialize(Ogre::SceneManager *sceneManager) = 0;
+	virtual void Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode) = 0;
 	virtual void Update();
 
 	virtual void Damage(float damage);

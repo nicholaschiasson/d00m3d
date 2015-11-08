@@ -9,8 +9,9 @@ public:
 	PhysicsEntity();
 	virtual ~PhysicsEntity() = 0;
 
-private:
+protected:
 	float mass;
+private:
 
 };
 

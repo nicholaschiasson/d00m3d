@@ -24,8 +24,9 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 	camera = cam;
 
 	//creating the player entitty
-	player.Initialize(sceneManager);
+	player.Initialize(sceneManager, worldSceneNode);
 	camera->attachTo(&player);
+	camera->setDistance(Ogre::Vector3(0,1,2));
 	
 	//Setting up the basic control scheme
 	initControls(inMan);
