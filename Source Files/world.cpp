@@ -13,12 +13,6 @@ World::~World()
 	//TODO memory cleanup
 }
 
-void World::createWorld()
-{
-
-	//TODO setup stuff for the world goes here.
-}
-
 void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* inMan)
 {
 	if(cam == NULL || inMan == NULL)
@@ -31,7 +25,7 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 
 	//creating the player entitty
 	player.Initialize(sceneManager);
-	//camera->attachTo(player.getSceneNode());
+	camera->attachTo(player.getSceneNode());
 	
 	//Setting up the basic control scheme
 	initControls(inMan);
@@ -57,6 +51,17 @@ void World::initControls(InputManager *inputManager)
 
 void World::setupAsteroids()
 {
+}
+
+
+void World::createWorld()
+{
+	//TODO setup stuff for the world goes here.
+}
+
+void World::updateWorld(const Ogre::FrameEvent& fe)
+{
+	//TODO update stuff
 }
 
 /*

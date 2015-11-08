@@ -69,32 +69,6 @@ namespace ogre_application
 
 		//setting up the world
 		world.initWorld(scene_manager, &camera, &inputManager);
-
-		/*
-		Ogre::Entity* cubeEntity = scene_manager->createEntity("Cube");
-		cubeEntity->setMaterialName("ObjectMaterial");
-		Ogre::SceneNode* testCube = root_scene_node->createChildSceneNode("testCube");
-		testCube->attachObject(cubeEntity);
-		testCube->translate(1.0f, 0.0f, 0.0f);
-		
-		Ogre::Entity* cylinderEntity = scene_manager->createEntity("Cylinder");
-		cylinderEntity->setMaterialName("ObjectMaterial");
-		Ogre::SceneNode* testCylinder = root_scene_node->createChildSceneNode("testCylinder");
-		testCylinder->attachObject(cylinderEntity);
-		testCylinder->translate(-1.0f, 0.0f, 0.0f);
-		
-		Ogre::Entity* torusEntity = scene_manager->createEntity("Torus");
-		torusEntity->setMaterialName("ObjectMaterial");
-		Ogre::SceneNode* testTorus = root_scene_node->createChildSceneNode("testTorus");
-		testTorus->attachObject(torusEntity);
-		testTorus->translate(0.0f, 0.0f, 1.0f);
-		
-		Ogre::Entity* sphereEntity = scene_manager->createEntity("Sphere");
-		sphereEntity->setMaterialName("ObjectMaterial");
-		Ogre::SceneNode* testSphere = root_scene_node->createChildSceneNode("testSphere");
-		testSphere->attachObject(sphereEntity);
-		testSphere->translate(0.0f, 0.0f, -1.0f);
-		*/
 	}
 
 	void OgreApplication::InitRootNode()
@@ -225,8 +199,7 @@ namespace ogre_application
 			float ratio = float(viewport->getActualWidth()) / float(viewport->getActualHeight());
 			ogreCamera->setAspectRatio(ratio);
 
-			camera.initCamera(ogreCamera);
-			camera.attachTo(camera_scene_node);
+			camera.initCamera(ogreCamera, camera_scene_node);
 		}
 		catch (Ogre::Exception &e)
 		{
@@ -364,6 +337,7 @@ namespace ogre_application
 
 		/* Capture input */
 		inputManager.Update(fe);
+		world.updateWorld(fe);
 
 		return true;
 	}
