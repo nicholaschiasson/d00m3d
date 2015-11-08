@@ -6,6 +6,7 @@
 class EnemySpacecraft : public Spacecraft
 {
 public:
+	EnemySpacecraft();
 	virtual ~EnemySpacecraft();
 
 private:

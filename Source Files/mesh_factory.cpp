@@ -187,8 +187,8 @@ void MeshFactory::CreateCylinderGeometry(Ogre::String object_name, float cylinde
 
 		/* Add vertices to the object */
 		float theta; // Angles for circle
-		Ogre::Vector3 circle_center_1 = Ogre::Vector3(0.0, 0.5f * cylinder_length, 0.0f);
-		Ogre::Vector3 circle_center_2 = Ogre::Vector3(0.0, -0.5f * cylinder_length, 0.0f);
+		Ogre::Vector3 circle_center_1 = Ogre::Vector3(0.0f, 0.5f * cylinder_length, 0.0f);
+		Ogre::Vector3 circle_center_2 = Ogre::Vector3(0.0f, -0.5f * cylinder_length, 0.0f);
 		Ogre::Vector3 vertex_position;
 		Ogre::Vector3 vertex_normal;
 		Ogre::ColourValue vertex_color = Ogre::ColourValue(0.0f, 0.0f, 0.0f, 1.0f);
@@ -380,18 +380,18 @@ void MeshFactory::CreateIcosahedron(Ogre::String object_name){
         object->begin(material_name, Ogre::RenderOperation::OT_TRIANGLE_LIST);
 
 		/* Vertices of an icosahedron */
-		#define X 0.525731112119133606
-		#define Z 0.850650808352039932
+		static float X = 0.525731112119133606f;
+		static float Z = 0.850650808352039932f;
         static float vdata[12][3] = {
-	        {-X, 0.0, Z}, {X, 0.0, Z}, {-X, 0.0, -Z}, {X, 0.0, -Z},
-	        {0.0, Z, X}, {0.0, Z, -X}, {0.0, -Z, X}, {0.0, -Z, -X},
-	        {Z, X, 0.0}, {-Z, X, 0.0}, {Z, -X, 0.0}, {-Z, -X, 0.0}};
+	        {-X, 0.0f, Z}, {X, 0.0f, Z}, {-X, 0.0f, -Z}, {X, 0.0f, -Z},
+	        {0.0f, Z, X}, {0.0f, Z, -X}, {0.0f, -Z, X}, {0.0f, -Z, -X},
+	        {Z, X, 0.0f}, {-Z, X, 0.0f}, {Z, -X, 0.0f}, {-Z, -X, 0.0f}};
  
 		/* Vertex colors */
 		static float clr[12][3] = {
-			{1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0}, {1.0, 1.0, 0.0},
-			{1.0, 0.0, 1.0}, {0.0, 1.0, 1.0}, {1.0, 1.0, 1.0}, {0.6, 0.4, 0.2},
-			{1.0, 0.2, 0.8}, {1.0, 0.4, 0.0}, {0.0, 0.6, 0.0}, {0.6, 0.6, 0.6}};
+			{1.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f}, {0.0f, 0.0f, 1.0f}, {1.0f, 1.0f, 0.0f},
+			{1.0f, 0.0f, 1.0f}, {0.0f, 1.0f, 1.0f}, {1.0f, 1.0f, 1.0f}, {0.6f, 0.4f, 0.2f},
+			{1.0f, 0.2f, 0.8f}, {1.0f, 0.4f, 0.0f}, {0.0f, 0.6f, 0.0f}, {0.6f, 0.6f, 0.6f}};
 
         /* Faces */
         static int tindices [20][3] = {
@@ -471,7 +471,7 @@ void MeshFactory::CreateSphereGeometry(Ogre::String object_name, float radius, i
 				/*vertex_color = Ogre::ColourValue(1.0 - ((float) i / (float) num_samples_theta), 
 				                                 (float) i / (float) num_samples_theta, 
 				                                 (float) j / (float) num_samples_phi);*/
-				vertex_color = Ogre::ColourValue(0.0, 0.0, 0.0);
+				vertex_color = Ogre::ColourValue(0.0f, 0.0f, 0.0);
 				texture_coord = Ogre::Vector2(((float)i)/((float)num_samples_theta), 1.0f-((float)j)/((float)num_samples_phi));
 								
 				/* Add them to the object */

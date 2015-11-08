@@ -2,6 +2,7 @@
 set(HDR_DIR "${PROJECT_SOURCE_DIR}/Header Files")
 
 set(HDRS
+	"${HDR_DIR}/defines.h"
 	"${HDR_DIR}/enemy_spacecraft.h"
 	"${HDR_DIR}/entity.h"
 	"${HDR_DIR}/mesh_factory.h"

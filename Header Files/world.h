@@ -8,6 +8,8 @@
 #include "camera.h"
 #include "input_manager.h"
 
+#include "player_spacecraft.h"
+
 class World
 {
 public:
@@ -31,15 +33,26 @@ private:
 	//things in the world go here.
 	Ogre::SceneNode* worldSceneNode;
 	
-	Camera camera;
-	InputManager inputManager;
 	Ogre::SceneManager* sceneManager;
+	Camera *camera;
+	InputManager *inputManager;
 
-	//TODO REPLACE WITH PLAYERSPACESHIP
-	Ogre::SceneNode* player;
+	PlayerSpacecraft* player;
 	//setup the control schemes
 	void initControls();
 	void setupAsteroids();
+
+	// InputManager Callbacks
+	static void PlayerMoveForward(void *context, const Ogre::FrameEvent& fe);
+	static void PlayerMoveLeft(void *context, const Ogre::FrameEvent& fe);
+	static void PlayerMoveBackward(void *context, const Ogre::FrameEvent& fe);
+	static void PlayerMoveRight(void *context, const Ogre::FrameEvent& fe);
+	static void PlayerMoveUp(void *context, const Ogre::FrameEvent& fe);
+	static void PlayerMoveDown(void *context, const Ogre::FrameEvent& fe);
+	static void PlayerPitchUp(void *context, const Ogre::FrameEvent& fe);
+	static void PlayerYawLeft(void *context, const Ogre::FrameEvent& fe);
+	static void PlayerPitchDown(void *context, const Ogre::FrameEvent& fe);
+	static void PlayerYawRight(void *context, const Ogre::FrameEvent& fe);
 
 };
 

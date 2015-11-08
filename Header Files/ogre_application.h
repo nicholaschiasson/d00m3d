@@ -64,16 +64,6 @@ namespace ogre_application
 
 		/* Input Callbacks */
 		static void ExitOgreApplication(void *context, const Ogre::FrameEvent& fe);
-		static void CameraMoveForward(void *context, const Ogre::FrameEvent& fe);
-		static void CameraMoveLeft(void *context, const Ogre::FrameEvent& fe);
-		static void CameraMoveBackward(void *context, const Ogre::FrameEvent& fe);
-		static void CameraMoveRight(void *context, const Ogre::FrameEvent& fe);
-		static void CameraMoveUp(void *context, const Ogre::FrameEvent& fe);
-		static void CameraMoveDown(void *context, const Ogre::FrameEvent& fe);
-		static void CameraPitchUp(void *context, const Ogre::FrameEvent& fe);
-		static void CameraYawLeft(void *context, const Ogre::FrameEvent& fe);
-		static void CameraPitchDown(void *context, const Ogre::FrameEvent& fe);
-		static void CameraYawRight(void *context, const Ogre::FrameEvent& fe);
 
     }; // class OgreApplication
 } // namespace ogre_application

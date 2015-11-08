@@ -3,8 +3,14 @@
 
 #include "entity.h"
 
-class PhysicsEntity : Entity
+class PhysicsEntity : public Entity
 {
+public:
+	PhysicsEntity();
+	virtual ~PhysicsEntity() = 0;
+
+private:
+	float mass;
 
 };
 

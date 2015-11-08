@@ -6,6 +6,7 @@
 class PlayerSpacecraft : public Spacecraft
 {
 public:
+	PlayerSpacecraft();
 	virtual ~PlayerSpacecraft();
 
 private:
