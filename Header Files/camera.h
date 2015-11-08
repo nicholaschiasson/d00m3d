@@ -3,6 +3,7 @@
 
 #include <OgreCamera.h>
 #include <OgreSceneNode.h>
+#include "entity.h"
 
 class Camera
 {
@@ -18,10 +19,10 @@ public:
 	void initCamera(Ogre::Camera* cam, Ogre::SceneNode* followNode);
 
 	/*	attachTo
-	*	in:			SceneNode you wish to attach
+	*	in:			entity you wish to attach to
 	*	Purpose:	To attach the camera to a Node, this will be attached starting  at a certain distance away (can be specified with the setDistance function)
 	*/
-	void attachTo(Ogre::SceneNode* followNode);
+	void attachTo(Entity* followEntity);
 
 	/*	setDistance
 	*	in:			The distance you wish to be away from the object

@@ -25,7 +25,7 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 
 	//creating the player entitty
 	player.Initialize(sceneManager);
-	camera->attachTo(player.getSceneNode());
+	camera->attachTo(&player);
 	
 	//Setting up the basic control scheme
 	initControls(inMan);
@@ -77,7 +77,7 @@ void World::PlayerMoveForward(void *context, const Ogre::FrameEvent& fe)
 	{
 		World *world = static_cast<World *>(context);
 		PlayerSpacecraft *player = &world->player;
-		Ogre::Quaternion playerOrientation = player->getSceneNode()->getOrientation();
+		Ogre::Quaternion playerOrientation = player->getOrientation();
 		Ogre::Vector3 playerDirection = playerOrientation * Ogre::Vector3::NEGATIVE_UNIT_Z;
 
 		player->translate(playerDirection * fe.timeSinceLastFrame);
@@ -90,7 +90,7 @@ void World::PlayerMoveLeft(void *context, const Ogre::FrameEvent& fe)
 	{
 		World *world = static_cast<World*>(context);
 		PlayerSpacecraft *player = &world->player;
-		Ogre::Quaternion playerOrientation = player->getSceneNode()->getOrientation();
+		Ogre::Quaternion playerOrientation = player->getOrientation();
 		Ogre::Vector3 playerRight = playerOrientation * Ogre::Vector3::UNIT_X;
 		
 		player->translate(-playerRight * fe.timeSinceLastFrame);
@@ -103,7 +103,7 @@ void World::PlayerMoveBackward(void *context, const Ogre::FrameEvent& fe)
 	{
 		World *world = static_cast<World*>(context);
 		PlayerSpacecraft *player = &world->player;
-		Ogre::Quaternion playerOrientation = player->getSceneNode()->getOrientation();
+		Ogre::Quaternion playerOrientation = player->getOrientation();
 		Ogre::Vector3 playerDirection = playerOrientation * Ogre::Vector3::NEGATIVE_UNIT_Z;
 
 		player->translate(-playerDirection * fe.timeSinceLastFrame);
@@ -116,7 +116,7 @@ void World::PlayerMoveRight(void *context, const Ogre::FrameEvent& fe)
 	{
 		World *world = static_cast<World*>(context);
 		PlayerSpacecraft *player = &world->player;
-		Ogre::Quaternion playerOrientation = player->getSceneNode()->getOrientation();
+		Ogre::Quaternion playerOrientation = player->getOrientation();
 		Ogre::Vector3 playerRight = playerOrientation * Ogre::Vector3::UNIT_X;
 		
 		player->translate(playerRight * fe.timeSinceLastFrame);
@@ -129,7 +129,7 @@ void World::PlayerMoveUp(void *context, const Ogre::FrameEvent& fe)
 	{
 		World *world = static_cast<World*>(context);
 		PlayerSpacecraft *player = &world->player;
-		Ogre::Quaternion playerOrientation = player->getSceneNode()->getOrientation();
+		Ogre::Quaternion playerOrientation = player->getOrientation();
 		Ogre::Vector3 playerUp = playerOrientation * Ogre::Vector3::UNIT_Y;
 		
 		player->translate(playerUp * fe.timeSinceLastFrame);
@@ -142,7 +142,7 @@ void World::PlayerMoveDown(void *context, const Ogre::FrameEvent& fe)
 	{
 		World *world = static_cast<World*>(context);
 		PlayerSpacecraft *player = &world->player;
-		Ogre::Quaternion playerOrientation = player->getSceneNode()->getOrientation();
+		Ogre::Quaternion playerOrientation = player->getOrientation();
 		Ogre::Vector3 playerUp = playerOrientation * Ogre::Vector3::UNIT_Y;
 		
 		player->translate(-playerUp * fe.timeSinceLastFrame);

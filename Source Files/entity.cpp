@@ -136,7 +136,22 @@ void Entity::yaw(const Ogre::Radian &angle, Ogre::Node::TransformSpace relativeT
 	}
 }
 
-Ogre::SceneNode* Entity::getSceneNode() const
+Ogre::Vector3 Entity::getPosition() const
 {
-	return sceneNode;
+	return sceneNode->getPosition();
+}
+
+Ogre::Vector3 Entity::getDerivedPosition() const
+{
+	return sceneNode->_getDerivedPosition();
+}
+
+Ogre::Quaternion Entity::getOrientation() const
+{
+	return sceneNode->getOrientation();
+}
+
+Ogre::Quaternion Entity::getDerivedOrientation() const
+{
+	return sceneNode->_getDerivedOrientation();
 }

@@ -22,14 +22,14 @@ void Camera::initCamera(Ogre::Camera* ogreCamera, Ogre::SceneNode* followNode)
 }
 
 
-void Camera::attachTo(Ogre::SceneNode* followNode)
+void Camera::attachTo(Entity* followEntity)
 {
 	//TODO move the hooking up a camera from the ogre_application to here
 	if(camera == NULL){
 		throw std::runtime_error("Camera not initialized");
 	}
 	cameraNode->getParentSceneNode()->removeChild(cameraNode->getName());
-	followNode->addChild(cameraNode);
+	followEntity->addChild(cameraNode);
 	cameraNode->setPosition(0,0,0);
 
 }
