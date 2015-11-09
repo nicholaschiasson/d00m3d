@@ -18,10 +18,16 @@ void PhysicsEntity::Update(const Ogre::FrameEvent &fe)
 
 void PhysicsEntity::ApplyForce(float x, float y, float z)
 {
-	appliedForce += Ogre::Vector3(x, y, z);
+	if (dynamic)
+	{
+		appliedForce += Ogre::Vector3(x, y, z);
+	}
 }
 
 void PhysicsEntity::ApplyForce(Ogre::Vector3 force)
 {
-	appliedForce += force;
+	if (dynamic)
+	{
+		appliedForce += force;
+	}
 }

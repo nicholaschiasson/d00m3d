@@ -8,7 +8,9 @@
 #include "camera.h"
 #include "input_manager.h"
 
+#include "physics_engine.h"
 #include "player_spacecraft.h"
+#include "asteroid.h"
 
 class World
 {
@@ -39,10 +41,12 @@ private:
 	
 	Ogre::SceneManager* sceneManager;
 	Camera *camera;
+	PhysicsEngine *physicsEngine;
 
 	PlayerSpacecraft player;
 	//setup the control schemes
 	void initControls(InputManager *inputManager);
+
 	void setupAsteroids();
 
 	// InputManager Callbacks
@@ -56,6 +60,16 @@ private:
 	static void PlayerYawLeft(void *context, const Ogre::FrameEvent& fe);
 	static void PlayerPitchDown(void *context, const Ogre::FrameEvent& fe);
 	static void PlayerYawRight(void *context, const Ogre::FrameEvent& fe);
+
+
+	#define MAX_NUM_ASTEROIDS 500 
+	int num_asteroids_;
+	//std::vector<Asteroid> asteroid_;
+    Asteroid asteroid_[MAX_NUM_ASTEROIDS];
+	Ogre::SceneNode* cube_[MAX_NUM_ASTEROIDS];
+
+	static void playerFireLaser(void* context, const Ogre::FrameEvent& fe);
+
 
 };
 

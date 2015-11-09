@@ -3,6 +3,14 @@
 
 #include "entity.h"
 
+enum ENTITY_BODY_TYPE
+{
+	ENTITY_BODY_METAPHYSICAL,
+	ENTITY_BODY_RAY,
+	ENTITY_BODY_SPHERE,
+	ENTITY_BODY_PRISM,
+};
+
 class PhysicsEntity : public Entity
 {
 public:
@@ -14,7 +22,7 @@ public:
 	void ApplyForce(float x, float y, float z);
 	void ApplyForce(Ogre::Vector3 force);
 
-private:
+protected:
 	Ogre::Vector3 acceleration;
 	Ogre::Vector3 appliedForce;
 	float mass;
@@ -22,6 +30,8 @@ private:
 	// For cheating the laws of physics
 	bool dynamic;
 	bool gravitational;
+
+private:
 
 };
 

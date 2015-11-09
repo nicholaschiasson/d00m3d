@@ -1,4 +1,4 @@
-vertex_program shader/vs glsl 
+vertex_program laserMaterialShader/vs glsl 
 {
     source MaterialVp.glsl 
 
@@ -8,36 +8,36 @@ vertex_program shader/vs glsl
         param_named_auto view_mat view_matrix
         param_named_auto projection_mat projection_matrix
 		param_named_auto normal_mat inverse_transpose_worldview_matrix
-		param_named light_position float3 2.0 2.0 2.0
+		param_named light_position float3 -0.5 1.0 1.5
     }
 }
 
 
-fragment_program shader/fs glsl 
+fragment_program laserMaterialShader/fs glsl 
 {
     source MaterialFp.glsl 
 
 	default_params
 	{
-		param_named ambient_colour float4 0.0 0.0 0.1 1.0
-		param_named diffuse_colour float4 0.0 0.0 0.5 1.0
-		param_named specular_colour float4 0.8 0.5 0.9 1.0
+		param_named ambient_colour float4 1.0 0.0 0.0 1.0
+		param_named diffuse_colour float4 1.0 0.0 0.0 1.0
+		param_named specular_colour float4 1.0 0.0 0.0 1.0
 		param_named phong_exponent float 128.0
 	}
 }
 
 
-material ObjectMaterial
+material LaserMaterial
 {
     technique
     {
         pass
         {
-            vertex_program_ref shader/vs
+            vertex_program_ref laserMaterialShader/vs
             {
             }
 
-            fragment_program_ref shader/fs
+            fragment_program_ref laserMaterialShader/fs
             {
             }
         } 
