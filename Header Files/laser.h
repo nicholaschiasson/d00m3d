@@ -21,8 +21,10 @@ public:
 	void Update(const Ogre::FrameEvent &fe);
 
 	void fire();
-
 	void upgrade(int maxCooldown, int dmg);
+
+	int getDamage() const;
+	int getCooldown() const;
 
 	
 

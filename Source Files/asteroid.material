@@ -1,4 +1,4 @@
-vertex_program shader/vs glsl 
+vertex_program asteroid_shader/vs glsl 
 {
     source MaterialVp.glsl 
 
@@ -13,14 +13,14 @@ vertex_program shader/vs glsl
 }
 
 
-fragment_program shader/fs glsl 
+fragment_program asteroid_shader/fs glsl 
 {
     source MaterialFp.glsl 
 
 	default_params
 	{
-		param_named ambient_colour float4 0.0 0.0 0.1 1.0
-		param_named diffuse_colour float4 0.0 0.0 0.5 1.0
+		param_named ambient_colour float4 0.054 0.035 0.016 1.0
+		param_named diffuse_colour float4 0.54 0.35 0.16 1.0
 		param_named specular_colour float4 1.0 1.0 1.0 1.0
 		param_named phong_exponent float 128.0
 		param_named custom_colour float 0.0
@@ -28,17 +28,17 @@ fragment_program shader/fs glsl
 }
 
 
-material ObjectMaterial
+material AsteroidMaterial
 {
     technique
     {
         pass
         {
-            vertex_program_ref shader/vs
+            vertex_program_ref asteroid_shader/vs
             {
             }
 
-            fragment_program_ref shader/fs
+            fragment_program_ref asteroid_shader/fs
             {
             }
         } 

@@ -15,7 +15,7 @@ void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* w
 	PhysicsEntity::Initialize(sceneManager, worldNode, physicsEngine);
 
 	Ogre::Entity *spacecraftBodyEntity = sceneManager->createEntity("Cone");
-	spacecraftBodyEntity->setMaterialName("ObjectMaterial");
+	spacecraftBodyEntity->setMaterialName("PlayerSpacecraftMaterial");
 	Ogre::SceneNode *spacecraftBodyNode = sceneNode->createChildSceneNode(Ogre::String("SpacecraftBody" + entityCount));
 	spacecraftBodyNode->attachObject(spacecraftBodyEntity);
 	spacecraftBodyNode->scale(1.0f, 1.0f, 0.25f);

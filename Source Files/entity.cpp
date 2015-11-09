@@ -19,7 +19,7 @@ Entity::~Entity()
 void Entity::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode)
 {
 	sceneNode = parentNode->createChildSceneNode(Ogre::String("Entity" + (entityCount++)));
-	printf("%u\n", entityCount);
+	std::cout << entityCount << std::endl;
 }
 
 void Entity::Update(const Ogre::FrameEvent &fe)

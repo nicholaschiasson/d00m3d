@@ -24,6 +24,8 @@ set(SRCS
         asteroid.cpp
 	entity.cpp
 	main.cpp
+	asteroid.material
+	player_spacecraft.material
 	red_laser.material
 	MaterialFp.glsl
 	MaterialFile.material

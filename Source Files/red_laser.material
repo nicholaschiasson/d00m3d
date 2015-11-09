@@ -23,6 +23,7 @@ fragment_program laserMaterialShader/fs glsl
 		param_named diffuse_colour float4 1.0 0.0 0.0 1.0
 		param_named specular_colour float4 1.0 0.0 0.0 1.0
 		param_named phong_exponent float 128.0
+		param_named custom_colour float 0.0
 	}
 }
 
