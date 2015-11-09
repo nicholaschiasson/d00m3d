@@ -21,8 +21,10 @@ public:
 
 	virtual void Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode);
 	void fire();
-
 	void upgrade(int maxCooldown, int dmg);
+
+	int getDamage() const;
+	int getCooldown() const;
 
 	
 

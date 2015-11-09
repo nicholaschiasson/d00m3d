@@ -9,6 +9,15 @@ Laser::~Laser()
 {
 }
 
+int Laser::getDamage() const
+{
+	return damage;
+}
+
+int Laser::getCooldown() const
+{
+	return cooldown;
+}
 
 void Laser::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode)
 {
@@ -24,6 +33,12 @@ void Laser::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parent
 	sceneNode->translate(0,50.5,-.5, Ogre::Node::TS_LOCAL);
 
 	sceneNode->setVisible(false);
+}
+
+void Laser::upgrade(int maxCooldown, int dmg)
+{
+	cooldown = maxCooldown;
+	damage = dmg;
 }
 
 Laser::LASER_STATE Laser::getState()
