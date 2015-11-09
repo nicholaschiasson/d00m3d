@@ -3,17 +3,20 @@
 
 #include "physics_entity.h"
 #include "input_manager.h"
+#include "laser.h"
 
 class Spacecraft : public PhysicsEntity
 {
 public:
 	Spacecraft();
 	virtual ~Spacecraft() = 0;
-
-	virtual void Initialize(Ogre::SceneManager *sceneManager);
+	
+	virtual void update();
+	virtual void Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* worldNode);
+	void fireLaser();
 
 private:
-
+	Laser laser;
 };
 
 #endif // SPACECRAFT_H

@@ -10,14 +10,8 @@ Asteroid::~Asteroid()
 {
 }
 
-void Asteroid::Initialize(Ogre::SceneManager* sceneManager){
-    std::cout << "BEGINNING OF FILE" << std::endl;
-	Ogre::Entity *asteroidEntity = sceneManager->createEntity("Icosahedron");
-	Ogre::SceneNode *rootSceneNode = sceneManager->getRootSceneNode();
-	//asteroidEntity->setMaterialName("ObjectMaterial");
-	sceneNode = rootSceneNode->createChildSceneNode("TROID");
-	name = "TROID";
-	sceneNode->attachObject(asteroidEntity);
+void Asteroid::Initialize(Ogre::SceneManager* sceneManager, Ogre::SceneNode *worldNode){
+
 
 }
 

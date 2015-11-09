@@ -59,11 +59,15 @@ private:
 	static void PlayerPitchDown(void *context, const Ogre::FrameEvent& fe);
 	static void PlayerYawRight(void *context, const Ogre::FrameEvent& fe);
 
+
 	#define MAX_NUM_ASTEROIDS 500 
 	int num_asteroids_;
 	//std::vector<Asteroid> asteroid_;
     Asteroid asteroid_[MAX_NUM_ASTEROIDS];
 	Ogre::SceneNode* cube_[MAX_NUM_ASTEROIDS];
+
+	static void playerFireLaser(void* context, const Ogre::FrameEvent& fe);
+
 
 };
 

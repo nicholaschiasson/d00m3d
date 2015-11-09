@@ -10,8 +10,8 @@ public:
 	Entity();
 	virtual ~Entity() = 0;
 
-	virtual void Initialize(Ogre::SceneManager *sceneManager) = 0;
-	virtual void Update();
+	virtual void Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode) = 0;
+	virtual void update();
 
 	virtual void Damage(float damage);
 
@@ -28,16 +28,20 @@ public:
 	virtual void translate(const Ogre::Matrix3 &axes, Ogre::Real x, Ogre::Real y, Ogre::Real z, Ogre::Node::TransformSpace relativeTo = Ogre::Node::TS_PARENT);
 	virtual void translate(const Ogre::Matrix3 &axes, const Ogre::Vector3 &move, Ogre::Node::TransformSpace relativeTo = Ogre::Node::TS_PARENT);
 	virtual void yaw(const Ogre::Radian &angle, Ogre::Node::TransformSpace relativeTo = Ogre::Node::TS_LOCAL);
-
-	Ogre::SceneNode* getSceneNode() const;
+	
+	virtual Ogre::Vector3 getPosition() const;
+	virtual Ogre::Vector3 Entity::getDerivedPosition() const;
+	virtual Ogre::Quaternion getOrientation() const;
+	virtual Ogre::Quaternion getDerivedOrientation() const;
 
 protected:
 	Ogre::SceneNode *sceneNode;
-
-private:
 	bool alive;
 	float health;
 	float durability;
+
+private:
+
 
 };
 
