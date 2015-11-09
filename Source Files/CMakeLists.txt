@@ -2,7 +2,7 @@
 set(HDR_DIR "${PROJECT_SOURCE_DIR}/Header Files")
 
 set(HDRS
-        "${HDR_DIR}/asteroid.h"
+    "${HDR_DIR}/asteroid.h"
 	"${HDR_DIR}/defines.h"
 	"${HDR_DIR}/enemy_spacecraft.h"
 	"${HDR_DIR}/entity.h"
@@ -17,14 +17,16 @@ set(HDRS
 	"${HDR_DIR}/spacecraft.h"
 	"${HDR_DIR}/physics_engine.h"
 	"${HDR_DIR}/laser.h"
+	"${HDR_DIR}/item.h"
 )
 
 set(SRCS
     enemy_spacecraft.cpp
-        asteroid.cpp
+	asteroid.cpp
 	entity.cpp
 	main.cpp
 	asteroid.material
+	item.material
 	player_spacecraft.material
 	red_laser.material
 	MaterialFp.glsl
@@ -40,6 +42,7 @@ set(SRCS
     spacecraft.cpp
 	physics_engine.cpp
 	laser.cpp
+	item.cpp
 )
 
 # The rules here are specific to Windows Systems

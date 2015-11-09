@@ -10,6 +10,7 @@
 
 #include "player_spacecraft.h"
 #include "asteroid.h"
+#include "item.h"
 
 class World
 {
