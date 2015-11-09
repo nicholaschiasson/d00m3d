@@ -11,6 +11,8 @@
 #include "player_spacecraft.h"
 #include "asteroid.h"
 #include "black_hole.h"
+#include "item.h"
+
 
 class World
 {

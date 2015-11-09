@@ -34,14 +34,12 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 	// TEST CUBE IN THE CENTER OF THE WORLD
 
 //	sceneManager->getRootSceneNode()->createChildSceneNode("shelly")->attachObject(sceneManager->createEntity("Cube"));
+	
+	Item myItem;
+	myItem.Initialize(sceneManager, worldSceneNode);
 
 	setupBlackHole();
 	setupAsteroids();
-
-	Ogre::Entity* cubeEntity = sceneManager->createEntity("Cube");
-	cubeEntity->setMaterialName("ObjectMaterial");
-	worldSceneNode->createChildSceneNode("shelly")->attachObject(cubeEntity);
-
 }
 
 /*

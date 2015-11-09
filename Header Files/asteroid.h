@@ -13,7 +13,7 @@ public:
 	virtual void Initialize(Ogre::SceneManager *sceneManager,Ogre::SceneNode *worldNode, std::string);
 	Ogre::SceneNode* getAsteroidSceneNode();
 	Ogre::Vector3 pos; // Position
-
+	
 private:
         Ogre::Quaternion ori; // Orientation
         Ogre::Quaternion lm; // Angular momentum (use as velocity)
