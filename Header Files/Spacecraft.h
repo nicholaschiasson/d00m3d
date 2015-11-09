@@ -11,8 +11,9 @@ public:
 	Spacecraft();
 	virtual ~Spacecraft() = 0;
 	
-	virtual void update();
-	virtual void Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* worldNode);
+	virtual void Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* worldNode, PhysicsEngine &physicsEngine);
+	virtual void Update(const Ogre::FrameEvent &fe);
+
 	void fireLaser();
 
 private:

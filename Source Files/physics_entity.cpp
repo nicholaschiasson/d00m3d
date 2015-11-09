@@ -10,6 +10,12 @@ PhysicsEntity::~PhysicsEntity()
 {
 }
 
+void PhysicsEntity::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine)
+{
+	Entity::Initialize(sceneManager, parentNode);
+	physicsEngine.AddPhysicsEntity(this);
+}
+
 void PhysicsEntity::Update(const Ogre::FrameEvent &fe)
 {
 	acceleration += appliedForce;

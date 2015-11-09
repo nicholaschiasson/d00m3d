@@ -17,9 +17,9 @@ public:
 	};
 
 	LASER_STATE getState();
-	void update();
+	virtual void Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine);
+	void Update(const Ogre::FrameEvent &fe);
 
-	virtual void Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode);
 	void fire();
 
 	void upgrade(int maxCooldown, int dmg);

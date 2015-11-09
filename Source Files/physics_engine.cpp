@@ -12,7 +12,8 @@ void PhysicsEngine::Update(const Ogre::FrameEvent &fe)
 {
 	for (std::vector<PhysicsEntity *>::iterator it = physicsEntities.begin(); it != physicsEntities.end(); ++it)
 	{
-		(*it)->Update(fe);
+		// Apply gravity to physics entities
+		// Detect collision between physics entities
 	}
 }
 

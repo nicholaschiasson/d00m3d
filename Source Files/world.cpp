@@ -23,8 +23,9 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 	worldSceneNode = sceneManager->getRootSceneNode()->createChildSceneNode("_worldSceneNode_");
 	camera = cam;
 	num_asteroids_ = MAX_NUM_ASTEROIDS;
+
 	//creating the player entitty
-	player.Initialize(sceneManager, worldSceneNode);
+	player.Initialize(sceneManager, worldSceneNode, physicsEngine);
 	camera->attachTo(&player);
 	camera->setDistance(Ogre::Vector3(0,1,2));
 	
@@ -83,7 +84,7 @@ void World::setupAsteroids()
 
 		entity_name = prefix + Ogre::StringConverter::toString(i);
 		asteroid_[i].Initialize(sceneManager,entity_name);
-		asteroid_[i].getAsteroidSceneNode()->setPosition(i - 5,0,-i);
+		asteroid_[i].getAsteroidSceneNode()->setPosition((float)i - 5.0f, 0.0f, (float)-i);
 
 	} 
 }
@@ -97,7 +98,8 @@ void World::createWorld()
 void World::updateWorld(const Ogre::FrameEvent& fe)
 {
 	//TODO update stuff
-	player.update();
+	physicsEngine.Update(fe);
+	player.Update(fe);
 }
 
 /*

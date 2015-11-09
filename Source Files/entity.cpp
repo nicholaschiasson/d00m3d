@@ -2,6 +2,8 @@
 
 #include "defines.h"
 
+unsigned int Entity::entityCount = 0;
+
 Entity::Entity()
 {
 	sceneNode = 0;
@@ -12,6 +14,12 @@ Entity::Entity()
 
 Entity::~Entity()
 {
+}
+
+void Entity::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode)
+{
+	sceneNode = parentNode->createChildSceneNode(Ogre::String("Entity" + (entityCount++)));
+	printf("%u\n", entityCount);
 }
 
 void Entity::Update(const Ogre::FrameEvent &fe)

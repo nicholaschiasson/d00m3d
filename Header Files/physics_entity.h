@@ -2,6 +2,9 @@
 #define PHYSICS_ENTITY_H
 
 #include "entity.h"
+#include "physics_engine.h"
+
+class PhysicsEngine;
 
 enum ENTITY_BODY_TYPE
 {
@@ -16,7 +19,8 @@ class PhysicsEntity : public Entity
 public:
 	PhysicsEntity();
 	virtual ~PhysicsEntity() = 0;
-
+	
+	virtual void Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine);
 	virtual void Update(const Ogre::FrameEvent &fe);
 	
 	void ApplyForce(float x, float y, float z);

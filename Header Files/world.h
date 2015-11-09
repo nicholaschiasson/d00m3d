@@ -41,7 +41,7 @@ private:
 	
 	Ogre::SceneManager* sceneManager;
 	Camera *camera;
-	PhysicsEngine *physicsEngine;
+	PhysicsEngine physicsEngine;
 
 	PlayerSpacecraft player;
 	//setup the control schemes

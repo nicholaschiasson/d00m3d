@@ -10,7 +10,7 @@ public:
 	Entity();
 	virtual ~Entity() = 0;
 
-	virtual void Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode) = 0;
+	virtual void Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode);
 	virtual void Update(const Ogre::FrameEvent &fe);
 
 	virtual void Damage(float damage);
@@ -35,6 +35,8 @@ public:
 	virtual Ogre::Quaternion getDerivedOrientation() const;
 
 protected:
+	static unsigned int entityCount;
+
 	Ogre::SceneNode *sceneNode;
 	bool alive;
 	float health;

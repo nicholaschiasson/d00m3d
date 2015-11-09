@@ -4,6 +4,8 @@
 #include <vector>
 #include "physics_entity.h"
 
+class PhysicsEntity;
+
 class PhysicsEngine
 {
 public:
