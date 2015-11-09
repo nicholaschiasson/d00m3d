@@ -11,7 +11,7 @@ public:
 	virtual ~Entity() = 0;
 
 	virtual void Initialize(Ogre::SceneManager *sceneManager) = 0;
-	virtual void Update();
+	virtual void Update(const Ogre::FrameEvent &fe);
 
 	virtual void Damage(float damage);
 

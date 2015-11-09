@@ -14,7 +14,7 @@ Entity::~Entity()
 {
 }
 
-void Entity::Update()
+void Entity::Update(const Ogre::FrameEvent &fe)
 {
 	if (alive)
 	{
