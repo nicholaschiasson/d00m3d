@@ -34,7 +34,8 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 	// TEST CUBE IN THE CENTER OF THE WORLD
 
 //	sceneManager->getRootSceneNode()->createChildSceneNode("shelly")->attachObject(sceneManager->createEntity("Cube"));
-	
+
+	setupBlackHole();
 	setupAsteroids();
 
 	Ogre::Entity* cubeEntity = sceneManager->createEntity("Cube");
@@ -63,26 +64,29 @@ void World::initControls(InputManager *inputManager)
 	
 }
 
+void World::setupBlackHole(){
+	blackHole.Initialize(sceneManager,worldSceneNode);
+	blackHole.getSceneNode()->setPosition(0.0,0.0,-15);
+}
+
 void World::setupAsteroids()
 {
 	//Use to set position/orientation... of asteroids? just what the prof had.
     for (int i = 0; i < num_asteroids_; i++){
 		
       //asteroid_[i].pos = Ogre::Vector3(-300 + 600 * (rand() % 1000) / 1000.0f, -300 + 600 * (rand() % 1000) / 1000.0f, 600 * (rand() % 1000) / 1000.0f);
-      // asteroid_[i].pos = Ogre::Vector3(0 + i,0,0);
+      //asteroid_[i].pos = Ogre::Vector3(0 + i,0,0);
 	  //asteroid_[i].ori = Ogre::Quaternion(1.0f, 3.14*(rand() % 1000) / 1000.0f, 3.14*(rand() % 1000) / 1000.0f, 3.14*(rand() % 1000) / 1000.0f);
 	  //asteroid_[i].lm = Ogre::Quaternion(1.0f, 0.005*3.14*(rand() % 1000) / 1000.0f, 0.005*3.14*(rand() % 1000) / 1000.0f, 0.005*3.14*(rand() % 1000) / 1000.0f);
 	  //asteroid_[i].drift = Ogre::Vector3(((double) rand() / RAND_MAX)*0.2, ((double) rand() / RAND_MAX)*0.2, ((double) rand() / RAND_MAX)*0.2);
     }
-
-    Ogre::SceneNode* root_scene_node = sceneManager->getRootSceneNode();
 
         /* Create multiple entities of a mesh */
 	Ogre::String entity_name, prefix("Asteroid");
   	for (int i = 0; i < num_asteroids_; i++){
 
 		entity_name = prefix + Ogre::StringConverter::toString(i);
-		asteroid_[i].Initialize(sceneManager,entity_name);
+		asteroid_[i].Initialize(sceneManager,worldSceneNode,entity_name);
 		asteroid_[i].getAsteroidSceneNode()->setPosition(i - 5,0,-i);
 
 	} 

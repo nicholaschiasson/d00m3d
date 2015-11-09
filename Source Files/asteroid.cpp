@@ -15,13 +15,11 @@ void Asteroid::Initialize(Ogre::SceneManager* sceneManager, Ogre::SceneNode *wor
 
 }
 
-void Asteroid::Initialize(Ogre::SceneManager *sceneManager, std::string object_name)
+void Asteroid::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode *worldNode, std::string object_name)
 {
-	std::cout << "BEGINNING OF FILE" << std::endl;
 	Ogre::Entity *asteroidEntity = sceneManager->createEntity("Icosahedron");
-	Ogre::SceneNode *rootSceneNode = sceneManager->getRootSceneNode();
 	asteroidEntity->setMaterialName("AsteroidMaterial");
-	sceneNode = rootSceneNode->createChildSceneNode(object_name);
+	sceneNode = worldNode->createChildSceneNode(object_name);
 	name = object_name;
 	sceneNode->attachObject(asteroidEntity);
 }
