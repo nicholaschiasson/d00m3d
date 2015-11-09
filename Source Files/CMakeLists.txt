@@ -22,6 +22,7 @@ set(SRCS
     enemy_spacecraft.cpp
 	entity.cpp
 	main.cpp
+	red_laser.material
 	MaterialFp.glsl
 	MaterialFile.material
 	MaterialVp.glsl

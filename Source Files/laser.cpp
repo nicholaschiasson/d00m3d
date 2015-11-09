@@ -17,7 +17,7 @@ void Laser::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parent
 	sceneNode = parentNode->createChildSceneNode("Laser");
 
 	Ogre::Entity *laserEntity = sceneManager->createEntity("Cylinder");
-	laserEntity->setMaterialName("ObjectMaterial");
+	laserEntity->setMaterialName("LaserMaterial");
 	sceneNode->attachObject(laserEntity);
 	sceneNode->scale(0.05f, 100.0f, 0.05f);
 	sceneNode->pitch(Ogre::Radian(-Ogre::Math::HALF_PI));
