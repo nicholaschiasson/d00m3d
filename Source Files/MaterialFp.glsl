@@ -6,11 +6,12 @@ in vec3 normal_interp;
 in vec4 colour_interp;
 in vec3 light_pos;
 
-//attributes passed in from vertex shader
+//attributes passed in from the material file
 uniform vec4 ambient_colour;
 uniform vec4 diffuse_colour;
 uniform vec4 specular_colour;
 uniform float phong_exponent;
+uniform float custom_colour;
 
 void calculate_light(in vec3 light_pos, inout float Id, inout float Is)
 {
@@ -52,7 +53,7 @@ void main()
 
 	calculate_light(light_pos, Id, Is);
 
-	if(colour_interp == black){
+	if(custom_colour == 0.0){ //if custom colour is false, we go with supplied material, otherwise go with defined in the code
 		light_colour = ambient_colour + Id*diffuse_colour + Is*specular_colour;
 	}else{
 		light_colour = colour_interp + Id*colour_interp + Is*colour_interp;

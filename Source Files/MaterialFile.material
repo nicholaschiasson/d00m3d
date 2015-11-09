@@ -21,8 +21,9 @@ fragment_program shader/fs glsl
 	{
 		param_named ambient_colour float4 0.0 0.0 0.1 1.0
 		param_named diffuse_colour float4 0.0 0.0 0.5 1.0
-		param_named specular_colour float4 0.8 0.5 0.9 1.0
+		param_named specular_colour float4 1.0 1.0 1.0 1.0
 		param_named phong_exponent float 128.0
+		param_named custom_colour float 0.0
 	}
 }
 
