@@ -11,7 +11,7 @@ public:
 	virtual ~Entity() = 0;
 
 	virtual void Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode) = 0;
-	virtual void Update();
+	virtual void update();
 
 	virtual void Damage(float damage);
 
@@ -36,11 +36,12 @@ public:
 
 protected:
 	Ogre::SceneNode *sceneNode;
-
-private:
 	bool alive;
 	float health;
 	float durability;
+
+private:
+
 
 };
 

@@ -14,7 +14,7 @@ Entity::~Entity()
 {
 }
 
-void Entity::Update()
+void Entity::update()
 {
 	if (alive)
 	{

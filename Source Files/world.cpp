@@ -51,6 +51,8 @@ void World::initControls(InputManager *inputManager)
 	inputManager->RegisterCallback(this, PlayerYawLeft, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_LEFT);
 	inputManager->RegisterCallback(this, PlayerPitchDown, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_DOWN);
 	inputManager->RegisterCallback(this, PlayerYawRight, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_RIGHT);
+	inputManager->RegisterCallback(this, playerFireLaser, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_SPACE);
+	
 }
 
 void World::setupAsteroids()
@@ -66,6 +68,7 @@ void World::createWorld()
 void World::updateWorld(const Ogre::FrameEvent& fe)
 {
 	//TODO update stuff
+	player.update();
 }
 
 /*
@@ -191,5 +194,16 @@ void World::PlayerYawRight(void *context, const Ogre::FrameEvent& fe)
 		PlayerSpacecraft *player = &world->player;
 
 		player->yaw(-Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
+	}
+}
+
+void World::playerFireLaser(void* context, const Ogre::FrameEvent& fe)
+{
+	if(context)
+	{
+		World *world = static_cast<World*>(context);
+		PlayerSpacecraft *player = &world->player;
+
+		player->fireLaser();
 	}
 }
