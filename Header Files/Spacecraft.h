@@ -16,8 +16,16 @@ public:
 
 	void fireLaser();
 
+	void ThrustersForward();
+	void ThrustersLeft();
+	void ThrustersBackward();
+	void ThrustersRight();
+	void ThrustersUpward();
+	void ThrustersDownward();
+
 private:
 	Laser laser;
+	float thrusterForce;
 };
 
 #endif // SPACECRAFT_H

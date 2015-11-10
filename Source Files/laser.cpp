@@ -24,11 +24,12 @@ void Laser::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parent
 	PhysicsEntity::Initialize(sceneManager, parentNode, physicsEngine);
 
 	//setting our mass to 0
+	dynamic = false;
 	mass = 0.0;
 
 	Ogre::Entity *laserEntity = sceneManager->createEntity("Cylinder");
 	laserEntity->setMaterialName("LaserMaterial");
-	Ogre::SceneNode *laserSceneNode = sceneNode->createChildSceneNode(Ogre::String("Laser" + entityCount));
+	Ogre::SceneNode *laserSceneNode = sceneNode->createChildSceneNode("Laser" + Ogre::StringConverter::toString(entityCount));
 	laserSceneNode->attachObject(laserEntity);
 	laserSceneNode->scale(0.05f, 100.0f, 0.05f);
 	laserSceneNode->pitch(Ogre::Radian(-Ogre::Math::HALF_PI));

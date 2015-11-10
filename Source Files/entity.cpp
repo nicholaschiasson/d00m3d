@@ -18,8 +18,7 @@ Entity::~Entity()
 
 void Entity::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode)
 {
-	sceneNode = parentNode->createChildSceneNode(Ogre::String("Entity" + (entityCount++)));
-	std::cout << entityCount << std::endl;
+	sceneNode = parentNode->createChildSceneNode("Entity" + Ogre::StringConverter::toString(entityCount++));
 }
 
 void Entity::Update(const Ogre::FrameEvent &fe)
@@ -142,6 +141,11 @@ void Entity::yaw(const Ogre::Radian &angle, Ogre::Node::TransformSpace relativeT
 	{
 		sceneNode->yaw(angle, relativeTo);
 	}
+}
+
+const Ogre::String & Entity::getName() const
+{
+	return sceneNode->getName();
 }
 
 Ogre::Vector3 Entity::getPosition() const

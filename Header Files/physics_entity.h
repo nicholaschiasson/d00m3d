@@ -26,12 +26,22 @@ public:
 	void ApplyForce(float x, float y, float z);
 	void ApplyForce(Ogre::Vector3 force);
 
+	// Getters and setters
+	Ogre::Vector3 GetDeltaVelocity();
+	float GetMass();
+
+	ENTITY_BODY_TYPE GetBodyType();
+	bool IsDynamic();
+	bool IsGravitational();
+
 protected:
-	Ogre::Vector3 acceleration;
 	Ogre::Vector3 appliedForce;
 	float mass;
+	Ogre::Vector3 previousVelocity;
+	Ogre::Vector3 velocity;
 
 	// For cheating the laws of physics
+	ENTITY_BODY_TYPE bodyType;
 	bool dynamic;
 	bool gravitational;
 

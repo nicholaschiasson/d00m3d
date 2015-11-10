@@ -372,6 +372,7 @@ namespace ogre_application
 			OgreApplication *app = static_cast<OgreApplication *>(context);
 			app->ogre_root_->shutdown();
 			app->ogre_window_->destroy();
+			app->world.JudgementDay();
 		}
 	}
 }

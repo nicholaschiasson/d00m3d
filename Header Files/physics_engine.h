@@ -17,7 +17,8 @@ public:
 	void AddPhysicsEntity(PhysicsEntity *physicsEntity);
 
 private:
-	std::vector<PhysicsEntity *> physicsEntities; 
+	float gravitationalConstant;
+	std::vector<PhysicsEntity *> physicsEntities;
 
 };
 

@@ -10,19 +10,15 @@ Asteroid::~Asteroid()
 {
 }
 
-void Asteroid::Initialize(Ogre::SceneManager* sceneManager, Ogre::SceneNode *worldNode){
-
-
-}
-
-void Asteroid::Initialize(Ogre::SceneManager *sceneManager, std::string object_name)
+void Asteroid::Initialize(Ogre::SceneManager* sceneManager, Ogre::SceneNode *parentNode, PhysicsEngine &physicsEngine)
 {
-	std::cout << "BEGINNING OF FILE" << std::endl;
+	PhysicsEntity::Initialize(sceneManager, parentNode, physicsEngine);
+
 	Ogre::Entity *asteroidEntity = sceneManager->createEntity("Icosahedron");
-	Ogre::SceneNode *rootSceneNode = sceneManager->getRootSceneNode();
 	asteroidEntity->setMaterialName("AsteroidMaterial");
-	sceneNode = rootSceneNode->createChildSceneNode(object_name);
-	name = object_name;
+	Ogre::String s = "Asteroid" + Ogre::StringConverter::toString(entityCount);
+	Ogre::SceneNode *asteroidNode = sceneNode->createChildSceneNode("Asteroid" + Ogre::StringConverter::toString(entityCount));
+	name = asteroidNode->getName();
 	sceneNode->attachObject(asteroidEntity);
 }
 
