@@ -17,10 +17,10 @@ public:
 	};
 
 	ITEM_TYPE getType();
-	void update();
+	virtual void Update(const Ogre::FrameEvent &fe);
 
-	virtual void Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, Ogre::Vector3 location, ITEM_TYPE type);
-	virtual void Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode);
+	virtual void Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, Ogre::Vector3 location, ITEM_TYPE type, unsigned int parentID = -1);
+	virtual void Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &PhysicsEngine, unsigned int parentID = -1);
 
 	int getValue() const;
 

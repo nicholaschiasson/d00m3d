@@ -7,9 +7,6 @@ unsigned int Entity::entityCount = 0;
 Entity::Entity()
 {
 	sceneNode = 0;
-	alive = true;
-	health = 100.0f;
-	durability = 1.0f;
 }
 
 Entity::~Entity()
@@ -21,6 +18,9 @@ void Entity::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* paren
 	objectID = entityCount;
 	parentObjectID = parentID;
 	sceneNode = parentNode->createChildSceneNode("Entity" + Ogre::StringConverter::toString(entityCount++));
+	alive = true;
+	health = 100.0f;
+	durability = 1.0f;
 }
 
 void Entity::Update(const Ogre::FrameEvent &fe)

@@ -37,10 +37,10 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 
 //	sceneManager->getRootSceneNode()->createChildSceneNode("shelly")->attachObject(sceneManager->createEntity("Cube"));
 	
-	Item myItem;
-	myItem.Initialize(sceneManager, worldSceneNode);
+	myItem.Initialize(sceneManager, worldSceneNode, physicsEngine);
+	myItem.translate(0.0f, 0.0f, 3.0f);
 
-	setupBlackHole();
+	//setupBlackHole();
 	setupAsteroids();
 }
 
@@ -103,6 +103,7 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 		//TODO update stuff
 		physicsEngine.Update(fe);
 		player.Update(fe);
+		myItem.Update(fe);
 		for (int i = 0; i < num_asteroids_; i++)
 		{
 			asteroid_[i].Update(fe);

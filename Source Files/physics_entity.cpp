@@ -4,15 +4,6 @@
 
 PhysicsEntity::PhysicsEntity()
 {
-	appliedForce = 0.0f;
-	bodyType = ENTITY_BODY_SPHERE;
-	dynamic = true;
-	gravitational = false;
-	mass = 1.0f;
-	restitution = 0.0f;
-	previousVelocity = 0.0f;
-	velocity = 0.0f;
-	radius = 0.5f;
 }
 
 PhysicsEntity::~PhysicsEntity()
@@ -23,8 +14,14 @@ void PhysicsEntity::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode
 {
 	Entity::Initialize(sceneManager, parentNode, parentID);
 	physicsEngine.AddPhysicsEntity(this);
-	Ogre::Vector3 scale = sceneNode->getScale();
-	radius = max(scale.x, max(scale.y, scale.z)) / 2.25f;
+	appliedForce = 0.0f;
+	bodyType = ENTITY_BODY_SPHERE;
+	dynamic = true;
+	gravitational = false;
+	mass = 1.0f;
+	restitution = 0.0f;
+	previousVelocity = 0.0f;
+	velocity = 0.0f;
 }
 
 void PhysicsEntity::Update(const Ogre::FrameEvent &fe)
@@ -106,5 +103,6 @@ bool PhysicsEntity::IsGravitational()
 
 float PhysicsEntity::GetRadius()
 {
-	return radius;
+	Ogre::Vector3 scale = sceneNode->getScale();
+	return max(scale.x, max(scale.y, scale.z)) / 2.25f;
 }

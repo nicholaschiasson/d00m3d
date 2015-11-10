@@ -33,15 +33,18 @@ void PhysicsEngine::Update(const Ogre::FrameEvent &fe)
 	{
 		for (std::vector<PhysicsEntity *>::iterator gr = gravitationalEntities.begin(); gr != gravitationalEntities.end(); ++gr)
 		{
-			Ogre::Vector3 distance = (*gr)->getPosition() - (*it)->getPosition();
-			if (*it != *gr && distance.length() != 0.0f)
+			if (*it != *gr)
 			{
-				Ogre::Vector3 force = distance.normalisedCopy() *
-					gravitationalConstant * (((*it)->GetMass() * (*gr)->GetMass()) / distance.squaredLength());
-				(*it)->ApplyForce(force);
-				if ((*gr)->IsDynamic())
+				Ogre::Vector3 distance = (*gr)->getPosition() - (*it)->getPosition();
+				if (distance.length() != 0.0f)
 				{
-					(*gr)->ApplyForce(force);
+					Ogre::Vector3 force = distance.normalisedCopy() *
+						gravitationalConstant * (((*it)->GetMass() * (*gr)->GetMass()) / distance.squaredLength());
+					(*it)->ApplyForce(force);
+					if ((*gr)->IsDynamic())
+					{
+						(*gr)->ApplyForce(force);
+					}
 				}
 			}
 		}

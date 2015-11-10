@@ -53,9 +53,6 @@ protected:
 	bool dynamic;
 	bool gravitational;
 
-	// For collision
-	float radius;
-
 private:
 
 };
