@@ -20,6 +20,8 @@ private:
         Ogre::Quaternion lm; // Angular momentum (use as velocity)
 		Ogre::Vector3 drift; // Drift direction
 		std::string name;
+
+
 };
 
 #endif // ASTEROID_H

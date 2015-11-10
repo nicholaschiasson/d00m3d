@@ -20,6 +20,9 @@ void Asteroid::Initialize(Ogre::SceneManager* sceneManager, Ogre::SceneNode *par
 	Ogre::SceneNode *asteroidNode = sceneNode->createChildSceneNode("Asteroid" + Ogre::StringConverter::toString(entityCount));
 	name = asteroidNode->getName();
 	sceneNode->attachObject(asteroidEntity);
+
+
+
 }
 
 Ogre::SceneNode* Asteroid::getAsteroidSceneNode(){

@@ -2,7 +2,6 @@
 
 #include "world.h"
 
-
 World::World(): worldSceneNode(NULL), camera(NULL), sceneManager(NULL)
 {
 	//lattahdah lattahdah
@@ -83,7 +82,10 @@ void World::setupAsteroids()
 		asteroid_[i].translate((float)i - 5.0f, 0.0f, (float)-(i * 2));
 
 	} 
+
+	
 }
+
 
 
 void World::createWorld()
