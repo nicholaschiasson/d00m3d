@@ -18,8 +18,6 @@ public:
 	virtual unsigned int GetObjectID();
 	virtual unsigned int GetParentID();
 
-	virtual void explode();
-
 	// SceneNode functionality
 	virtual void addChild(Ogre::Node *child);
 	virtual void pitch(const Ogre::Radian &angle, Ogre::Node::TransformSpace relativeTo = Ogre::Node::TS_LOCAL);
@@ -39,7 +37,6 @@ public:
 	virtual Ogre::Vector3 Entity::getDerivedPosition() const;
 	virtual Ogre::Quaternion getOrientation() const;
 	virtual Ogre::Quaternion getDerivedOrientation() const;
-	virtual bool isAlive() const;
 
 protected:
 	static unsigned int entityCount;

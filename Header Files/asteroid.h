@@ -11,9 +11,15 @@ public:
 	virtual ~Asteroid();
 
     virtual void Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode *parentNode, PhysicsEngine &physicsEngine, unsigned int parentID = -1);
+
+	Ogre::SceneNode* getAsteroidSceneNode();
+	Ogre::Vector3 pos; // Position
 	
 private:
-
+        Ogre::Quaternion ori; // Orientation
+        Ogre::Quaternion lm; // Angular momentum (use as velocity)
+		Ogre::Vector3 drift; // Drift direction
+		std::string name;
 };
 
 #endif // ASTEROID_H

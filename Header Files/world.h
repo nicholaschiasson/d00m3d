@@ -86,8 +86,6 @@ private:
 
 	BlackHole blackHole;
 	Item myItem;
-	std::vector<Item> itemList; 
-	std::vector<Asteroid> asteroidList;
 	//setup the control schemes
 	void initControls(InputManager *inputManager);
 
@@ -109,7 +107,8 @@ private:
 
 	#define MAX_NUM_ASTEROIDS 50
 	int num_asteroids_;
-	 
+    Asteroid asteroid_[MAX_NUM_ASTEROIDS];
+	Ogre::SceneNode* cube_[MAX_NUM_ASTEROIDS];
 
 	static void playerFireLaser(void* context, const Ogre::FrameEvent& fe);
 
