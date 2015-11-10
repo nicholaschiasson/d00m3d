@@ -85,6 +85,7 @@ private:
 	PlayerSpacecraft player;
 
 	BlackHole blackHole;
+	Item myItem;
 	//setup the control schemes
 	void initControls(InputManager *inputManager);
 

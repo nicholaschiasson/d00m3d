@@ -7,26 +7,27 @@ Item::~Item()
 {
 }
 
-void Item::update()
+void Item::Update(const Ogre::FrameEvent &fe)
 {
+	PhysicsEntity::Update(fe);
 }
 
-void Item::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode)
+void Item::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, unsigned int parentID)
 {
-	Initialize(sceneManager, parentNode, Ogre::Vector3(0,0,0), FAKE);
+	Initialize(sceneManager, parentNode, physicsEngine, Ogre::Vector3(0,0,0), FAKE, parentID);
 }
 
-void Item::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, Ogre::Vector3 location, ITEM_TYPE type)
+void Item::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, Ogre::Vector3 location, ITEM_TYPE type, unsigned int parentID)
 {
+	PhysicsEntity::Initialize(sceneManager, parentNode, physicsEngine, parentID);
 	//setting our mass to 0
-	mass = 0.0;
-	sceneNode = parentNode->createChildSceneNode("item");
+	mass = 40.0f;
 
 	Ogre::Entity *itemEntity = sceneManager->createEntity("Cube");
 	itemEntity->setMaterialName("ItemMaterial");
 	sceneNode->attachObject(itemEntity);
-	sceneNode->scale(0.1f, 0.1f, 0.1f);
-	sceneNode->translate(location);
+	scale(0.1f, 0.1f, 0.1f);
+	translate(location);
 
 	myType = type;
 
