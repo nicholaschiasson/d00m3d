@@ -34,8 +34,11 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 	//Setting up the basic control scheme
 	initControls(inMan);
 	
-	myItem.Initialize(sceneManager, worldSceneNode, physicsEngine);
-	myItem.translate(0.0f, 0.0f, 3.0f);
+	itemList.push_back(Item());
+	itemList.back().Initialize(sceneManager, worldSceneNode, physicsEngine);
+	itemList.back().translate(0.0f, 0.0f, 3.0f);
+	//myItem.Initialize(sceneManager, worldSceneNode, physicsEngine);
+	//myItem.translate(0.0f, 0.0f, 3.0f);
 
 	setupAsteroids();
 }
@@ -78,9 +81,9 @@ void World::setupAsteroids()
 
         /* Create multiple entities of a mesh */
   	for (int i = 0; i < num_asteroids_; i++){
-
-		asteroid_[i].Initialize(sceneManager, worldSceneNode, physicsEngine);
-		asteroid_[i].translate((float)i - 5.0f, 0.0f, (float)-(i * 2));
+		asteroidList.push_back(Asteroid());
+		asteroidList.back().Initialize(sceneManager, worldSceneNode, physicsEngine);
+		asteroidList.back().translate((float)i - 5.0f, 0.0f, (float)-(i * 2));
 
 	} 
 }
@@ -99,9 +102,29 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 		physicsEngine.Update(fe);
 		player.Update(fe);
 		myItem.Update(fe);
-		for (int i = 0; i < num_asteroids_; i++)
+		for (std::vector<Asteroid>::iterator it = asteroidList.begin(); it != asteroidList.end(); ++it)
 		{
-			asteroid_[i].Update(fe);
+			it->Update(fe);
+
+			//checking if the asteroid is now dead, if he is dead then add an item in its place
+			if(!it->isAlive()){
+				it->explode();
+				//adding an item to the item list (At the end)
+				itemList.push_back(Item());
+				//initializing the item we just added at the end
+				itemList.back().Initialize(sceneManager, worldSceneNode, physicsEngine, it->getPosition(), Item::FUEL);
+			}
+		}
+
+		//iterating through the item list and updating the items.
+		for(std::vector<Item>::iterator it = itemList.begin(); it != itemList.end(); ++it)
+		{
+			it->Update(fe);
+
+			//needs to be the last thing we do at each iteration (so we dont work on something already erased.
+			if(!it->isAlive()){
+				itemList.erase(it);
+			}
 		}
 	}
 }

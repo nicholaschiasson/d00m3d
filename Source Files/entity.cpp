@@ -4,9 +4,8 @@
 
 unsigned int Entity::entityCount = 0;
 
-Entity::Entity()
+Entity::Entity(): sceneNode(NULL)
 {
-	sceneNode = 0;
 }
 
 Entity::~Entity()
@@ -47,6 +46,11 @@ void Entity::Damage(float damage)
 			health = max(0.0f, health - (damage / durability));
 		}
 	}
+}
+
+void Entity::explode()
+{
+	//TODO explosion particle effects things
 }
 
 unsigned int Entity::GetObjectID()
@@ -178,4 +182,9 @@ Ogre::Quaternion Entity::getOrientation() const
 Ogre::Quaternion Entity::getDerivedOrientation() const
 {
 	return sceneNode->_getDerivedOrientation();
+}
+
+bool Entity::isAlive() const
+{
+	return alive;
 }
