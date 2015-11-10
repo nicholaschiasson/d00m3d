@@ -37,13 +37,10 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 
 //	sceneManager->getRootSceneNode()->createChildSceneNode("shelly")->attachObject(sceneManager->createEntity("Cube"));
 	
-<<<<<<< HEAD
-=======
 	Item myItem;
 	myItem.Initialize(sceneManager, worldSceneNode);
 
 	setupBlackHole();
->>>>>>> refs/remotes/origin/master
 	setupAsteroids();
 }
 
