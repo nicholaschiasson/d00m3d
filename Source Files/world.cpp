@@ -24,23 +24,19 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 	worldSceneNode = sceneManager->getRootSceneNode()->createChildSceneNode("_worldSceneNode_");
 	camera = cam;
 	num_asteroids_ = MAX_NUM_ASTEROIDS;
+	setupBlackHole();
 
-	//creating the player entitty
+	//creating the player entity
 	player.Initialize(sceneManager, worldSceneNode, physicsEngine);
 	camera->attachTo(&player);
-	camera->setDistance(Ogre::Vector3(0,1,2));
+	player.translate(0.0f, 0.0f, 100.0f);
 	
 	//Setting up the basic control scheme
 	initControls(inMan);
-
-	// TEST CUBE IN THE CENTER OF THE WORLD
-
-//	sceneManager->getRootSceneNode()->createChildSceneNode("shelly")->attachObject(sceneManager->createEntity("Cube"));
 	
 	myItem.Initialize(sceneManager, worldSceneNode, physicsEngine);
 	myItem.translate(0.0f, 0.0f, 3.0f);
 
-	//setupBlackHole();
 	setupAsteroids();
 }
 
@@ -65,8 +61,7 @@ void World::initControls(InputManager *inputManager)
 }
 
 void World::setupBlackHole(){
-	blackHole.Initialize(sceneManager,worldSceneNode);
-	blackHole.getSceneNode()->setPosition(0.0,0.0,-15);
+	blackHole.Initialize(sceneManager, worldSceneNode, physicsEngine);
 }
 
 void World::setupAsteroids()

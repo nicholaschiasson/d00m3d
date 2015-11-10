@@ -36,6 +36,7 @@ public:
 	float GetRestitution();
 
 	ENTITY_BODY_TYPE GetBodyType();
+	bool IsAbsoluteGravitationalPull();
 	bool IsDynamic();
 	bool IsGravitational();
 
@@ -49,6 +50,7 @@ protected:
 	Ogre::Vector3 velocity;
 
 	// For cheating the laws of physics
+	bool absoluteGravitationalPull;
 	ENTITY_BODY_TYPE bodyType;
 	bool dynamic;
 	bool gravitational;

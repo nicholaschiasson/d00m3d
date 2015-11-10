@@ -14,6 +14,7 @@ void PhysicsEntity::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode
 {
 	Entity::Initialize(sceneManager, parentNode, parentID);
 	physicsEngine.AddPhysicsEntity(this);
+	absoluteGravitationalPull = false;
 	appliedForce = 0.0f;
 	bodyType = ENTITY_BODY_SPHERE;
 	dynamic = true;
@@ -89,6 +90,11 @@ float PhysicsEntity::GetRestitution()
 ENTITY_BODY_TYPE PhysicsEntity::GetBodyType()
 {
 	return bodyType;
+}
+
+bool PhysicsEntity::IsAbsoluteGravitationalPull()
+{
+	return absoluteGravitationalPull;
 }
 
 bool PhysicsEntity::IsDynamic()
