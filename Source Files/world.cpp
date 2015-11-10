@@ -64,7 +64,7 @@ void World::initControls(InputManager *inputManager)
 
 void World::setupBlackHole(){
 	blackHole.Initialize(sceneManager,worldSceneNode);
-	blackHole.getSceneNode()->setPosition(0.0,0.0,-15);
+	blackHole.getSceneNode()->setPosition(120,0.0,-120);
 }
 
 void World::setupAsteroids()
