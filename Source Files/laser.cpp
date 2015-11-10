@@ -19,9 +19,9 @@ int Laser::getCooldown() const
 	return cooldown;
 }
 
-void Laser::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine)
+void Laser::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, unsigned int parentID)
 {
-	PhysicsEntity::Initialize(sceneManager, parentNode, physicsEngine);
+	PhysicsEntity::Initialize(sceneManager, parentNode, physicsEngine, parentID);
 
 	//setting our mass to 0
 	dynamic = false;

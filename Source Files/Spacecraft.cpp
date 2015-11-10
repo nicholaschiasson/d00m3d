@@ -11,9 +11,9 @@ Spacecraft::~Spacecraft()
 {
 }
 
-void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* worldNode, PhysicsEngine &physicsEngine)
+void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, unsigned int parentID)
 {
-	PhysicsEntity::Initialize(sceneManager, worldNode, physicsEngine);
+	PhysicsEntity::Initialize(sceneManager, parentNode, physicsEngine, parentID);
 	mass = 5000.0f;
 
 	Ogre::Entity *spacecraftBodyEntity = sceneManager->createEntity("Cone");
@@ -23,7 +23,7 @@ void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* w
 	spacecraftBodyNode->scale(1.0f, 1.0f, 0.25f);
 	spacecraftBodyNode->pitch(Ogre::Radian(-Ogre::Math::HALF_PI));
 
-	laser.Initialize(sceneManager, sceneNode, physicsEngine);
+	laser.Initialize(sceneManager, sceneNode, physicsEngine, objectID);
 }
 
 void Spacecraft::Update(const Ogre::FrameEvent &fe)

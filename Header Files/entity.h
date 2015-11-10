@@ -10,10 +10,13 @@ public:
 	Entity();
 	virtual ~Entity() = 0;
 
-	virtual void Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode);
+	virtual void Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, unsigned int parentID = -1);
 	virtual void Update(const Ogre::FrameEvent &fe);
 
 	virtual void Damage(float damage);
+
+	virtual unsigned int GetObjectID();
+	virtual unsigned int GetParentID();
 
 	// SceneNode functionality
 	virtual void addChild(Ogre::Node *child);
@@ -42,6 +45,9 @@ protected:
 	bool alive;
 	float health;
 	float durability;
+
+	unsigned int objectID;
+	unsigned int parentObjectID;
 
 private:
 

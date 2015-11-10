@@ -52,9 +52,26 @@ void PhysicsEngine::Update(const Ogre::FrameEvent &fe)
 
 		for (std::vector<PhysicsEntity *>::reverse_iterator it = collidableEntities.rbegin(); it != collidableEntities.rend(); ++it)
 		{
-			
-		}
+			if (i != (*it) && i->GetObjectID() != (*it)->GetParentID() && i->GetParentID() != (*it)->GetObjectID())
+			{
+				if (i->getPosition().distance((*it)->getPosition()) <= (i->GetRadius() + (*it)->GetRadius()))
+				{
+					Ogre::Vector3 d = (*it)->getPosition() - i->getPosition();
+					Ogre::Vector3 relativeVelocity = d * (d.dotProduct(i->GetVelocity() + (*it)->GetVelocity()) / d.squaredLength());
+					
+					Ogre::Vector3 impulse1 = -((((*it)->GetRestitution() + 1.0f) * relativeVelocity) /
+						((1 / i->GetMass()) + (1 / (*it)->GetMass())));
+					Ogre::Vector3 impulse2 = (((i->GetRestitution() + 1.0f) * relativeVelocity) /
+						((1 / i->GetMass()) + (1 / (*it)->GetMass())));
 
+					(*it)->ApplyForce(impulse1);
+					i->ApplyForce(impulse2);
+
+					i->Collide(*it);
+					(*it)->Collide(i);
+				}
+			}
+		}
 		collidableEntities.pop_back();
 	}
 }

@@ -78,7 +78,7 @@ void World::setupAsteroids()
   	for (int i = 0; i < num_asteroids_; i++){
 
 		asteroid_[i].Initialize(sceneManager, worldSceneNode, physicsEngine);
-		asteroid_[i].getAsteroidSceneNode()->setPosition((float)i - 5.0f, 0.0f, (float)-i);
+		asteroid_[i].translate((float)i - 5.0f, 0.0f, (float)-(i * 2));
 
 	} 
 }

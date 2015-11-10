@@ -1,5 +1,7 @@
 #include "physics_entity.h"
 
+#include "defines.h"
+
 PhysicsEntity::PhysicsEntity()
 {
 	appliedForce = 0.0f;
@@ -7,18 +9,22 @@ PhysicsEntity::PhysicsEntity()
 	dynamic = true;
 	gravitational = false;
 	mass = 1.0f;
+	restitution = 0.0f;
 	previousVelocity = 0.0f;
 	velocity = 0.0f;
+	radius = 0.5f;
 }
 
 PhysicsEntity::~PhysicsEntity()
 {
 }
 
-void PhysicsEntity::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine)
+void PhysicsEntity::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, unsigned int parentID)
 {
-	Entity::Initialize(sceneManager, parentNode);
+	Entity::Initialize(sceneManager, parentNode, parentID);
 	physicsEngine.AddPhysicsEntity(this);
+	Ogre::Vector3 scale = sceneNode->getScale();
+	radius = max(scale.x, max(scale.y, scale.z)) / 2.25f;
 }
 
 void PhysicsEntity::Update(const Ogre::FrameEvent &fe)
@@ -51,14 +57,36 @@ void PhysicsEntity::ApplyForce(Ogre::Vector3 force)
 	}
 }
 
+void PhysicsEntity::Collide(PhysicsEntity *physicsEntity)
+{
+	// Should be overridden, probably pure virtual
+	// DO NOT CALL THE OTHER PHYSICS ENTITY'S COLLIDE FUNCTION
+	// That is for the caller of this function to do
+}
+
 Ogre::Vector3 PhysicsEntity::GetDeltaVelocity()
 {
 	return velocity - previousVelocity;
 }
 
+Ogre::Vector3 PhysicsEntity::GetPreviousVelocity()
+{
+	return previousVelocity;
+}
+
+Ogre::Vector3 PhysicsEntity::GetVelocity()
+{
+	return velocity;
+}
+
 float PhysicsEntity::GetMass()
 {
 	return mass;
+}
+
+float PhysicsEntity::GetRestitution()
+{
+	return restitution;
 }
 
 ENTITY_BODY_TYPE PhysicsEntity::GetBodyType()
@@ -74,4 +102,9 @@ bool PhysicsEntity::IsDynamic()
 bool PhysicsEntity::IsGravitational()
 {
 	return gravitational;
+}
+
+float PhysicsEntity::GetRadius()
+{
+	return radius;
 }

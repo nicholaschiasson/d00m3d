@@ -16,8 +16,10 @@ Entity::~Entity()
 {
 }
 
-void Entity::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode)
+void Entity::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, unsigned int parentID)
 {
+	objectID = entityCount;
+	parentObjectID = parentID;
 	sceneNode = parentNode->createChildSceneNode("Entity" + Ogre::StringConverter::toString(entityCount++));
 }
 
@@ -45,6 +47,16 @@ void Entity::Damage(float damage)
 			health = max(0.0f, health - (damage / durability));
 		}
 	}
+}
+
+unsigned int Entity::GetObjectID()
+{
+	return objectID;
+}
+
+unsigned int Entity::GetParentID()
+{
+	return parentObjectID;
 }
 
 void Entity::addChild(Ogre::Node *child)
