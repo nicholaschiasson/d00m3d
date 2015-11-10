@@ -11,6 +11,9 @@
 #include "physics_engine.h"
 #include "player_spacecraft.h"
 #include "asteroid.h"
+#include "black_hole.h"
+#include "item.h"
+
 
 class World
 {
@@ -80,10 +83,13 @@ private:
 	PhysicsEngine physicsEngine;
 
 	PlayerSpacecraft player;
+
+	BlackHole blackHole;
 	//setup the control schemes
 	void initControls(InputManager *inputManager);
 
 	void setupAsteroids();
+	void setupBlackHole();
 
 	// InputManager Callbacks
 	static void PlayerMoveForward(void *context, const Ogre::FrameEvent& fe);
@@ -100,7 +106,6 @@ private:
 
 	#define MAX_NUM_ASTEROIDS 50
 	int num_asteroids_;
-	//std::vector<Asteroid> asteroid_;
     Asteroid asteroid_[MAX_NUM_ASTEROIDS];
 	Ogre::SceneNode* cube_[MAX_NUM_ASTEROIDS];
 
