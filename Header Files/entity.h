@@ -14,7 +14,7 @@ public:
 	virtual void Update(const Ogre::FrameEvent &fe);
 
 	virtual void Damage(float damage);
-	virtual void expode();
+	virtual void explode();
 
 	virtual unsigned int GetObjectID();
 	virtual unsigned int GetParentID();
