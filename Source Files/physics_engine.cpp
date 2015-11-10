@@ -39,7 +39,8 @@ void PhysicsEngine::Update(const Ogre::FrameEvent &fe)
 				if (distance.length() != 0.0f)
 				{
 					Ogre::Vector3 force = distance.normalisedCopy() *
-						gravitationalConstant * (((*it)->GetMass() * (*gr)->GetMass()) / distance.squaredLength());
+						gravitationalConstant * (((*it)->GetMass() * (*gr)->GetMass()) /
+						((*gr)->IsAbsoluteGravitationalPull() ? ((*gr)->GetRadius() + (*it)->GetRadius()) : distance.squaredLength()));
 					(*it)->ApplyForce(force);
 					if ((*gr)->IsDynamic())
 					{

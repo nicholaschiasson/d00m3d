@@ -1,15 +1,16 @@
 #ifndef BLACK_HOLE_H
 #define BLACK_HOLE_H
 
-#include "entity.h"
+#include "physics_entity.h"
 #include "input_manager.h"
 
-class BlackHole : public Entity
+class BlackHole : public PhysicsEntity
 {
 public:
 	BlackHole();
 	virtual ~BlackHole();
-    virtual void Initialize(Ogre::SceneManager *sceneManager,Ogre::SceneNode *worldNode);
+    virtual void Initialize(Ogre::SceneManager *sceneManager,Ogre::SceneNode *parentNode, PhysicsEngine &physicsEngine, unsigned int parentID = -1);
+	
 	Ogre::SceneNode* getSceneNode();
 	float getSize();
 

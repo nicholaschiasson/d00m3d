@@ -10,11 +10,18 @@ BlackHole::~BlackHole()
 {
 }
 
-void BlackHole::Initialize(Ogre::SceneManager* sceneManager, Ogre::SceneNode *worldNode){
+void BlackHole::Initialize(Ogre::SceneManager* sceneManager, Ogre::SceneNode *parentNode, PhysicsEngine &physicsEngine, unsigned int parentID)
+{
+	PhysicsEntity::Initialize(sceneManager, parentNode, physicsEngine, parentID);
+	absoluteGravitationalPull = true;
+	bodyType = ENTITY_BODY_METAPHYSICAL;
+	dynamic = false;
+	gravitational = true;
+	mass = 10999999999.0f;
+
 	Ogre::Entity *bhEntity = sceneManager->createEntity("Sphere");
 	Ogre::SceneNode *rootSceneNode = sceneManager->getRootSceneNode();
 	bhEntity->setMaterialName("BlackHoleMaterial");
-	sceneNode = worldNode->createChildSceneNode("BlackHole");
 	sceneNode->attachObject(bhEntity);
 	size = 10.0f;
 	sceneNode->setScale(size,size,size);

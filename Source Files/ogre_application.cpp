@@ -26,7 +26,7 @@ namespace ogre_application
 	unsigned short viewport_z_order_g = 100;
 	const Ogre::ColourValue viewport_background_color_g((100.0f / 255.0f), (149.0f / 255.0f), (237.0f / 255.0f));
 	float camera_near_clip_distance_g = 0.01f;
-	float camera_far_clip_distance_g = 100.0f;
+	float camera_far_clip_distance_g = 1000.0f;
 	Ogre::Vector3 camera_position_g(0.0, 1.0, 2.0);
 	Ogre::Vector3 camera_look_at_g(0.0, 0.0, 0.0);
 	Ogre::Vector3 camera_up_g(0.0, 1.0, 0.0);
