@@ -1,5 +1,4 @@
 #include "asteroid.h"
-
 #include "OgreEntity.h"
 
 Asteroid::Asteroid()
