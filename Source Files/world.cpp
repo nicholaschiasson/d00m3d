@@ -19,6 +19,7 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 	{
 		throw std::runtime_error("Camera or InputManager not initialized!");
 	}
+	exists = true;
 	sceneManager = sceneMan;
 	worldSceneNode = sceneManager->getRootSceneNode()->createChildSceneNode("_worldSceneNode_");
 	camera = cam;
@@ -37,11 +38,6 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 //	sceneManager->getRootSceneNode()->createChildSceneNode("shelly")->attachObject(sceneManager->createEntity("Cube"));
 	
 	setupAsteroids();
-
-	Ogre::Entity* cubeEntity = sceneManager->createEntity("Cube");
-	cubeEntity->setMaterialName("ObjectMaterial");
-	worldSceneNode->createChildSceneNode("shelly")->attachObject(cubeEntity);
-
 }
 
 /*
@@ -79,11 +75,9 @@ void World::setupAsteroids()
     Ogre::SceneNode* root_scene_node = sceneManager->getRootSceneNode();
 
         /* Create multiple entities of a mesh */
-	Ogre::String entity_name, prefix("Asteroid");
   	for (int i = 0; i < num_asteroids_; i++){
 
-		entity_name = prefix + Ogre::StringConverter::toString(i);
-		asteroid_[i].Initialize(sceneManager,entity_name);
+		asteroid_[i].Initialize(sceneManager, worldSceneNode, physicsEngine);
 		asteroid_[i].getAsteroidSceneNode()->setPosition((float)i - 5.0f, 0.0f, (float)-i);
 
 	} 
@@ -97,9 +91,16 @@ void World::createWorld()
 
 void World::updateWorld(const Ogre::FrameEvent& fe)
 {
-	//TODO update stuff
-	physicsEngine.Update(fe);
-	player.Update(fe);
+	if (exists)
+	{
+		//TODO update stuff
+		physicsEngine.Update(fe);
+		player.Update(fe);
+		for (int i = 0; i < num_asteroids_; i++)
+		{
+			asteroid_[i].Update(fe);
+		}
+	}
 }
 
 /*
@@ -112,10 +113,7 @@ void World::PlayerMoveForward(void *context, const Ogre::FrameEvent& fe)
 	{
 		World *world = static_cast<World *>(context);
 		PlayerSpacecraft *player = &world->player;
-		Ogre::Quaternion playerOrientation = player->getOrientation();
-		Ogre::Vector3 playerDirection = playerOrientation * Ogre::Vector3::NEGATIVE_UNIT_Z;
-
-		player->translate(playerDirection * fe.timeSinceLastFrame);
+		player->ThrustersForward();
 	}
 }
 
@@ -125,10 +123,7 @@ void World::PlayerMoveLeft(void *context, const Ogre::FrameEvent& fe)
 	{
 		World *world = static_cast<World*>(context);
 		PlayerSpacecraft *player = &world->player;
-		Ogre::Quaternion playerOrientation = player->getOrientation();
-		Ogre::Vector3 playerRight = playerOrientation * Ogre::Vector3::UNIT_X;
-		
-		player->translate(-playerRight * fe.timeSinceLastFrame);
+		player->ThrustersLeft();
 	}
 }
 
@@ -138,10 +133,7 @@ void World::PlayerMoveBackward(void *context, const Ogre::FrameEvent& fe)
 	{
 		World *world = static_cast<World*>(context);
 		PlayerSpacecraft *player = &world->player;
-		Ogre::Quaternion playerOrientation = player->getOrientation();
-		Ogre::Vector3 playerDirection = playerOrientation * Ogre::Vector3::NEGATIVE_UNIT_Z;
-
-		player->translate(-playerDirection * fe.timeSinceLastFrame);
+		player->ThrustersBackward();
 	}
 }
 
@@ -151,10 +143,7 @@ void World::PlayerMoveRight(void *context, const Ogre::FrameEvent& fe)
 	{
 		World *world = static_cast<World*>(context);
 		PlayerSpacecraft *player = &world->player;
-		Ogre::Quaternion playerOrientation = player->getOrientation();
-		Ogre::Vector3 playerRight = playerOrientation * Ogre::Vector3::UNIT_X;
-		
-		player->translate(playerRight * fe.timeSinceLastFrame);
+		player->ThrustersRight();
 	}
 }
 
@@ -164,10 +153,7 @@ void World::PlayerMoveUp(void *context, const Ogre::FrameEvent& fe)
 	{
 		World *world = static_cast<World*>(context);
 		PlayerSpacecraft *player = &world->player;
-		Ogre::Quaternion playerOrientation = player->getOrientation();
-		Ogre::Vector3 playerUp = playerOrientation * Ogre::Vector3::UNIT_Y;
-		
-		player->translate(playerUp * fe.timeSinceLastFrame);
+		player->ThrustersUpward();
 	}
 }
 
@@ -177,10 +163,7 @@ void World::PlayerMoveDown(void *context, const Ogre::FrameEvent& fe)
 	{
 		World *world = static_cast<World*>(context);
 		PlayerSpacecraft *player = &world->player;
-		Ogre::Quaternion playerOrientation = player->getOrientation();
-		Ogre::Vector3 playerUp = playerOrientation * Ogre::Vector3::UNIT_Y;
-		
-		player->translate(-playerUp * fe.timeSinceLastFrame);
+		player->ThrustersDownward();
 	}
 }
 
@@ -237,4 +220,9 @@ void World::playerFireLaser(void* context, const Ogre::FrameEvent& fe)
 
 		player->fireLaser();
 	}
+}
+
+void World::JudgementDay()
+{
+	exists = false;
 }
