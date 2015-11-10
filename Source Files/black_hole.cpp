@@ -17,7 +17,7 @@ void BlackHole::Initialize(Ogre::SceneManager* sceneManager, Ogre::SceneNode *wo
 	sceneNode = worldNode->createChildSceneNode("BlackHole");
 	sceneNode->attachObject(bhEntity);
 
-	size = 100.0f;
+	size = 10.0f;
 	sceneNode->setScale(size,size,size);
 }
 
