@@ -9,8 +9,9 @@ class Asteroid : public PhysicsEntity
 public:
 	Asteroid();
 	virtual ~Asteroid();
-    virtual void Initialize(Ogre::SceneManager *sceneManager,Ogre::SceneNode *worldNode);
-	virtual void Initialize(Ogre::SceneManager *sceneManager,Ogre::SceneNode *worldNode, std::string);
+
+    virtual void Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode *parentNode, PhysicsEngine &physicsEngine, unsigned int parentID = -1);
+
 	Ogre::SceneNode* getAsteroidSceneNode();
 	Ogre::Vector3 pos; // Position
 	

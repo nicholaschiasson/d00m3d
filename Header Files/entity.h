@@ -10,10 +10,13 @@ public:
 	Entity();
 	virtual ~Entity() = 0;
 
-	virtual void Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode) = 0;
-	virtual void update();
+	virtual void Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, unsigned int parentID = -1);
+	virtual void Update(const Ogre::FrameEvent &fe);
 
 	virtual void Damage(float damage);
+
+	virtual unsigned int GetObjectID();
+	virtual unsigned int GetParentID();
 
 	// SceneNode functionality
 	virtual void addChild(Ogre::Node *child);
@@ -29,16 +32,22 @@ public:
 	virtual void translate(const Ogre::Matrix3 &axes, const Ogre::Vector3 &move, Ogre::Node::TransformSpace relativeTo = Ogre::Node::TS_PARENT);
 	virtual void yaw(const Ogre::Radian &angle, Ogre::Node::TransformSpace relativeTo = Ogre::Node::TS_LOCAL);
 	
+	virtual const Ogre::String & getName() const;
 	virtual Ogre::Vector3 getPosition() const;
 	virtual Ogre::Vector3 Entity::getDerivedPosition() const;
 	virtual Ogre::Quaternion getOrientation() const;
 	virtual Ogre::Quaternion getDerivedOrientation() const;
 
 protected:
+	static unsigned int entityCount;
+
 	Ogre::SceneNode *sceneNode;
 	bool alive;
 	float health;
 	float durability;
+
+	unsigned int objectID;
+	unsigned int parentObjectID;
 
 private:
 

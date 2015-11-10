@@ -2,8 +2,8 @@
 set(HDR_DIR "${PROJECT_SOURCE_DIR}/Header Files")
 
 set(HDRS
-        "${HDR_DIR}/asteroid.h"
-        "${HDR_DIR}/black_hole.h"
+    "${HDR_DIR}/asteroid.h"
+    "${HDR_DIR}/black_hole.h"
 	"${HDR_DIR}/defines.h"
 	"${HDR_DIR}/enemy_spacecraft.h"
 	"${HDR_DIR}/entity.h"
@@ -23,13 +23,12 @@ set(HDRS
 
 set(SRCS
     enemy_spacecraft.cpp
-        asteroid.cpp
-        black_hole.cpp
-	asteroid.cpp
+    asteroid.cpp
+    black_hole.cpp
 	entity.cpp
 	main.cpp
-        black_hole.material
-	asteroid.material
+    black_hole.material
+    asteroid.material
 	item.material
 	player_spacecraft.material
 	red_laser.material

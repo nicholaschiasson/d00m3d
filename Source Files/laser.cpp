@@ -19,18 +19,21 @@ int Laser::getCooldown() const
 	return cooldown;
 }
 
-void Laser::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode)
+void Laser::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, unsigned int parentID)
 {
+	PhysicsEntity::Initialize(sceneManager, parentNode, physicsEngine, parentID);
+
 	//setting our mass to 0
+	dynamic = false;
 	mass = 0.0;
-	sceneNode = parentNode->createChildSceneNode("Laser");
 
 	Ogre::Entity *laserEntity = sceneManager->createEntity("Cylinder");
 	laserEntity->setMaterialName("LaserMaterial");
-	sceneNode->attachObject(laserEntity);
-	sceneNode->scale(0.05f, 100.0f, 0.05f);
-	sceneNode->pitch(Ogre::Radian(-Ogre::Math::HALF_PI));
-	sceneNode->translate(0,50.5,-.5, Ogre::Node::TS_LOCAL);
+	Ogre::SceneNode *laserSceneNode = sceneNode->createChildSceneNode("Laser" + Ogre::StringConverter::toString(entityCount));
+	laserSceneNode->attachObject(laserEntity);
+	laserSceneNode->scale(0.05f, 100.0f, 0.05f);
+	laserSceneNode->pitch(Ogre::Radian(-Ogre::Math::HALF_PI));
+	laserSceneNode->translate(0,50.5,-.5, Ogre::Node::TS_LOCAL);
 
 	sceneNode->setVisible(false);
 }
@@ -55,9 +58,9 @@ void Laser::fire()
 	}
 }
 
-void Laser::update()
+void Laser::Update(const Ogre::FrameEvent &fe)
 {
-	PhysicsEntity::update();
+	PhysicsEntity::Update(fe);
 	if(alive){
 		if(timer == 0){
 			switch(myState){

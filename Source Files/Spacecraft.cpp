@@ -4,24 +4,34 @@
 
 Spacecraft::Spacecraft()
 {
+	thrusterForce = 500.0f;
 }
 
 Spacecraft::~Spacecraft()
 {
 }
 
-void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* worldNode)
+void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, unsigned int parentID)
 {
-	sceneNode = worldNode->createChildSceneNode("Spacecraft");
+	PhysicsEntity::Initialize(sceneManager, parentNode, physicsEngine, parentID);
+	mass = 5000.0f;
 
 	Ogre::Entity *spacecraftBodyEntity = sceneManager->createEntity("Cone");
 	spacecraftBodyEntity->setMaterialName("PlayerSpacecraftMaterial");
-	Ogre::SceneNode *spacecraftBodyNode = sceneNode->createChildSceneNode("SpacecraftBody");
+	Ogre::SceneNode *spacecraftBodyNode = sceneNode->createChildSceneNode("SpacecraftBody" + Ogre::StringConverter::toString(entityCount));
 	spacecraftBodyNode->attachObject(spacecraftBodyEntity);
 	spacecraftBodyNode->scale(1.0f, 1.0f, 0.25f);
 	spacecraftBodyNode->pitch(Ogre::Radian(-Ogre::Math::HALF_PI));
 
-	laser.Initialize(sceneManager, sceneNode);
+	laser.Initialize(sceneManager, sceneNode, physicsEngine, objectID);
+}
+
+void Spacecraft::Update(const Ogre::FrameEvent &fe)
+{
+	PhysicsEntity::Update(fe);
+	if(alive){
+		laser.Update(fe);
+	}
 }
 
 void Spacecraft::fireLaser()
@@ -31,10 +41,50 @@ void Spacecraft::fireLaser()
 	}
 }
 
-void Spacecraft::update()
+void Spacecraft::ThrustersForward()
 {
-	PhysicsEntity::update();
-	if(alive){
-		laser.update();
-	}
+	Ogre::Quaternion playerOrientation = sceneNode->getOrientation();
+	Ogre::Vector3 playerDirection = playerOrientation * Ogre::Vector3::NEGATIVE_UNIT_Z;
+
+	ApplyForce(playerDirection.normalisedCopy() * thrusterForce);
+}
+
+void Spacecraft::ThrustersLeft()
+{
+	Ogre::Quaternion playerOrientation = sceneNode->getOrientation();
+	Ogre::Vector3 playerRight = playerOrientation * Ogre::Vector3::UNIT_X;
+		
+	ApplyForce(-playerRight.normalisedCopy() * thrusterForce);
+}
+
+void Spacecraft::ThrustersBackward()
+{
+	Ogre::Quaternion playerOrientation = sceneNode->getOrientation();
+	Ogre::Vector3 playerDirection = playerOrientation * Ogre::Vector3::NEGATIVE_UNIT_Z;
+
+	ApplyForce(-playerDirection.normalisedCopy() * thrusterForce);
+}
+
+void Spacecraft::ThrustersRight()
+{
+	Ogre::Quaternion playerOrientation = sceneNode->getOrientation();
+	Ogre::Vector3 playerRight = playerOrientation * Ogre::Vector3::UNIT_X;
+		
+	ApplyForce(playerRight.normalisedCopy() * thrusterForce);
+}
+
+void Spacecraft::ThrustersUpward()
+{
+	Ogre::Quaternion playerOrientation = sceneNode->getOrientation();
+	Ogre::Vector3 playerUp = playerOrientation * Ogre::Vector3::UNIT_Y;
+		
+	ApplyForce(playerUp.normalisedCopy() * thrusterForce);
+}
+
+void Spacecraft::ThrustersDownward()
+{
+	Ogre::Quaternion playerOrientation = sceneNode->getOrientation();
+	Ogre::Vector3 playerUp = playerOrientation * Ogre::Vector3::UNIT_Y;
+		
+	ApplyForce(-playerUp.normalisedCopy() * thrusterForce);
 }

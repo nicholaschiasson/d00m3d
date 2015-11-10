@@ -565,8 +565,9 @@ void MeshFactory::CreateIcosahedron(Ogre::String object_name)
         object->begin(material_name, Ogre::RenderOperation::OT_TRIANGLE_LIST);
 
 		/* Vertices of an icosahedron */
-		float X = 0.525731112119133606f;
-		float Z = 0.850650808352039932f;
+		Ogre::Vector2 v = Ogre::Vector2(0.525731112119133606f, 0.850650808352039932f).normalisedCopy();
+		float X = v.x / 2.0f;
+		float Z = v.y / 2.0f;
         float vdata[12][3] = {
 	        {-X, 0.0f, Z}, {X, 0.0f, Z}, {-X, 0.0f, -Z}, {X, 0.0f, -Z},
 	        {0.0f, Z, X}, {0.0f, Z, -X}, {0.0f, -Z, X}, {0.0f, -Z, -X},

@@ -2,6 +2,8 @@
 
 #include "defines.h"
 
+unsigned int Entity::entityCount = 0;
+
 Entity::Entity()
 {
 	sceneNode = 0;
@@ -14,7 +16,14 @@ Entity::~Entity()
 {
 }
 
-void Entity::update()
+void Entity::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, unsigned int parentID)
+{
+	objectID = entityCount;
+	parentObjectID = parentID;
+	sceneNode = parentNode->createChildSceneNode("Entity" + Ogre::StringConverter::toString(entityCount++));
+}
+
+void Entity::Update(const Ogre::FrameEvent &fe)
 {
 	if (alive)
 	{
@@ -38,6 +47,16 @@ void Entity::Damage(float damage)
 			health = max(0.0f, health - (damage / durability));
 		}
 	}
+}
+
+unsigned int Entity::GetObjectID()
+{
+	return objectID;
+}
+
+unsigned int Entity::GetParentID()
+{
+	return parentObjectID;
 }
 
 void Entity::addChild(Ogre::Node *child)
@@ -134,6 +153,11 @@ void Entity::yaw(const Ogre::Radian &angle, Ogre::Node::TransformSpace relativeT
 	{
 		sceneNode->yaw(angle, relativeTo);
 	}
+}
+
+const Ogre::String & Entity::getName() const
+{
+	return sceneNode->getName();
 }
 
 Ogre::Vector3 Entity::getPosition() const
