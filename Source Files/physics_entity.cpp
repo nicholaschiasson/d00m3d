@@ -27,6 +27,7 @@ void PhysicsEntity::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode
 
 void PhysicsEntity::Update(const Ogre::FrameEvent &fe)
 {
+	Entity::Update(fe);
 	if (dynamic)
 	{
 		if (mass != 0.0f)

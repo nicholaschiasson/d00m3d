@@ -58,6 +58,7 @@ void World::initControls(InputManager *inputManager)
 	inputManager->RegisterCallback(this, PlayerPitchDown, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_DOWN);
 	inputManager->RegisterCallback(this, PlayerYawRight, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_RIGHT);
 	inputManager->RegisterCallback(this, playerFireLaser, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_SPACE);
+	inputManager->RegisterCallback(this, boom, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_B);
 	
 }
 
@@ -86,7 +87,7 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 		//TODO update stuff
 		physicsEngine.Update(fe);
 		player.Update(fe);
-		for(std::vector<Item*>::iterator it = itemList.begin(); it != itemList.end(); ++it){
+		for(std::vector<Asteroid*>::iterator it = asteroidList.begin(); it != asteroidList.end(); ++it){
 			(*it)->Update(fe);
 
 			if(!(*it)->isAlive()){
@@ -94,7 +95,7 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 				itemList.push_back(new Item(sceneManager, worldSceneNode, physicsEngine, (*it)->getPosition(), Item::FUEL));
 			}
 		}
-		for(std::vector<Asteroid*>::iterator it = asteroidList.begin(); it != asteroidList.end(); ++it){
+		for(std::vector<Item*>::iterator it = itemList.begin(); it != itemList.end(); ++it){
 			(*it)->Update(fe);
 		}
 	}
@@ -222,4 +223,16 @@ void World::playerFireLaser(void* context, const Ogre::FrameEvent& fe)
 void World::JudgementDay()
 {
 	exists = false;
+}
+
+
+void World::boom(void* context, const Ogre::FrameEvent& fe)
+{
+	if(context)
+	{
+		World *world = static_cast<World*>(context);
+		for(std::vector<Asteroid*>::iterator it = world->asteroidList.begin(); it != world->asteroidList.end(); ++it){
+			(*it)->Damage(100);
+		}
+	}
 }

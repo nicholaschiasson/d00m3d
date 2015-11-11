@@ -105,6 +105,7 @@ private:
 	static void PlayerPitchDown(void *context, const Ogre::FrameEvent& fe);
 	static void PlayerYawRight(void *context, const Ogre::FrameEvent& fe);
 	static void playerFireLaser(void* context, const Ogre::FrameEvent& fe);
+	static void boom(void* context, const Ogre::FrameEvent& fe);
 	
 	const int numAsteroids;
 
