@@ -88,6 +88,11 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 		player.Update(fe);
 		for(std::vector<Item*>::iterator it = itemList.begin(); it != itemList.end(); ++it){
 			(*it)->Update(fe);
+
+			if(!(*it)->isAlive()){
+				//(*it)->explode(); //TODO PARTCILE STUFF
+				itemList.push_back(new Item(sceneManager, worldSceneNode, physicsEngine, (*it)->getPosition(), Item::FUEL));
+			}
 		}
 		for(std::vector<Asteroid*>::iterator it = asteroidList.begin(); it != asteroidList.end(); ++it){
 			(*it)->Update(fe);

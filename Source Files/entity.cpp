@@ -33,6 +33,7 @@ void Entity::Update(const Ogre::FrameEvent &fe)
 		if (health <= 0.0f)
 		{
 			alive = false;
+			sceneNode->setVisible(false);
 		}
 	}
 }
