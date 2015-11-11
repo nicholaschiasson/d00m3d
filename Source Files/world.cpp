@@ -2,14 +2,19 @@
 
 #include "world.h"
 
-World::World(): worldSceneNode(NULL), camera(NULL), sceneManager(NULL)
+World::World(): worldSceneNode(NULL), camera(NULL), sceneManager(NULL), numAsteroids(50)
 {
 	//lattahdah lattahdah
 }
 
 World::~World()
 {
-	//TODO memory cleanup
+	for(std::vector<Item*>::iterator it = itemList.begin(); it != itemList.end(); ++it){
+		delete (*it);
+	}
+	for(std::vector<Asteroid*>::iterator it = asteroidList.begin(); it != asteroidList.end(); ++it){
+		delete (*it);
+	}
 }
 
 void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* inMan)
@@ -23,7 +28,6 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 	sceneManager->setSkyDome(true, "SkyboxMaterial", 5, 8);
 	worldSceneNode = sceneManager->getRootSceneNode()->createChildSceneNode("_worldSceneNode_");
 	camera = cam;
-	num_asteroids_ = MAX_NUM_ASTEROIDS;
 
 	//setupBlackHole();
 
@@ -34,10 +38,6 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 	
 	//Setting up the basic control scheme
 	initControls(inMan);
-	
-	myItem.Initialize(sceneManager, worldSceneNode, physicsEngine);
-	myItem.translate(0.0f, 0.0f, 3.0f);
-
 	setupAsteroids();
 }
 
@@ -67,22 +67,10 @@ void World::setupBlackHole(){
 
 void World::setupAsteroids()
 {
-	//Use to set position/orientation... of asteroids? just what the prof had.
-    for (int i = 0; i < num_asteroids_; i++){
-		
-      //asteroid_[i].pos = Ogre::Vector3(-300 + 600 * (rand() % 1000) / 1000.0f, -300 + 600 * (rand() % 1000) / 1000.0f, 600 * (rand() % 1000) / 1000.0f);
-      //asteroid_[i].pos = Ogre::Vector3(0 + i,0,0);
-	  //asteroid_[i].ori = Ogre::Quaternion(1.0f, 3.14*(rand() % 1000) / 1000.0f, 3.14*(rand() % 1000) / 1000.0f, 3.14*(rand() % 1000) / 1000.0f);
-	  //asteroid_[i].lm = Ogre::Quaternion(1.0f, 0.005*3.14*(rand() % 1000) / 1000.0f, 0.005*3.14*(rand() % 1000) / 1000.0f, 0.005*3.14*(rand() % 1000) / 1000.0f);
-	  //asteroid_[i].drift = Ogre::Vector3(((double) rand() / RAND_MAX)*0.2, ((double) rand() / RAND_MAX)*0.2, ((double) rand() / RAND_MAX)*0.2);
-    }
-
-        /* Create multiple entities of a mesh */
-  	for (int i = 0; i < num_asteroids_; i++){
-
-		asteroid_[i].Initialize(sceneManager, worldSceneNode, physicsEngine);
-		asteroid_[i].translate((float)i - 5.0f, 0.0f, (float)-(i * 3.5));
-
+    /* Create multiple entities of a mesh */
+  	for (int i = 0; i < numAsteroids; i++){
+		asteroidList.push_back(new Asteroid(sceneManager, worldSceneNode, physicsEngine));
+		asteroidList.back()->translate((float)i - 5.0f, 0.0f, (float)-(i * 3.5));
 	}
 }
 
@@ -98,10 +86,11 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 		//TODO update stuff
 		physicsEngine.Update(fe);
 		player.Update(fe);
-		myItem.Update(fe);
-		for (int i = 0; i < num_asteroids_; i++)
-		{
-			asteroid_[i].Update(fe);
+		for(std::vector<Item*>::iterator it = itemList.begin(); it != itemList.end(); ++it){
+			(*it)->Update(fe);
+		}
+		for(std::vector<Asteroid*>::iterator it = asteroidList.begin(); it != asteroidList.end(); ++it){
+			(*it)->Update(fe);
 		}
 	}
 }

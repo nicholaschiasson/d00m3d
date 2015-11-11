@@ -5,6 +5,11 @@ Asteroid::Asteroid()
 {
 }
 
+Asteroid::Asteroid(Ogre::SceneManager *sceneManager, Ogre::SceneNode *parentNode, PhysicsEngine &physicsEngine, unsigned int parentID)
+{
+	Initialize(sceneManager, parentNode, physicsEngine, parentID);
+}
+
 Asteroid::~Asteroid()
 {
 }

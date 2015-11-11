@@ -4,9 +4,8 @@
 
 unsigned int Entity::entityCount = 0;
 
-Entity::Entity()
+Entity::Entity(): sceneNode(NULL)
 {
-	sceneNode = 0;
 }
 
 Entity::~Entity()
@@ -17,7 +16,11 @@ void Entity::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* paren
 {
 	objectID = entityCount;
 	parentObjectID = parentID;
-	sceneNode = parentNode->createChildSceneNode("Entity" + Ogre::StringConverter::toString(entityCount++));
+	
+	//only if we have not already initialized
+	if(sceneNode == NULL){
+		sceneNode = parentNode->createChildSceneNode("Entity" + Ogre::StringConverter::toString(entityCount++));
+	}
 	alive = true;
 	health = 100.0f;
 	durability = 1.0f;
