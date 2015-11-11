@@ -16,8 +16,8 @@ public:
 
 	void AddPhysicsEntity(PhysicsEntity *physicsEntity);
 
-	void PerformSphereSphereCollisionTest(PhysicsEntity *sphere1, PhysicsEntity *sphere2);
-	void PerformRaySphereCollisionTest(PhysicsEntity *ray, PhysicsEntity *sphere);
+	bool PerformSphereSphereCollisionTest(PhysicsEntity *sphere1, PhysicsEntity *sphere2);
+	bool PerformRaySphereCollisionTest(PhysicsEntity *ray, PhysicsEntity *sphere);
 
 private:
 	float gravitationalConstant;

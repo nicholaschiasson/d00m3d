@@ -87,7 +87,7 @@ void PhysicsEngine::AddPhysicsEntity(PhysicsEntity *physicsEntity)
 	physicsEntities.push_back(physicsEntity);
 }
 
-void PhysicsEngine::PerformSphereSphereCollisionTest(PhysicsEntity *sphere1, PhysicsEntity *sphere2)
+bool PhysicsEngine::PerformSphereSphereCollisionTest(PhysicsEntity *sphere1, PhysicsEntity *sphere2)
 {
 	float overlapMagnitude = (sphere1->GetRadius() + sphere2->GetRadius()) - sphere1->getPosition().distance(sphere2->getPosition());
 	if (overlapMagnitude >= 0.0f)
@@ -111,10 +111,41 @@ void PhysicsEngine::PerformSphereSphereCollisionTest(PhysicsEntity *sphere1, Phy
 
 		sphere1->Collide(sphere2);
 		sphere2->Collide(sphere1);
+
+		return true;
 	}
+
+	return false;
 }
 
-void PhysicsEngine::PerformRaySphereCollisionTest(PhysicsEntity *ray, PhysicsEntity *sphere)
+bool PhysicsEngine::PerformRaySphereCollisionTest(PhysicsEntity *ray, PhysicsEntity *sphere)
 {
 	Ogre::Vector3 rayDirection = ray->getDerivedOrientation() * Ogre::Vector3::NEGATIVE_UNIT_Z;
+	Ogre::Vector3 rayPosition = ray->getDerivedPosition();
+
+	float ab2 = rayDirection.dotProduct(rayDirection);
+
+	Ogre::Vector3 p = sphere->getDerivedPosition();
+	Ogre::Vector3 ap = p - rayPosition;
+	float ap_dot_dir = ap.dotProduct(rayDirection);
+	float t = ap_dot_dir / ab2;
+
+	if (t < 0.0f) t = 0.0f;
+
+	Ogre::Vector3 q = rayPosition + rayDirection * t;
+
+	Ogre::Vector3 pq = q - p;
+
+	float radius = sphere->GetRadius();
+	float r2 = radius * radius;
+
+	if (pq.dotProduct(pq) < r2)
+	{
+		ray->Collide(sphere);
+		sphere->Collide(ray);
+
+		return true;
+	}
+
+	return false;
 }
