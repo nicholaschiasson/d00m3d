@@ -39,9 +39,14 @@ void Item::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentN
 	value = 5;
 }
 
-void Item::Collide(PhysicsEntity *physicsEntity)
+void Item::Collide(const Ogre::FrameEvent &fe, PhysicsEntity *physicsEntity)
 {
 
+}
+
+void Item::Damage(float damage)
+{
+	// nope
 }
 
 int Item::getValue() const

@@ -17,8 +17,8 @@ public:
 	void AddPhysicsEntity(PhysicsEntity *physicsEntity);
 	void RemovePhysicsEntity(PhysicsEntity *physicsEntity);
 
-	bool PerformSphereSphereCollisionTest(PhysicsEntity *sphere1, PhysicsEntity *sphere2);
-	bool PerformRaySphereCollisionTest(PhysicsEntity *ray, PhysicsEntity *sphere);
+	bool PerformSphereSphereCollisionTest(const Ogre::FrameEvent &fe, PhysicsEntity *sphere1, PhysicsEntity *sphere2);
+	bool PerformRaySphereCollisionTest(const Ogre::FrameEvent &fe, PhysicsEntity *ray, PhysicsEntity *sphere);
 
 private:
 	float gravitationalConstant;

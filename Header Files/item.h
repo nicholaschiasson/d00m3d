@@ -20,7 +20,8 @@ public:
 	ITEM_TYPE getType();
 	virtual void Update(const Ogre::FrameEvent &fe);
 
-	virtual void Collide(PhysicsEntity *physicsEntity);
+	virtual void Collide(const Ogre::FrameEvent &fe, PhysicsEntity *physicsEntity);
+	virtual void Damage(float damage);
 
 	virtual void Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, Ogre::Vector3 location, ITEM_TYPE type, unsigned int parentID = -1);
 	virtual void Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &PhysicsEngine, unsigned int parentID = -1);

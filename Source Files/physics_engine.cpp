@@ -66,18 +66,18 @@ void PhysicsEngine::Update(const Ogre::FrameEvent &fe)
 				{
 					if ((*it)->GetBodyType() == ENTITY_BODY_SPHERE || (*it)->GetBodyType() == ENTITY_BODY_METAPHYSICAL_SPHERE)
 					{
-						PerformSphereSphereCollisionTest(i, *it);
+						PerformSphereSphereCollisionTest(fe, i, *it);
 					}
 					else if ((*it)->GetBodyType() == ENTITY_BODY_RAY || (*it)->GetBodyType() == ENTITY_BODY_METAPHYSICAL_RAY)
 					{
-						PerformRaySphereCollisionTest(*it, i);
+						PerformRaySphereCollisionTest(fe, *it, i);
 					}
 				}
 				else if (i->GetBodyType() == ENTITY_BODY_RAY || i->GetBodyType() == ENTITY_BODY_METAPHYSICAL_RAY)
 				{
 					if ((*it)->GetBodyType() == ENTITY_BODY_SPHERE || (*it)->GetBodyType() == ENTITY_BODY_METAPHYSICAL_SPHERE)
 					{
-						PerformRaySphereCollisionTest(i, *it);
+						PerformRaySphereCollisionTest(fe, i, *it);
 					}
 				}
 			}
@@ -100,7 +100,7 @@ void PhysicsEngine::RemovePhysicsEntity(PhysicsEntity *physicsEntity)
 	}
 }
 
-bool PhysicsEngine::PerformSphereSphereCollisionTest(PhysicsEntity *sphere1, PhysicsEntity *sphere2)
+bool PhysicsEngine::PerformSphereSphereCollisionTest(const Ogre::FrameEvent &fe, PhysicsEntity *sphere1, PhysicsEntity *sphere2)
 {
 	float overlapMagnitude = (sphere1->GetRadius() + sphere2->GetRadius()) - sphere1->getPosition().distance(sphere2->getPosition());
 	if (overlapMagnitude >= 0.0f)
@@ -125,8 +125,8 @@ bool PhysicsEngine::PerformSphereSphereCollisionTest(PhysicsEntity *sphere1, Phy
 			sphere1->ApplyForce(impulse2);// + currentImpulse2);
 		}
 
-		sphere1->Collide(sphere2);
-		sphere2->Collide(sphere1);
+		sphere1->Collide(fe, sphere2);
+		sphere2->Collide(fe, sphere1);
 
 		return true;
 	}
@@ -134,7 +134,7 @@ bool PhysicsEngine::PerformSphereSphereCollisionTest(PhysicsEntity *sphere1, Phy
 	return false;
 }
 
-bool PhysicsEngine::PerformRaySphereCollisionTest(PhysicsEntity *ray, PhysicsEntity *sphere)
+bool PhysicsEngine::PerformRaySphereCollisionTest(const Ogre::FrameEvent &fe, PhysicsEntity *ray, PhysicsEntity *sphere)
 {
 	Ogre::Vector3 rayDirection = ray->getDerivedOrientation() * Ogre::Vector3::NEGATIVE_UNIT_Z;
 	Ogre::Vector3 rayPosition = ray->getDerivedPosition();
@@ -157,11 +157,11 @@ bool PhysicsEngine::PerformRaySphereCollisionTest(PhysicsEntity *ray, PhysicsEnt
 
 	if (pq.dotProduct(pq) < r2)
 	{
-		ray->Collide(sphere);
+		ray->Collide(fe, sphere);
 		if (ray->GetBodyType() == ENTITY_BODY_RAY)
 		{
 			// sphere only detects collisions with physical rays
-			sphere->Collide(ray);
+			sphere->Collide(fe, ray);
 		}
 
 		return true;

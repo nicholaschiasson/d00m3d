@@ -27,9 +27,14 @@ void BlackHole::Initialize(Ogre::SceneManager* sceneManager, Ogre::SceneNode *pa
 	sceneNode->setScale(size,size,size);
 }
 
-void BlackHole::Collide(PhysicsEntity *physicsEntity)
+void BlackHole::Collide(const Ogre::FrameEvent &fe, PhysicsEntity *physicsEntity)
 {
 	physicsEntity->spaghettify();
+}
+
+void BlackHole::Damage(float damage)
+{
+	// nope
 }
 
 Ogre::SceneNode* BlackHole::getSceneNode(){

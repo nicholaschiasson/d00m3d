@@ -1,6 +1,6 @@
 #include "laser.h"
 
-Laser::Laser(): cooldown(5), duration(5), timer(0), damage(1), active(false), myState(LASER_READY)
+Laser::Laser(): cooldown(5), duration(5), timer(0), damage(10), active(false), myState(LASER_READY)
 {
 	//lalala
 }
@@ -39,9 +39,14 @@ void Laser::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parent
 	sceneNode->setVisible(false);
 }
 
-void Laser::Collide(PhysicsEntity *physicsEntity)
+void Laser::Collide(const Ogre::FrameEvent &fe, PhysicsEntity *physicsEntity)
 {
+	physicsEntity->Damage(damage * fe.timeSinceLastFrame);
+}
 
+void Laser::Damage(float damage)
+{
+	// nope
 }
 
 void Laser::upgrade(int maxCooldown, int dmg)

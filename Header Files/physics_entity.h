@@ -28,7 +28,7 @@ public:
 	void ApplyForce(float x, float y, float z);
 	void ApplyForce(Ogre::Vector3 force);
 	
-	virtual void Collide(PhysicsEntity *physicsEntity) = 0;
+	virtual void Collide(const Ogre::FrameEvent &fe, PhysicsEntity *physicsEntity) = 0;
 
 	// Getters and setters
 	Ogre::Vector3 GetDeltaVelocity();

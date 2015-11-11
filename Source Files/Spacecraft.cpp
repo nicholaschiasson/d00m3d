@@ -14,7 +14,6 @@ void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* p
 {
 	PhysicsEntity::Initialize(sceneManager, parentNode, physicsEngine, parentID);
 	mass = 5000.0f;
-	dynamic = false; // temp
 
 	Ogre::Entity *spacecraftBodyEntity = sceneManager->createEntity("Cone");
 	spacecraftBodyEntity->setMaterialName("PlayerSpacecraftMaterial");
@@ -38,7 +37,12 @@ void Spacecraft::Update(const Ogre::FrameEvent &fe)
 	}
 }
 
-void Spacecraft::Collide(PhysicsEntity *physicsEntity)
+void Spacecraft::Collide(const Ogre::FrameEvent &fe, PhysicsEntity *physicsEntity)
+{
+
+}
+
+void Spacecraft::spaghettify()
 {
 
 }

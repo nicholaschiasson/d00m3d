@@ -27,7 +27,7 @@ void Asteroid::Initialize(Ogre::SceneManager* sceneManager, Ogre::SceneNode *par
 	sceneNode->attachObject(asteroidEntity);
 }
 
-void Asteroid::Collide(PhysicsEntity *physicsEntity)
+void Asteroid::Collide(const Ogre::FrameEvent &fe, PhysicsEntity *physicsEntity)
 {
 
 }
