@@ -35,7 +35,7 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 	player.Initialize(sceneManager, worldSceneNode, physicsEngine);
 	camera->attachTo(&player);
 	player.translate(0.0f, 0.0f, 100.0f);
-	
+
 	//Setting up the basic control scheme
 	initControls(inMan);
 	setupAsteroids();
@@ -92,7 +92,7 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 
 			if(!(*it)->isAlive()){
 				//(*it)->explode(); //TODO PARTCILE STUFF
-				itemList.push_back(new Item(sceneManager, worldSceneNode, physicsEngine, (*it)->getPosition(), Item::FUEL));
+				//itemList.push_back(new Item(sceneManager, worldSceneNode, physicsEngine, (*it)->getPosition(), Item::FUEL));
 			}
 		}
 		for(std::vector<Item*>::iterator it = itemList.begin(); it != itemList.end(); ++it){
