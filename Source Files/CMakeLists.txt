@@ -19,6 +19,7 @@ set(HDRS
 	"${HDR_DIR}/physics_engine.h"
 	"${HDR_DIR}/laser.h"
 	"${HDR_DIR}/item.h"
+	"${HDR_DIR}/TextRenderer.h"
 )
 
 set(SRCS
@@ -46,9 +47,11 @@ set(SRCS
 	physics_engine.cpp
 	laser.cpp
 	item.cpp
+	TextRenderer.cpp
     Skybox.material
     SkyboxFp.glsl
     SkyboxVp.glsl
+	MyFont.fontdef
 )
 
 # The rules here are specific to Windows Systems
