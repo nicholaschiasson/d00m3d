@@ -35,6 +35,11 @@ void Item::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentN
 	value = 5;
 }
 
+void Item::Collide(PhysicsEntity *physicsEntity)
+{
+
+}
+
 int Item::getValue() const
 {
 	return value;

@@ -58,9 +58,9 @@ void PhysicsEngine::Update(const Ogre::FrameEvent &fe)
 		{
 			if (i != (*it) && i->GetObjectID() != (*it)->GetParentID() && i->GetParentID() != (*it)->GetObjectID())
 			{
-				if (i->GetBodyType() == ENTITY_BODY_SPHERE)
+				if (i->GetBodyType() == ENTITY_BODY_SPHERE || i->GetBodyType() == ENTITY_BODY_METAPHYSICAL_SPHERE)
 				{
-					if ((*it)->GetBodyType() == ENTITY_BODY_SPHERE)
+					if ((*it)->GetBodyType() == ENTITY_BODY_SPHERE || (*it)->GetBodyType() == ENTITY_BODY_METAPHYSICAL_SPHERE)
 					{
 						PerformSphereSphereCollisionTest(i, *it);
 					}
@@ -71,7 +71,7 @@ void PhysicsEngine::Update(const Ogre::FrameEvent &fe)
 				}
 				else if (i->GetBodyType() == ENTITY_BODY_RAY)
 				{
-					if ((*it)->GetBodyType() == ENTITY_BODY_SPHERE)
+					if ((*it)->GetBodyType() == ENTITY_BODY_SPHERE || (*it)->GetBodyType() == ENTITY_BODY_METAPHYSICAL_SPHERE)
 					{
 						PerformRaySphereCollisionTest(i, *it);
 					}
@@ -103,11 +103,14 @@ bool PhysicsEngine::PerformSphereSphereCollisionTest(PhysicsEntity *sphere1, Phy
 		//Ogre::Vector3 currentImpulse1 = d * (d.dotProduct(sphere1->GetAppliedForce()) / d.squaredLength());
 		//Ogre::Vector3 currentImpulse2 = -d * (d.dotProduct(sphere2->GetAppliedForce()) / d.squaredLength());
 		
-		sphere1->translate(-d.normalisedCopy() * (overlapMagnitude / 2.0f));
-		sphere2->translate(d.normalisedCopy() * (overlapMagnitude / 2.0f));
+		if (sphere1->GetBodyType() == ENTITY_BODY_SPHERE && sphere2->GetBodyType() == ENTITY_BODY_SPHERE)
+		{
+			sphere1->translate(-d.normalisedCopy() * (overlapMagnitude / 2.0f));
+			sphere2->translate(d.normalisedCopy() * (overlapMagnitude / 2.0f));
 
-		sphere2->ApplyForce(impulse1);// + currentImpulse1);
-		sphere1->ApplyForce(impulse2);// + currentImpulse2);
+			sphere2->ApplyForce(impulse1);// + currentImpulse1);
+			sphere1->ApplyForce(impulse2);// + currentImpulse2);
+		}
 
 		sphere1->Collide(sphere2);
 		sphere2->Collide(sphere1);

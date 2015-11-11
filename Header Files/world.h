@@ -1,6 +1,8 @@
 #ifndef WORLD_H
 #define WORLD_H
 
+#include <vector>
+
 #include <OgreSceneManager.h>
 #include <OgreEntity.h>
 #include <OgreSceneNode.h>
@@ -13,7 +15,6 @@
 #include "asteroid.h"
 #include "black_hole.h"
 #include "item.h"
-
 
 class World
 {
@@ -77,20 +78,24 @@ private:
 	//things in the world go here.
 	Ogre::SceneNode* worldSceneNode;
 	
-	bool exists;
 	Ogre::SceneManager* sceneManager;
 	Camera *camera;
 	PhysicsEngine physicsEngine;
 
-	PlayerSpacecraft player;
+	bool exists;
+	float worldRadius;
+	float timer;
+	float spawnTime;
 
 	BlackHole blackHole;
-	Item myItem;
+	PlayerSpacecraft player;
+
+    std::vector<Asteroid *> asteroids;
+
+	void SpawnAsteroid();
+
 	//setup the control schemes
 	void initControls(InputManager *inputManager);
-
-	void setupAsteroids();
-	void setupBlackHole();
 
 	// InputManager Callbacks
 	static void PlayerMoveForward(void *context, const Ogre::FrameEvent& fe);
@@ -103,13 +108,6 @@ private:
 	static void PlayerYawLeft(void *context, const Ogre::FrameEvent& fe);
 	static void PlayerPitchDown(void *context, const Ogre::FrameEvent& fe);
 	static void PlayerYawRight(void *context, const Ogre::FrameEvent& fe);
-
-
-	#define MAX_NUM_ASTEROIDS 50
-	int num_asteroids_;
-    Asteroid asteroid_[MAX_NUM_ASTEROIDS];
-	Ogre::SceneNode* cube_[MAX_NUM_ASTEROIDS];
-
 	static void playerFireLaser(void* context, const Ogre::FrameEvent& fe);
 
 

@@ -2,7 +2,7 @@
 
 #include "world.h"
 
-World::World(): worldSceneNode(NULL), camera(NULL), sceneManager(NULL)
+World::World(): worldSceneNode(NULL), camera(NULL), sceneManager(NULL), worldRadius(1000.0f)
 {
 	//lattahdah lattahdah
 }
@@ -10,6 +10,7 @@ World::World(): worldSceneNode(NULL), camera(NULL), sceneManager(NULL)
 World::~World()
 {
 	//TODO memory cleanup
+	JudgementDay();
 }
 
 void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* inMan)
@@ -18,27 +19,28 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 	{
 		throw std::runtime_error("Camera or InputManager not initialized!");
 	}
-	exists = true;
+
 	sceneManager = sceneMan;
 	sceneManager->setSkyDome(true, "SkyboxMaterial", 5, 8);
 	worldSceneNode = sceneManager->getRootSceneNode()->createChildSceneNode("_worldSceneNode_");
 	camera = cam;
-	num_asteroids_ = MAX_NUM_ASTEROIDS;
 
-	//setupBlackHole();
+	exists = true;
+	worldRadius = 1000.0f;
+	spawnTime = 5.0f;
+	timer = spawnTime;
+
+	
+	// The source of all our frustrations
+	blackHole.Initialize(sceneManager, worldSceneNode, physicsEngine);
 
 	//creating the player entity
 	player.Initialize(sceneManager, worldSceneNode, physicsEngine);
 	camera->attachTo(&player);
-	player.translate(0.0f, 0.0f, 100.0f);
+	player.translate(0.0f, 0.0f, 300.0f);
 	
 	//Setting up the basic control scheme
 	initControls(inMan);
-	
-	myItem.Initialize(sceneManager, worldSceneNode, physicsEngine);
-	myItem.translate(0.0f, 0.0f, 3.0f);
-
-	setupAsteroids();
 }
 
 /*
@@ -61,29 +63,15 @@ void World::initControls(InputManager *inputManager)
 	
 }
 
-void World::setupBlackHole(){
-	blackHole.Initialize(sceneManager, worldSceneNode, physicsEngine);
-}
-
-void World::setupAsteroids()
+void World::SpawnAsteroid()
 {
-	//Use to set position/orientation... of asteroids? just what the prof had.
-    for (int i = 0; i < num_asteroids_; i++){
-		
-      //asteroid_[i].pos = Ogre::Vector3(-300 + 600 * (rand() % 1000) / 1000.0f, -300 + 600 * (rand() % 1000) / 1000.0f, 600 * (rand() % 1000) / 1000.0f);
-      //asteroid_[i].pos = Ogre::Vector3(0 + i,0,0);
-	  //asteroid_[i].ori = Ogre::Quaternion(1.0f, 3.14*(rand() % 1000) / 1000.0f, 3.14*(rand() % 1000) / 1000.0f, 3.14*(rand() % 1000) / 1000.0f);
-	  //asteroid_[i].lm = Ogre::Quaternion(1.0f, 0.005*3.14*(rand() % 1000) / 1000.0f, 0.005*3.14*(rand() % 1000) / 1000.0f, 0.005*3.14*(rand() % 1000) / 1000.0f);
-	  //asteroid_[i].drift = Ogre::Vector3(((double) rand() / RAND_MAX)*0.2, ((double) rand() / RAND_MAX)*0.2, ((double) rand() / RAND_MAX)*0.2);
-    }
-
-        /* Create multiple entities of a mesh */
-  	for (int i = 0; i < num_asteroids_; i++){
-
-		asteroid_[i].Initialize(sceneManager, worldSceneNode, physicsEngine);
-		asteroid_[i].translate((float)i - 5.0f, 0.0f, (float)-(i * 3.5));
-
-	}
+	Asteroid *asteroid = new Asteroid();
+	asteroid->Initialize(sceneManager, worldSceneNode, physicsEngine);
+	float theta = Ogre::Math::RangeRandom(0.0f, Ogre::Math::TWO_PI);
+	float phi = Ogre::Math::RangeRandom(0.0f, Ogre::Math::TWO_PI);
+	Ogre::Vector3 initialPosition = Ogre::Vector3(cos(theta) * sin(phi), sin(theta) * sin(phi), -cos(phi)) * worldRadius;
+	asteroid->translate(initialPosition);
+	asteroids.push_back(asteroid);
 }
 
 void World::createWorld()
@@ -96,13 +84,23 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 	if (exists)
 	{
 		//TODO update stuff
-		physicsEngine.Update(fe);
 		player.Update(fe);
-		myItem.Update(fe);
-		for (int i = 0; i < num_asteroids_; i++)
+		for (std::vector<Asteroid *>::iterator it = asteroids.begin(); it != asteroids.end(); ++it)
 		{
-			asteroid_[i].Update(fe);
+			(*it)->Update(fe);
 		}
+
+		if (timer <= 0.0f)
+		{
+			SpawnAsteroid();
+			timer = spawnTime;
+		}
+		else
+		{
+			timer -= fe.timeSinceLastFrame;
+		}
+
+		physicsEngine.Update(fe); // I think this should always be updated last
 	}
 }
 
@@ -228,4 +226,13 @@ void World::playerFireLaser(void* context, const Ogre::FrameEvent& fe)
 void World::JudgementDay()
 {
 	exists = false;
+	for (std::vector<Asteroid *>::iterator it = asteroids.begin(); it != asteroids.end(); ++it)
+	{
+		if (*it != 0)
+		{
+			delete *it;
+			*it = 0;
+		}
+	}
+	asteroids.clear();
 }

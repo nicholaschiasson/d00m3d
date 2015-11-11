@@ -39,6 +39,11 @@ void Laser::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parent
 	sceneNode->setVisible(false);
 }
 
+void Laser::Collide(PhysicsEntity *physicsEntity)
+{
+
+}
+
 void Laser::upgrade(int maxCooldown, int dmg)
 {
 	cooldown = maxCooldown;

@@ -1,10 +1,10 @@
 #ifndef PHYSICS_ENGINE_H
 #define PHYSICS_ENGINE_H
 
+class PhysicsEntity;
+
 #include <vector>
 #include "physics_entity.h"
-
-class PhysicsEntity;
 
 class PhysicsEngine
 {
