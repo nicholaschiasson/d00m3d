@@ -34,6 +34,10 @@ void Entity::Update(const Ogre::FrameEvent &fe)
 	}
 }
 
+//void PhysicsEntity::Collect(Item *item)
+//{
+//}
+
 void Entity::Damage(float damage)
 {
 	if (alive)

@@ -55,13 +55,6 @@ void PhysicsEntity::ApplyForce(Ogre::Vector3 force)
 	}
 }
 
-void PhysicsEntity::Collide(PhysicsEntity *physicsEntity)
-{
-	// Should be overridden, probably pure virtual
-	// DO NOT CALL THE OTHER PHYSICS ENTITY'S COLLIDE FUNCTION
-	// That is for the caller of this function to do
-}
-
 Ogre::Vector3 PhysicsEntity::GetAppliedForce()
 {
 	return appliedForce;
