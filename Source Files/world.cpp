@@ -1,7 +1,6 @@
 //world.cpp
 
 #include "world.h"
-#include "../bin/Source Files/path_config.h"
 
 World::World(): worldSceneNode(NULL), camera(NULL), sceneManager(NULL)
 {
@@ -84,9 +83,8 @@ void World::setupAsteroids()
 		asteroid_[i].Initialize(sceneManager, worldSceneNode, physicsEngine);
 		asteroid_[i].translate((float)i - 5.0f, 0.0f, (float)-(i * 3.5));
 
-	} 
+	}
 }
-
 
 void World::createWorld()
 {

@@ -49,6 +49,10 @@ void Entity::Damage(float damage)
 	}
 }
 
+void Entity::explode()
+{
+	//lalala
+}
 unsigned int Entity::GetObjectID()
 {
 	return objectID;
@@ -178,4 +182,9 @@ Ogre::Quaternion Entity::getOrientation() const
 Ogre::Quaternion Entity::getDerivedOrientation() const
 {
 	return sceneNode->_getDerivedOrientation();
+}
+
+bool Entity::isAlive() const
+{
+	return alive;
 }

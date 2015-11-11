@@ -21,6 +21,9 @@ void Asteroid::Initialize(Ogre::SceneManager* sceneManager, Ogre::SceneNode *par
 	scale(3.0f, 3.0f, 3.0f);
 	name = asteroidNode->getName();
 	sceneNode->attachObject(asteroidEntity);
+
+
+
 }
 
 Ogre::SceneNode* Asteroid::getAsteroidSceneNode(){
