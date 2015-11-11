@@ -90,12 +90,14 @@ private:
 	BlackHole blackHole;
 	PlayerSpacecraft player;
 
-    std::vector<Asteroid *> asteroids;
+	std::vector<Item *> itemList;
+	std::vector<Asteroid *> asteroidList;
 
 	void SpawnAsteroid();
 
 	//setup the control schemes
 	void initControls(InputManager *inputManager);
+	void cleanupLists(bool cleanupNeeded = true);
 
 	// InputManager Callbacks
 	static void PlayerMoveForward(void *context, const Ogre::FrameEvent& fe);
@@ -109,7 +111,7 @@ private:
 	static void PlayerPitchDown(void *context, const Ogre::FrameEvent& fe);
 	static void PlayerYawRight(void *context, const Ogre::FrameEvent& fe);
 	static void playerFireLaser(void* context, const Ogre::FrameEvent& fe);
-
+	static void boom(void* context, const Ogre::FrameEvent& fe);
 
 };
 

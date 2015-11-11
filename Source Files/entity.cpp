@@ -4,23 +4,46 @@
 
 unsigned int Entity::entityCount = 0;
 
-Entity::Entity()
+Entity::Entity(): sceneNode(NULL)
 {
-	sceneNode = 0;
 }
 
 Entity::~Entity()
 {
 }
 
+void Entity::kill()
+{
+	alive = false;
+}
+
+void Entity::spaghettify()
+{
+	kill();
+	spaghettified = true;
+}
+
+void Entity::cleanup()
+{
+	if(sceneNode){
+		sceneNode->getParentSceneNode()->removeAndDestroyChild(sceneNode->getName());
+		sceneNode = NULL;
+	}
+}
+
 void Entity::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, unsigned int parentID)
 {
 	objectID = entityCount;
 	parentObjectID = parentID;
-	sceneNode = parentNode->createChildSceneNode("Entity" + Ogre::StringConverter::toString(entityCount++));
+	
+	//only if we have not already initialized
+	if(sceneNode == NULL){
+		sceneNode = parentNode->createChildSceneNode("Entity" + Ogre::StringConverter::toString(entityCount++));
+	}
 	alive = true;
 	health = 100.0f;
 	durability = 1.0f;
+	spaghettified = false;
 }
 
 void Entity::Update(const Ogre::FrameEvent &fe)
@@ -29,7 +52,7 @@ void Entity::Update(const Ogre::FrameEvent &fe)
 	{
 		if (health <= 0.0f)
 		{
-			alive = false;
+			kill();
 		}
 	}
 }
@@ -193,8 +216,7 @@ bool Entity::isAlive() const
 	return alive;
 }
 
-void Entity::MeetDoom()
+bool Entity::isSpaghettified() const
 {
-	sceneNode->getParentSceneNode()->removeAndDestroyChild(sceneNode->getName());
-	alive = false;
+	return spaghettified;
 }

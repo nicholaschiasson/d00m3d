@@ -42,8 +42,25 @@ public:
 	virtual Ogre::Quaternion getOrientation() const;
 	virtual Ogre::Quaternion getDerivedOrientation() const;
 	virtual bool isAlive() const;
+	virtual bool isSpaghettified() const;
+	
+	/*
+	*	Sets player to dead (alive false)
+	*
+	*/
+	virtual void kill();
+	
+	/*
+	*	Marks player as being killed by black hole (spaghettified true)
+	*
+	*/
+	virtual void spaghettify();
 
-	virtual void MeetDoom();
+	/*	cleanup()
+	*	Purpose:	To clean up all the resources attached to this entity, should only be called when deleting the object if you have not removed the sceneNode
+	*
+	*/
+	virtual void cleanup();
 
 protected:
 	static unsigned int entityCount;
@@ -52,6 +69,7 @@ protected:
 	bool alive;
 	float health;
 	float durability;
+	bool spaghettified; // absolute death
 
 	unsigned int objectID;
 	unsigned int parentObjectID;

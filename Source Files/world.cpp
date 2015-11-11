@@ -60,18 +60,18 @@ void World::initControls(InputManager *inputManager)
 	inputManager->RegisterCallback(this, PlayerPitchDown, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_DOWN);
 	inputManager->RegisterCallback(this, PlayerYawRight, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_RIGHT);
 	inputManager->RegisterCallback(this, playerFireLaser, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_SPACE);
+	inputManager->RegisterCallback(this, boom, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_B);
 	
 }
 
 void World::SpawnAsteroid()
 {
-	Asteroid *asteroid = new Asteroid();
-	asteroid->Initialize(sceneManager, worldSceneNode, physicsEngine);
+	Asteroid *asteroid = new Asteroid(sceneManager, worldSceneNode, physicsEngine);
 	float theta = Ogre::Math::RangeRandom(0.0f, Ogre::Math::TWO_PI);
 	float phi = Ogre::Math::RangeRandom(0.0f, Ogre::Math::TWO_PI);
 	Ogre::Vector3 initialPosition = Ogre::Vector3(cos(theta) * sin(phi), sin(theta) * sin(phi), -cos(phi)) * worldRadius;
 	asteroid->translate(initialPosition);
-	asteroids.push_back(asteroid);
+	asteroidList.push_back(asteroid);
 }
 
 void World::createWorld()
@@ -81,29 +81,10 @@ void World::createWorld()
 
 void World::updateWorld(const Ogre::FrameEvent& fe)
 {
+	Entity* deadEntity = NULL;
 	if (exists)
 	{
 		//TODO update stuff
-		player.Update(fe);
-		
-		std::vector<unsigned int> deadAsteroidIndices;
-		for (std::vector<Asteroid *>::iterator it = asteroids.begin(); it != asteroids.end(); ++it)
-		{
-			(*it)->Update(fe);
-			if (!(*it)->isAlive())
-			{
-				deadAsteroidIndices.push_back((unsigned int)(it - asteroids.begin()));
-			}
-		}
-		for (std::vector<unsigned int>::iterator it = deadAsteroidIndices.begin(); it != deadAsteroidIndices.end(); ++it)
-		{
-			std::vector<Asteroid *>::iterator deadIt = asteroids.begin() + (*it);
-			Asteroid *dead = *deadIt;
-			asteroids.erase(deadIt);
-			physicsEngine.RemovePhysicsEntity(dead);
-			delete dead;
-		}
-
 		if (timer <= 0.0f)
 		{
 			SpawnAsteroid();
@@ -114,7 +95,69 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 			timer -= fe.timeSinceLastFrame;
 		}
 
-		physicsEngine.Update(fe); // I think this should always be updated last
+		//first we update all of our entities in our list.
+		for(std::vector<Asteroid*>::iterator it = asteroidList.begin(); it != asteroidList.end(); ++it){
+			(*it)->Update(fe);
+
+			if(!(*it)->isAlive()){
+				deadEntity = (*it);
+				//(*it)->explode(); //TODO PARTCILE STUFF
+
+				//removing our now dead enetity from the list of physicsOBject
+				physicsEngine.RemovePhysicsEntity((PhysicsEntity*) deadEntity);
+				if (!deadEntity->isSpaghettified())
+				{
+					itemList.push_back(new Item(sceneManager, worldSceneNode, physicsEngine, deadEntity->getPosition(), Item::FUEL));
+				}
+			}
+		}
+		for(std::vector<Item*>::iterator it = itemList.begin(); it != itemList.end(); ++it){
+			(*it)->Update(fe);
+		}
+		//cleanup any dead entities from those lists
+		cleanupLists();
+	
+		//now that our lists our clean we can update the player.
+		player.Update(fe);
+
+		//Now that everything is updated we apply physics
+		physicsEngine.Update(fe);
+	}
+}
+
+void World::cleanupLists(bool cleanupNeeded)
+{
+	Entity* deadEntity;
+	std::vector<Asteroid*>::iterator it = asteroidList.begin();
+	while(it != asteroidList.end()){
+		if((*it)->isAlive()){
+			++it;
+			continue;
+		}
+
+		//we need to delete if they are not alive.
+		deadEntity = (*it);
+		it = asteroidList.erase(it);
+		if(cleanupNeeded)
+			deadEntity->cleanup();
+		delete deadEntity;
+		deadEntity = NULL;
+	}
+
+	std::vector<Item*>::iterator iter = itemList.begin();
+	while(iter != itemList.end()){
+		if((*iter)->isAlive()){
+			++iter;
+			continue;
+		}
+
+		//we need to delete if they are not alive.
+		deadEntity = (*iter);
+		iter = itemList.erase(iter);
+		if(cleanupNeeded)
+			deadEntity->cleanup();
+		delete (Item *) deadEntity;
+		deadEntity = NULL;
 	}
 }
 
@@ -240,13 +283,29 @@ void World::playerFireLaser(void* context, const Ogre::FrameEvent& fe)
 void World::JudgementDay()
 {
 	exists = false;
-	for (std::vector<Asteroid *>::iterator it = asteroids.begin(); it != asteroids.end(); ++it)
+
+	for(std::vector<Item*>::iterator it = itemList.begin(); it != itemList.end(); ++it){
+		(*it)->kill();
+	}
+
+	for(std::vector<Asteroid*>::iterator it = asteroidList.begin(); it != asteroidList.end(); ++it){
+		(*it)->kill();
+	}
+
+	cleanupLists(false);
+
+	itemList.clear();
+	asteroidList.clear();
+}
+
+
+void World::boom(void* context, const Ogre::FrameEvent& fe)
+{
+	if(context)
 	{
-		if (*it != 0)
-		{
-			delete *it;
-			*it = 0;
+		World *world = static_cast<World*>(context);
+		for(std::vector<Asteroid*>::iterator it = world->asteroidList.begin(); it != world->asteroidList.end(); ++it){
+			(*it)->kill();
 		}
 	}
-	asteroids.clear();
 }

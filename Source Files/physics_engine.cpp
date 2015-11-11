@@ -14,19 +14,23 @@ void PhysicsEngine::Update(const Ogre::FrameEvent &fe)
 	std::vector<PhysicsEntity *> gravitationalEntities;
 	std::vector<PhysicsEntity *> dynamicEntities;
 	std::vector<PhysicsEntity *> collidableEntities;
+
 	for (std::vector<PhysicsEntity *>::iterator it = physicsEntities.begin(); it != physicsEntities.end(); ++it)
 	{
-		if ((*it)->IsGravitational())
+		if ((*it)->isAlive())
 		{
-			gravitationalEntities.push_back(*it);
-		}
-		if ((*it)->IsDynamic())
-		{
-			dynamicEntities.push_back(*it);
-		}
-		if ((*it)->GetBodyType() != ENTITY_BODY_METAPHYSICAL)
-		{
-			collidableEntities.push_back(*it);
+			if ((*it)->IsGravitational())
+			{
+				gravitationalEntities.push_back(*it);
+			}
+			if ((*it)->IsDynamic())
+			{
+				dynamicEntities.push_back(*it);
+			}
+			if ((*it)->GetBodyType() != ENTITY_BODY_METAPHYSICAL)
+			{
+				collidableEntities.push_back(*it);
+			}
 		}
 	}
 	for (std::vector<PhysicsEntity *>::iterator it = dynamicEntities.begin(); it != dynamicEntities.end(); ++it)
@@ -56,7 +60,7 @@ void PhysicsEngine::Update(const Ogre::FrameEvent &fe)
 
 		for (std::vector<PhysicsEntity *>::reverse_iterator it = collidableEntities.rbegin(); it != collidableEntities.rend(); ++it)
 		{
-			if (i != (*it) && i->GetObjectID() != (*it)->GetParentID() && i->GetParentID() != (*it)->GetObjectID())
+			if (i != (*it) && i->isAlive() && (*it)->isAlive() && i->GetObjectID() != (*it)->GetParentID() && i->GetParentID() != (*it)->GetObjectID())
 			{
 				if (i->GetBodyType() == ENTITY_BODY_SPHERE || i->GetBodyType() == ENTITY_BODY_METAPHYSICAL_SPHERE)
 				{

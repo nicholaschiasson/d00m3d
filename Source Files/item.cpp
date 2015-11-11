@@ -3,6 +3,10 @@
 Item::Item()
 {
 }
+Item::Item(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, Ogre::Vector3 location, ITEM_TYPE type, unsigned int parentID)
+{
+	Initialize(sceneManager, parentNode, physicsEngine, location, type, parentID);
+}
 Item::~Item()
 {
 }
