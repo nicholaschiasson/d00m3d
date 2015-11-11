@@ -68,12 +68,12 @@ void PhysicsEngine::Update(const Ogre::FrameEvent &fe)
 					{
 						PerformSphereSphereCollisionTest(i, *it);
 					}
-					else if ((*it)->GetBodyType() == ENTITY_BODY_RAY)
+					else if ((*it)->GetBodyType() == ENTITY_BODY_RAY || (*it)->GetBodyType() == ENTITY_BODY_METAPHYSICAL_RAY)
 					{
 						PerformRaySphereCollisionTest(*it, i);
 					}
 				}
-				else if (i->GetBodyType() == ENTITY_BODY_RAY)
+				else if (i->GetBodyType() == ENTITY_BODY_RAY || i->GetBodyType() == ENTITY_BODY_METAPHYSICAL_RAY)
 				{
 					if ((*it)->GetBodyType() == ENTITY_BODY_SPHERE || (*it)->GetBodyType() == ENTITY_BODY_METAPHYSICAL_SPHERE)
 					{
@@ -158,7 +158,11 @@ bool PhysicsEngine::PerformRaySphereCollisionTest(PhysicsEntity *ray, PhysicsEnt
 	if (pq.dotProduct(pq) < r2)
 	{
 		ray->Collide(sphere);
-		sphere->Collide(ray);
+		if (ray->GetBodyType() == ENTITY_BODY_RAY)
+		{
+			// sphere only detects collisions with physical rays
+			sphere->Collide(ray);
+		}
 
 		return true;
 	}

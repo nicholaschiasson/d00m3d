@@ -19,7 +19,7 @@ fragment_program item_shader/fs glsl
 
 	default_params
 	{
-		param_named ambient_colour float4 0.2 0.2 0.0 1.0
+		param_named ambient_colour float4 0.25 0.25 0.0 1.0
 		param_named diffuse_colour float4 0.75 0.75 0.0 1.0
 		param_named specular_colour float4 1.0 1.0 1.0 1.0
 		param_named phong_exponent float 128.0

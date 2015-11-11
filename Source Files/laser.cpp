@@ -58,7 +58,7 @@ Laser::LASER_STATE Laser::getState()
 void Laser::fire()
 {
 	if(myState == LASER_READY){
-		bodyType = ENTITY_BODY_RAY;
+		bodyType = ENTITY_BODY_METAPHYSICAL_RAY;
 		myState = LASER_FIRING;
 		timer = duration;
 		sceneNode->setVisible(true);
