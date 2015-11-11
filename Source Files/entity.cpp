@@ -73,7 +73,6 @@ void Entity::Damage(float damage)
 		{
 			health = max(0.0f, health - (damage / durability));
 		}
-		std::cout << getName() << ": " << health << std::endl;
 	}
 }
 
