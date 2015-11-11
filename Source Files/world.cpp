@@ -1,7 +1,7 @@
 //world.cpp
 
 #include "world.h"
-
+#include "../bin/Source Files/path_config.h"
 
 World::World(): worldSceneNode(NULL), camera(NULL), sceneManager(NULL)
 {
@@ -21,6 +21,7 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 	}
 	exists = true;
 	sceneManager = sceneMan;
+	sceneManager->setSkyDome(true, "SkyboxMaterial", 5, 8);
 	worldSceneNode = sceneManager->getRootSceneNode()->createChildSceneNode("_worldSceneNode_");
 	camera = cam;
 	num_asteroids_ = MAX_NUM_ASTEROIDS;

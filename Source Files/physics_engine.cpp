@@ -58,7 +58,8 @@ void PhysicsEngine::Update(const Ogre::FrameEvent &fe)
 		{
 			if (i != (*it) && i->GetObjectID() != (*it)->GetParentID() && i->GetParentID() != (*it)->GetObjectID())
 			{
-				if (i->getPosition().distance((*it)->getPosition()) <= (i->GetRadius() + (*it)->GetRadius()))
+				float overlapMagnitude = (i->GetRadius() + (*it)->GetRadius()) - i->getPosition().distance((*it)->getPosition());
+				if (overlapMagnitude >= 0.0f)
 				{
 					Ogre::Vector3 d = (*it)->getPosition() - i->getPosition();
 					Ogre::Vector3 relativeVelocity = d * (d.dotProduct(i->GetVelocity() + (*it)->GetVelocity()) / d.squaredLength());
@@ -67,9 +68,12 @@ void PhysicsEngine::Update(const Ogre::FrameEvent &fe)
 						((1 / i->GetMass()) + (1 / (*it)->GetMass())));
 					Ogre::Vector3 impulse2 = (((i->GetRestitution() + 1.0f) * relativeVelocity) /
 						((1 / i->GetMass()) + (1 / (*it)->GetMass())));
+					
+					//Ogre::Vector3 currentImpulse1 = d * (d.dotProduct(i->GetAppliedForce()) / d.squaredLength());
+					//Ogre::Vector3 currentImpulse2 = -d * (d.dotProduct((*it)->GetAppliedForce()) / d.squaredLength());
 
-					(*it)->ApplyForce(impulse1);
-					i->ApplyForce(impulse2);
+					(*it)->ApplyForce(impulse1);// + currentImpulse1);
+					i->ApplyForce(impulse2);// + currentImpulse2);
 
 					i->Collide(*it);
 					(*it)->Collide(i);

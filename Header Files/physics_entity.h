@@ -35,6 +35,7 @@ public:
 	float GetMass();
 	float GetRestitution();
 
+	Ogre::Vector3 GetAppliedForce();
 	ENTITY_BODY_TYPE GetBodyType();
 	bool IsAbsoluteGravitationalPull();
 	bool IsDynamic();

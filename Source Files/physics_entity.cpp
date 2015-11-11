@@ -62,6 +62,11 @@ void PhysicsEntity::Collide(PhysicsEntity *physicsEntity)
 	// That is for the caller of this function to do
 }
 
+Ogre::Vector3 PhysicsEntity::GetAppliedForce()
+{
+	return appliedForce;
+}
+
 Ogre::Vector3 PhysicsEntity::GetDeltaVelocity()
 {
 	return velocity - previousVelocity;
