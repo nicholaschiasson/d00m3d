@@ -1,0 +1,46 @@
+vertex_program Skybox/vs glsl 
+{
+    source SkyboxVp.glsl 
+
+    default_params
+    {
+        param_named_auto world_mat world_matrix
+        param_named_auto view_mat view_matrix
+        param_named_auto projection_mat projection_matrix
+		param_named_auto normal_mat inverse_transpose_worldview_matrix
+    }
+}
+
+
+fragment_program Skybox/fs glsl 
+{
+    source SkyboxFp.glsl 
+
+	default_params
+	{
+		param_named skybox_map int 0
+	}
+}
+
+
+material SkyboxMaterial
+{
+    technique
+    {
+        pass
+        {
+            vertex_program_ref Skybox/vs
+            {
+            }
+
+            fragment_program_ref Skybox/fs
+            {
+            }
+
+			texture_unit
+			{
+				texture Resources/sky_space.jpg 2d
+			}
+        } 
+    }
+}

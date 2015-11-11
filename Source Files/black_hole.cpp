@@ -17,13 +17,13 @@ void BlackHole::Initialize(Ogre::SceneManager* sceneManager, Ogre::SceneNode *pa
 	bodyType = ENTITY_BODY_METAPHYSICAL;
 	dynamic = false;
 	gravitational = true;
-	mass = 10999999999.0f;
+	mass = 99999999999.0f;
 
 	Ogre::Entity *bhEntity = sceneManager->createEntity("Sphere");
 	Ogre::SceneNode *rootSceneNode = sceneManager->getRootSceneNode();
 	bhEntity->setMaterialName("BlackHoleMaterial");
 	sceneNode->attachObject(bhEntity);
-	size = 10.0f;
+	size = 100.0f;
 	sceneNode->setScale(size,size,size);
 }
 

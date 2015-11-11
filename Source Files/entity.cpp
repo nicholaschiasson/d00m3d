@@ -4,9 +4,8 @@
 
 unsigned int Entity::entityCount = 0;
 
-Entity::Entity()
+Entity::Entity(): sceneNode(NULL)
 {
-	sceneNode = 0;
 }
 
 Entity::~Entity()
@@ -17,7 +16,11 @@ void Entity::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* paren
 {
 	objectID = entityCount;
 	parentObjectID = parentID;
-	sceneNode = parentNode->createChildSceneNode("Entity" + Ogre::StringConverter::toString(entityCount++));
+	
+	//only if we have not already initialized
+	if(sceneNode == NULL){
+		sceneNode = parentNode->createChildSceneNode("Entity" + Ogre::StringConverter::toString(entityCount++));
+	}
 	alive = true;
 	health = 100.0f;
 	durability = 1.0f;
@@ -30,6 +33,7 @@ void Entity::Update(const Ogre::FrameEvent &fe)
 		if (health <= 0.0f)
 		{
 			alive = false;
+			sceneNode->setVisible(false);
 		}
 	}
 }
@@ -49,6 +53,10 @@ void Entity::Damage(float damage)
 	}
 }
 
+void Entity::explode()
+{
+	//lalala
+}
 unsigned int Entity::GetObjectID()
 {
 	return objectID;
@@ -178,4 +186,9 @@ Ogre::Quaternion Entity::getOrientation() const
 Ogre::Quaternion Entity::getDerivedOrientation() const
 {
 	return sceneNode->_getDerivedOrientation();
+}
+
+bool Entity::isAlive() const
+{
+	return alive;
 }

@@ -11,7 +11,7 @@ enum ENTITY_BODY_TYPE
 	ENTITY_BODY_METAPHYSICAL,
 	ENTITY_BODY_RAY,
 	ENTITY_BODY_SPHERE,
-	ENTITY_BODY_PRISM,
+	ENTITY_BODY_BOX,
 };
 
 class PhysicsEntity : public Entity
@@ -35,6 +35,7 @@ public:
 	float GetMass();
 	float GetRestitution();
 
+	Ogre::Vector3 GetAppliedForce();
 	ENTITY_BODY_TYPE GetBodyType();
 	bool IsAbsoluteGravitationalPull();
 	bool IsDynamic();

@@ -27,6 +27,7 @@ void PhysicsEntity::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode
 
 void PhysicsEntity::Update(const Ogre::FrameEvent &fe)
 {
+	Entity::Update(fe);
 	if (dynamic)
 	{
 		if (mass != 0.0f)
@@ -60,6 +61,11 @@ void PhysicsEntity::Collide(PhysicsEntity *physicsEntity)
 	// Should be overridden, probably pure virtual
 	// DO NOT CALL THE OTHER PHYSICS ENTITY'S COLLIDE FUNCTION
 	// That is for the caller of this function to do
+}
+
+Ogre::Vector3 PhysicsEntity::GetAppliedForce()
+{
+	return appliedForce;
 }
 
 Ogre::Vector3 PhysicsEntity::GetDeltaVelocity()

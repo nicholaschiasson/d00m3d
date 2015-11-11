@@ -53,7 +53,7 @@ namespace ogre_application
 		void InitViewport();
 		void InitEvents();
 		void InitOIS();
-		void LoadMaterials();
+		void LoadResources();
 		void RegisterInputCallbacks();
 
 		/* Methods to handle events */

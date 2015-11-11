@@ -7,14 +7,15 @@
 class Item: public PhysicsEntity
 {
 public:
-	Item();
-	~Item();
-
 	enum ITEM_TYPE{
 		FUEL,
 		ENERGY,
 		FAKE
 	};
+	
+	Item();
+	Item(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, Ogre::Vector3 location, ITEM_TYPE type, unsigned int parentID = -1);
+	~Item();
 
 	ITEM_TYPE getType();
 	virtual void Update(const Ogre::FrameEvent &fe);
