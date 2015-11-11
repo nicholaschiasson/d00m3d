@@ -58,25 +58,23 @@ void PhysicsEngine::Update(const Ogre::FrameEvent &fe)
 		{
 			if (i != (*it) && i->GetObjectID() != (*it)->GetParentID() && i->GetParentID() != (*it)->GetObjectID())
 			{
-				float overlapMagnitude = (i->GetRadius() + (*it)->GetRadius()) - i->getPosition().distance((*it)->getPosition());
-				if (overlapMagnitude >= 0.0f)
+				if (i->GetBodyType() == ENTITY_BODY_SPHERE)
 				{
-					Ogre::Vector3 d = (*it)->getPosition() - i->getPosition();
-					Ogre::Vector3 relativeVelocity = d * (d.dotProduct(i->GetVelocity() + (*it)->GetVelocity()) / d.squaredLength());
-					
-					Ogre::Vector3 impulse1 = -((((*it)->GetRestitution() + 1.0f) * relativeVelocity) /
-						((1 / i->GetMass()) + (1 / (*it)->GetMass())));
-					Ogre::Vector3 impulse2 = (((i->GetRestitution() + 1.0f) * relativeVelocity) /
-						((1 / i->GetMass()) + (1 / (*it)->GetMass())));
-					
-					//Ogre::Vector3 currentImpulse1 = d * (d.dotProduct(i->GetAppliedForce()) / d.squaredLength());
-					//Ogre::Vector3 currentImpulse2 = -d * (d.dotProduct((*it)->GetAppliedForce()) / d.squaredLength());
-
-					(*it)->ApplyForce(impulse1);// + currentImpulse1);
-					i->ApplyForce(impulse2);// + currentImpulse2);
-
-					i->Collide(*it);
-					(*it)->Collide(i);
+					if ((*it)->GetBodyType() == ENTITY_BODY_SPHERE)
+					{
+						PerformSphereSphereCollisionTest(i, *it);
+					}
+					else if ((*it)->GetBodyType() == ENTITY_BODY_RAY)
+					{
+						PerformRaySphereCollisionTest(*it, i);
+					}
+				}
+				else if (i->GetBodyType() == ENTITY_BODY_RAY)
+				{
+					if ((*it)->GetBodyType() == ENTITY_BODY_SPHERE)
+					{
+						PerformRaySphereCollisionTest(i, *it);
+					}
 				}
 			}
 		}
@@ -87,4 +85,36 @@ void PhysicsEngine::Update(const Ogre::FrameEvent &fe)
 void PhysicsEngine::AddPhysicsEntity(PhysicsEntity *physicsEntity)
 {
 	physicsEntities.push_back(physicsEntity);
+}
+
+void PhysicsEngine::PerformSphereSphereCollisionTest(PhysicsEntity *sphere1, PhysicsEntity *sphere2)
+{
+	float overlapMagnitude = (sphere1->GetRadius() + sphere2->GetRadius()) - sphere1->getPosition().distance(sphere2->getPosition());
+	if (overlapMagnitude >= 0.0f)
+	{
+		Ogre::Vector3 d = sphere2->getPosition() - sphere1->getPosition();
+		Ogre::Vector3 relativeVelocity = d * (d.dotProduct(sphere1->GetVelocity() - sphere2->GetVelocity()) / d.squaredLength());
+		
+		Ogre::Vector3 impulse1 = (((sphere2->GetRestitution() + 1.0f) * relativeVelocity) /
+			((1 / sphere1->GetMass()) + (1 / sphere2->GetMass())));
+		Ogre::Vector3 impulse2 = -(((sphere1->GetRestitution() + 1.0f) * relativeVelocity) /
+			((1 / sphere1->GetMass()) + (1 / sphere2->GetMass())));
+		
+		//Ogre::Vector3 currentImpulse1 = d * (d.dotProduct(sphere1->GetAppliedForce()) / d.squaredLength());
+		//Ogre::Vector3 currentImpulse2 = -d * (d.dotProduct(sphere2->GetAppliedForce()) / d.squaredLength());
+		
+		sphere1->translate(-d.normalisedCopy() * (overlapMagnitude / 2.0f));
+		sphere2->translate(d.normalisedCopy() * (overlapMagnitude / 2.0f));
+
+		sphere2->ApplyForce(impulse1);// + currentImpulse1);
+		sphere1->ApplyForce(impulse2);// + currentImpulse2);
+
+		sphere1->Collide(sphere2);
+		sphere2->Collide(sphere1);
+	}
+}
+
+void PhysicsEngine::PerformRaySphereCollisionTest(PhysicsEntity *ray, PhysicsEntity *sphere)
+{
+	Ogre::Vector3 rayDirection = ray->getDerivedOrientation() * Ogre::Vector3::NEGATIVE_UNIT_Z;
 }

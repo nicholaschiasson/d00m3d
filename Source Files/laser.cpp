@@ -24,6 +24,7 @@ void Laser::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parent
 	PhysicsEntity::Initialize(sceneManager, parentNode, physicsEngine, parentID);
 
 	//setting our mass to 0
+	bodyType = ENTITY_BODY_RAY;
 	dynamic = false;
 	mass = 0.0;
 

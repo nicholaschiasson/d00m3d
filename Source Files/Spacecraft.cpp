@@ -30,8 +30,9 @@ void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* p
 
 void Spacecraft::Update(const Ogre::FrameEvent &fe)
 {
-	PhysicsEntity::Update(fe);
-	if(alive){
+	if(alive)
+	{
+		PhysicsEntity::Update(fe);
 		laser.Update(fe);
 	}
 }

@@ -25,7 +25,8 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 	worldSceneNode = sceneManager->getRootSceneNode()->createChildSceneNode("_worldSceneNode_");
 	camera = cam;
 	num_asteroids_ = MAX_NUM_ASTEROIDS;
-	setupBlackHole();
+
+	//setupBlackHole();
 
 	//creating the player entity
 	player.Initialize(sceneManager, worldSceneNode, physicsEngine);
