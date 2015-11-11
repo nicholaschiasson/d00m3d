@@ -11,8 +11,6 @@ public:
 	virtual ~BlackHole();
     virtual void Initialize(Ogre::SceneManager *sceneManager,Ogre::SceneNode *parentNode, PhysicsEngine &physicsEngine, unsigned int parentID = -1);
 	
-	virtual void Collide(PhysicsEntity *physicsEntity);
-
 	Ogre::SceneNode* getSceneNode();
 	float getSize();
 

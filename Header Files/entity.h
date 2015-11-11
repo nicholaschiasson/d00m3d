@@ -4,8 +4,6 @@
 #include "OgreSceneManager.h"
 #include "OgreSceneNode.h"
 
-//#include "item.h"
-
 class Entity
 {
 public:
@@ -14,8 +12,7 @@ public:
 
 	virtual void Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, unsigned int parentID = -1);
 	virtual void Update(const Ogre::FrameEvent &fe);
-	
-	//virtual void Collect(Item *item);
+
 	virtual void Damage(float damage);
 	virtual void explode();
 

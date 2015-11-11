@@ -14,9 +14,6 @@ int main(int argc, char *argv[])
 
 	try
 	{
-		time_t t;
-		time(&t);
-		srand((unsigned int)t * (unsigned int)t);
 		application.Initialize();
 		application.MainLoop();
 	}

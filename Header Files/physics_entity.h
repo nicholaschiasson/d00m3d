@@ -1,16 +1,15 @@
 #ifndef PHYSICS_ENTITY_H
 #define PHYSICS_ENTITY_H
 
-class PhysicsEngine;
-
 #include "entity.h"
 #include "physics_engine.h"
+
+class PhysicsEngine;
 
 enum ENTITY_BODY_TYPE
 {
 	ENTITY_BODY_METAPHYSICAL,
 	ENTITY_BODY_RAY,
-	ENTITY_BODY_METAPHYSICAL_SPHERE,
 	ENTITY_BODY_SPHERE,
 	ENTITY_BODY_BOX,
 };
@@ -26,8 +25,8 @@ public:
 	
 	void ApplyForce(float x, float y, float z);
 	void ApplyForce(Ogre::Vector3 force);
-	
-	virtual void Collide(PhysicsEntity *physicsEntity) = 0;
+
+	void Collide(PhysicsEntity *physicsEntity);
 
 	// Getters and setters
 	Ogre::Vector3 GetDeltaVelocity();

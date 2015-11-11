@@ -12,8 +12,6 @@ public:
 
     virtual void Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode *parentNode, PhysicsEngine &physicsEngine, unsigned int parentID = -1);
 
-	virtual void Collide(PhysicsEntity *physicsentity);
-
 	Ogre::SceneNode* getAsteroidSceneNode();
 	Ogre::Vector3 pos; // Position
 	
