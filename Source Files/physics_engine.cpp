@@ -87,6 +87,15 @@ void PhysicsEngine::AddPhysicsEntity(PhysicsEntity *physicsEntity)
 	physicsEntities.push_back(physicsEntity);
 }
 
+void PhysicsEngine::RemovePhysicsEntity(PhysicsEntity *physicsEntity)
+{
+	std::vector<PhysicsEntity *>::iterator remove = std::find(physicsEntities.begin(), physicsEntities.end(), physicsEntity);
+	if (remove != physicsEntities.end())
+	{
+		physicsEntities.erase(remove);
+	}
+}
+
 bool PhysicsEngine::PerformSphereSphereCollisionTest(PhysicsEntity *sphere1, PhysicsEntity *sphere2)
 {
 	float overlapMagnitude = (sphere1->GetRadius() + sphere2->GetRadius()) - sphere1->getPosition().distance(sphere2->getPosition());

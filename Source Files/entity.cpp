@@ -192,3 +192,9 @@ bool Entity::isAlive() const
 {
 	return alive;
 }
+
+void Entity::MeetDoom()
+{
+	sceneNode->getParentSceneNode()->removeAndDestroyChild(sceneNode->getName());
+	alive = false;
+}

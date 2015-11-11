@@ -43,6 +43,8 @@ public:
 	virtual Ogre::Quaternion getDerivedOrientation() const;
 	virtual bool isAlive() const;
 
+	virtual void MeetDoom();
+
 protected:
 	static unsigned int entityCount;
 

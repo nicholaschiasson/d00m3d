@@ -27,15 +27,19 @@ void PhysicsEntity::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode
 
 void PhysicsEntity::Update(const Ogre::FrameEvent &fe)
 {
-	if (dynamic)
+	Entity::Update(fe);
+	if (alive)
 	{
-		if (mass != 0.0f)
+		if (dynamic)
 		{
-			previousVelocity = velocity;
-			velocity += appliedForce / mass;
+			if (mass != 0.0f)
+			{
+				previousVelocity = velocity;
+				velocity += appliedForce / mass;
+			}
+			translate(velocity * fe.timeSinceLastFrame);
+			appliedForce = 0;
 		}
-		translate(velocity * fe.timeSinceLastFrame);
-		appliedForce = 0;
 	}
 }
 

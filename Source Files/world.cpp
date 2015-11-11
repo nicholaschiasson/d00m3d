@@ -27,7 +27,7 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 
 	exists = true;
 	worldRadius = 1000.0f;
-	spawnTime = 5.0f;
+	spawnTime = 2.0f;
 	timer = spawnTime;
 
 	
@@ -85,9 +85,23 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 	{
 		//TODO update stuff
 		player.Update(fe);
+		
+		std::vector<unsigned int> deadAsteroidIndices;
 		for (std::vector<Asteroid *>::iterator it = asteroids.begin(); it != asteroids.end(); ++it)
 		{
 			(*it)->Update(fe);
+			if (!(*it)->isAlive())
+			{
+				deadAsteroidIndices.push_back((unsigned int)(it - asteroids.begin()));
+			}
+		}
+		for (std::vector<unsigned int>::iterator it = deadAsteroidIndices.begin(); it != deadAsteroidIndices.end(); ++it)
+		{
+			std::vector<Asteroid *>::iterator deadIt = asteroids.begin() + (*it);
+			Asteroid *dead = *deadIt;
+			asteroids.erase(deadIt);
+			physicsEngine.RemovePhysicsEntity(dead);
+			delete dead;
 		}
 
 		if (timer <= 0.0f)

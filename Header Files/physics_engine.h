@@ -13,8 +13,9 @@ public:
 	~PhysicsEngine();
 
 	void Update(const Ogre::FrameEvent &fe);
-
+	
 	void AddPhysicsEntity(PhysicsEntity *physicsEntity);
+	void RemovePhysicsEntity(PhysicsEntity *physicsEntity);
 
 	bool PerformSphereSphereCollisionTest(PhysicsEntity *sphere1, PhysicsEntity *sphere2);
 	bool PerformRaySphereCollisionTest(PhysicsEntity *ray, PhysicsEntity *sphere);

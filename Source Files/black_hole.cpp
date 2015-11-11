@@ -29,7 +29,7 @@ void BlackHole::Initialize(Ogre::SceneManager* sceneManager, Ogre::SceneNode *pa
 
 void BlackHole::Collide(PhysicsEntity *physicsEntity)
 {
-
+	physicsEntity->MeetDoom();
 }
 
 Ogre::SceneNode* BlackHole::getSceneNode(){
