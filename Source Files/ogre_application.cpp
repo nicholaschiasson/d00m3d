@@ -33,6 +33,7 @@ namespace ogre_application
 
 	/* Materials */
 	const Ogre::String material_directory_g = MATERIAL_DIRECTORY;
+	const Ogre::String resource_directory_g = RESOURCE_DIRECTORY;
 
 
 	OgreApplication::OgreApplication()
@@ -59,7 +60,7 @@ namespace ogre_application
 		InitViewport();
 		InitEvents();
 		InitOIS();
-		LoadMaterials();
+		LoadResources();
 		RegisterInputCallbacks();
 
 		MeshFactory::Initialize(&ogre_root_);
@@ -270,7 +271,7 @@ namespace ogre_application
 		}
 	}
 
-	void OgreApplication::LoadMaterials()
+	void OgreApplication::LoadResources()
 	{
 		try
 		{
@@ -278,7 +279,7 @@ namespace ogre_application
 			Ogre::String resource_group_name = "MyGame";
 			Ogre::ResourceGroupManager& resource_group_manager = Ogre::ResourceGroupManager::getSingleton();
 			resource_group_manager.createResourceGroup(resource_group_name);
-			bool is_recursive = false;
+			bool is_recursive = true;
 			resource_group_manager.addResourceLocation(material_directory_g, "FileSystem", resource_group_name, is_recursive);
 			resource_group_manager.initialiseResourceGroup(resource_group_name);
 			resource_group_manager.loadResourceGroup(resource_group_name);

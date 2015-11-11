@@ -24,6 +24,7 @@ void Laser::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parent
 	PhysicsEntity::Initialize(sceneManager, parentNode, physicsEngine, parentID);
 
 	//setting our mass to 0
+	bodyType = ENTITY_BODY_METAPHYSICAL;
 	dynamic = false;
 	mass = 0.0;
 
@@ -33,7 +34,7 @@ void Laser::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parent
 	laserSceneNode->attachObject(laserEntity);
 	laserSceneNode->scale(0.05f, 100.0f, 0.05f);
 	laserSceneNode->pitch(Ogre::Radian(-Ogre::Math::HALF_PI));
-	laserSceneNode->translate(0,50.5,-.5, Ogre::Node::TS_LOCAL);
+	laserSceneNode->translate(0,0,-50.5f);
 
 	sceneNode->setVisible(false);
 }
@@ -52,6 +53,7 @@ Laser::LASER_STATE Laser::getState()
 void Laser::fire()
 {
 	if(myState == LASER_READY){
+		bodyType = ENTITY_BODY_RAY;
 		myState = LASER_FIRING;
 		timer = duration;
 		sceneNode->setVisible(true);
@@ -68,6 +70,7 @@ void Laser::Update(const Ogre::FrameEvent &fe)
 				myState = LASER_READY;
 				break;
 			case LASER_FIRING:
+				bodyType = ENTITY_BODY_METAPHYSICAL;
 				sceneNode->setVisible(false);
 				myState = LASER_COOLDOWN;
 				timer = cooldown;

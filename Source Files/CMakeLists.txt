@@ -46,6 +46,9 @@ set(SRCS
 	physics_engine.cpp
 	laser.cpp
 	item.cpp
+    Skybox.material
+    SkyboxFp.glsl
+    SkyboxVp.glsl
 )
 
 # The rules here are specific to Windows Systems

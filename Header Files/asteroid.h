@@ -8,6 +8,7 @@ class Asteroid : public PhysicsEntity
 {
 public:
 	Asteroid();
+	Asteroid(Ogre::SceneManager *sceneManager, Ogre::SceneNode *parentNode, PhysicsEngine &physicsEngine, unsigned int parentID = -1);
 	virtual ~Asteroid();
 
     virtual void Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode *parentNode, PhysicsEngine &physicsEngine, unsigned int parentID = -1);
@@ -20,6 +21,8 @@ private:
         Ogre::Quaternion lm; // Angular momentum (use as velocity)
 		Ogre::Vector3 drift; // Drift direction
 		std::string name;
+
+
 };
 
 #endif // ASTEROID_H

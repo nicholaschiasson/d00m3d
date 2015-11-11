@@ -14,7 +14,7 @@ void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* p
 {
 	PhysicsEntity::Initialize(sceneManager, parentNode, physicsEngine, parentID);
 	mass = 5000.0f;
-	dynamic = false; // temp
+	//dynamic = false; // temp
 
 	Ogre::Entity *spacecraftBodyEntity = sceneManager->createEntity("Cone");
 	spacecraftBodyEntity->setMaterialName("PlayerSpacecraftMaterial");
@@ -24,14 +24,16 @@ void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* p
 	spacecraftBodyNode->pitch(Ogre::Radian(-(Ogre::Math::HALF_PI * 0.9f)));
 
 	laser.Initialize(sceneManager, sceneNode, physicsEngine, objectID);
+	laser.translate(0.0f, -0.5f, 0.0f);
 	
 	thrusterForce = 500.0f;
 }
 
 void Spacecraft::Update(const Ogre::FrameEvent &fe)
 {
-	PhysicsEntity::Update(fe);
-	if(alive){
+	if(alive)
+	{
+		PhysicsEntity::Update(fe);
 		laser.Update(fe);
 	}
 }

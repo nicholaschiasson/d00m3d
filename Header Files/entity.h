@@ -14,6 +14,7 @@ public:
 	virtual void Update(const Ogre::FrameEvent &fe);
 
 	virtual void Damage(float damage);
+	virtual void explode();
 
 	virtual unsigned int GetObjectID();
 	virtual unsigned int GetParentID();
@@ -37,6 +38,7 @@ public:
 	virtual Ogre::Vector3 Entity::getDerivedPosition() const;
 	virtual Ogre::Quaternion getOrientation() const;
 	virtual Ogre::Quaternion getDerivedOrientation() const;
+	virtual bool isAlive() const;
 
 protected:
 	static unsigned int entityCount;
