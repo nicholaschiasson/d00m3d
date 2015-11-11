@@ -39,6 +39,18 @@ public:
 	virtual Ogre::Quaternion getOrientation() const;
 	virtual Ogre::Quaternion getDerivedOrientation() const;
 	virtual bool isAlive() const;
+	
+	/*
+	*	Sets player to dead (alive false)
+	*
+	*/
+	virtual void kill();
+
+	/*	cleanup()
+	*	Purpose:	To clean up all the resources attached to this entity, should only be called when deleting the object if you have not removed the sceneNode
+	*
+	*/
+	virtual void cleanup();
 
 protected:
 	static unsigned int entityCount;

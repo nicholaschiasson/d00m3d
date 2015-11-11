@@ -10,11 +10,13 @@ World::World(): worldSceneNode(NULL), camera(NULL), sceneManager(NULL), numAster
 World::~World()
 {
 	for(std::vector<Item*>::iterator it = itemList.begin(); it != itemList.end(); ++it){
-		delete (*it);
+		(*it)->kill();
 	}
 	for(std::vector<Asteroid*>::iterator it = asteroidList.begin(); it != asteroidList.end(); ++it){
-		delete (*it);
+		(*it)->kill();
 	}
+
+	cleanupLists(false);
 }
 
 void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* inMan)
@@ -82,22 +84,73 @@ void World::createWorld()
 
 void World::updateWorld(const Ogre::FrameEvent& fe)
 {
+	Entity* deadEntity = NULL;
 	if (exists)
 	{
-		//TODO update stuff
-		physicsEngine.Update(fe);
-		player.Update(fe);
+		//first we update all of our entities in our list.
+		std::vector<Entity*> deadEntities;
 		for(std::vector<Asteroid*>::iterator it = asteroidList.begin(); it != asteroidList.end(); ++it){
 			(*it)->Update(fe);
 
 			if(!(*it)->isAlive()){
+				deadEntity = (*it);
 				//(*it)->explode(); //TODO PARTCILE STUFF
-				//itemList.push_back(new Item(sceneManager, worldSceneNode, physicsEngine, (*it)->getPosition(), Item::FUEL));
+
+				//removing our now dead enetity from the list of physicsOBject
+				physicsEngine.removeEntity((PhysicsEntity*) deadEntity);
+				itemList.push_back(new Item(sceneManager, worldSceneNode, physicsEngine, deadEntity->getPosition() /*Ogre::Vector3(0,0,97)*/, Item::FUEL));
 			}
 		}
 		for(std::vector<Item*>::iterator it = itemList.begin(); it != itemList.end(); ++it){
 			(*it)->Update(fe);
 		}
+		//cleanup any dead entities from those lists
+		cleanupLists();
+	
+		//now that our lists our clean we can update the player.
+		player.Update(fe);
+
+		//Now that everything is updated we apply physics
+		physicsEngine.Update(fe);
+		
+	}
+
+	
+}
+
+void World::cleanupLists(bool cleanupNeeded)
+{
+	Entity* deadEntity;
+	std::vector<Asteroid*>::iterator it = asteroidList.begin();
+	while(it != asteroidList.end()){
+		if((*it)->isAlive()){
+			++it;
+			continue;
+		}
+
+		//we need to delete if they are not alive.
+		deadEntity = (*it);
+		it = asteroidList.erase(it);
+		if(cleanupNeeded)
+			deadEntity->cleanup();
+		delete (Asteroid *) deadEntity;
+		deadEntity = NULL;
+	}
+
+	std::vector<Item*>::iterator iter = itemList.begin();
+	while(iter != itemList.end()){
+		if((*iter)->isAlive()){
+			++iter;
+			continue;
+		}
+
+		//we need to delete if they are not alive.
+		deadEntity = (*iter);
+		iter = itemList.erase(iter);
+		if(cleanupNeeded)
+			deadEntity->cleanup();
+		delete (Item *) deadEntity;
+		deadEntity = NULL;
 	}
 }
 
@@ -232,7 +285,7 @@ void World::boom(void* context, const Ogre::FrameEvent& fe)
 	{
 		World *world = static_cast<World*>(context);
 		for(std::vector<Asteroid*>::iterator it = world->asteroidList.begin(); it != world->asteroidList.end(); ++it){
-			(*it)->Damage(100);
+			(*it)->kill();
 		}
 	}
 }

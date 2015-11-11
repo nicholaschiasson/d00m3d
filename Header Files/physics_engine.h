@@ -18,7 +18,7 @@ public:
 
 	bool PerformSphereSphereCollisionTest(PhysicsEntity *sphere1, PhysicsEntity *sphere2);
 	bool PerformRaySphereCollisionTest(PhysicsEntity *ray, PhysicsEntity *sphere);
-
+	void removeEntity(PhysicsEntity *physicsEntity);
 private:
 	float gravitationalConstant;
 	std::vector<PhysicsEntity *> physicsEntities;

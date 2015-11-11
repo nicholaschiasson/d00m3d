@@ -14,6 +14,7 @@ void PhysicsEngine::Update(const Ogre::FrameEvent &fe)
 	std::vector<PhysicsEntity *> gravitationalEntities;
 	std::vector<PhysicsEntity *> dynamicEntities;
 	std::vector<PhysicsEntity *> collidableEntities;
+
 	for (std::vector<PhysicsEntity *>::iterator it = physicsEntities.begin(); it != physicsEntities.end(); ++it)
 	{
 		if ((*it)->IsGravitational())
@@ -148,4 +149,15 @@ bool PhysicsEngine::PerformRaySphereCollisionTest(PhysicsEntity *ray, PhysicsEnt
 	}
 
 	return false;
+}
+
+void PhysicsEngine::removeEntity(PhysicsEntity *physicsEntity)
+{
+	for (std::vector<PhysicsEntity *>::iterator it = physicsEntities.begin(); it != physicsEntities.end(); ++it)
+	{
+		if((*it) == physicsEntity){
+			physicsEntities.erase(it);
+			return;
+		}
+	}
 }

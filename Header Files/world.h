@@ -81,7 +81,6 @@ private:
 	Ogre::SceneManager* sceneManager;
 	Camera *camera;
 	PhysicsEngine physicsEngine;
-
 	PlayerSpacecraft player;
 
 	BlackHole blackHole;
@@ -89,6 +88,7 @@ private:
 	std::vector<Asteroid*> asteroidList;
 	//setup the control schemes
 	void initControls(InputManager *inputManager);
+	void cleanupLists(bool cleanupNeeded = true);
 
 	void setupAsteroids();
 	void setupBlackHole();

@@ -12,6 +12,21 @@ Entity::~Entity()
 {
 }
 
+void Entity::kill()
+{
+	alive = false;
+	
+}
+
+void Entity::cleanup()
+{
+	if(sceneNode){
+		sceneNode->removeAndDestroyAllChildren();
+		sceneNode->getParentSceneNode()->removeAndDestroyChild(sceneNode->getName());
+		sceneNode = NULL;
+	}
+}
+
 void Entity::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, unsigned int parentID)
 {
 	objectID = entityCount;
@@ -32,8 +47,7 @@ void Entity::Update(const Ogre::FrameEvent &fe)
 	{
 		if (health <= 0.0f)
 		{
-			alive = false;
-			sceneNode->setVisible(false);
+			kill();
 		}
 	}
 }
