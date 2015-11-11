@@ -22,24 +22,29 @@ fragment_program Skybox/fs glsl
 	}
 }
 
-
 material SkyboxMaterial
 {
     technique
     {
         pass
         {
+			lighting off
+			depth_write off
+			fog_override true none
+
             vertex_program_ref Skybox/vs
             {
             }
 
             fragment_program_ref Skybox/fs
             {
-            }
+            } 
 
 			texture_unit
 			{
-				texture Resources/sky_space.jpg 2d
+				cubic_texture Resources/space.jpg separateUV
+				tex_address_mode clamp
+			  //  texture Resources/sspace.jpg
 			}
         } 
     }

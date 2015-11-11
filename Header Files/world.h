@@ -15,6 +15,7 @@
 #include "asteroid.h"
 #include "black_hole.h"
 #include "item.h"
+#include "TextRenderer.h"
 
 class World
 {

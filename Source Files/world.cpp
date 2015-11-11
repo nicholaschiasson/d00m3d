@@ -21,7 +21,9 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 	}
 
 	sceneManager = sceneMan;
-	sceneManager->setSkyDome(true, "SkyboxMaterial", 5, 8);
+//	sceneManager->setSkyDome(true, "SkyboxMaterial", 2, 9);
+		sceneManager->setSkyBox(true, "SkyboxMaterial", 550, true);
+
 	worldSceneNode = sceneManager->getRootSceneNode()->createChildSceneNode("_worldSceneNode_");
 	camera = cam;
 
@@ -30,7 +32,7 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 	spawnTime = 2.0f;
 	timer = spawnTime;
 
-	
+	//tr = new TextRenderer;
 	// The source of all our frustrations
 	blackHole.Initialize(sceneManager, worldSceneNode, physicsEngine);
 
@@ -41,6 +43,7 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 	
 	//Setting up the basic control scheme
 	initControls(inMan);
+
 }
 
 /*
