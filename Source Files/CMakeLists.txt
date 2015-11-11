@@ -52,6 +52,7 @@ set(SRCS
     SkyboxFp.glsl
     SkyboxVp.glsl
 	MyFont.fontdef
+	arial.ttf
 )
 
 # The rules here are specific to Windows Systems
