@@ -39,7 +39,7 @@ void calculate_light(in vec3 light_pos, inout float Id, inout float Is)
     R = -L + 2 *dot(L, N) * N; // Halfway vector
     R = normalize(R);
 
-    float spec_angle_cos = max(dot(N, R), 0.0);
+    float spec_angle_cos = max(dot(V, R), 0.0);
 	Is += pow(spec_angle_cos, phong_exponent);
 }
 
