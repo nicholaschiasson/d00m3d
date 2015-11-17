@@ -22,7 +22,7 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 
 	sceneManager = sceneMan;
 //	sceneManager->setSkyDome(true, "SkyboxMaterial", 2, 9);
-		sceneManager->setSkyBox(true, "SkyboxMaterial", 550, true);
+	sceneManager->setSkyBox(true, "SkyboxMaterial", 550, true);
 
 	worldSceneNode = sceneManager->getRootSceneNode()->createChildSceneNode("_worldSceneNode_");
 	camera = cam;
