@@ -31,6 +31,8 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 	spawnTime = 2.0f;
 	timer = spawnTime;
 
+	//AI setup
+	aiManager.initialize(sceneManager, worldSceneNode, &physicsEngine);
 	//tr = new TextRenderer;
 
 	//creating the player entity
