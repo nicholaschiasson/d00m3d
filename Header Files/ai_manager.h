@@ -7,15 +7,16 @@
 
 class aiManager{
 public:
-	aiManager(PhysicsEngine* physicsEngineRef);
 	aiManager();
 	~aiManager();
 	//passes in a physicsEngine* to add ships to it, keeps a reference to physicsEngine, does not clean up the physicsEngine
-	initialize(PhysicsEngine* physicsEngineRef);
-	trainNewShip(Ogre::Vector3 position);
+	void initialize(Ogre::SceneManager *sceneManagerRef, Ogre::SceneNode *parentNodeRef, PhysicsEngine *physicsEngineRef);
+	void trainNewShip(Ogre::Vector3 position);
 private:
 	std::vector<EnemySpacecraft*> fleet;
-	PhysicsEngine* physicsEngine
+	PhysicsEngine* physicsEngine;
+	Ogre::SceneManager* sceneManager;
+	Ogre::SceneNode*	parentNode;
 
 };
 

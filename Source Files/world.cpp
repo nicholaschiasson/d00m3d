@@ -76,6 +76,7 @@ void World::SpawnAsteroid()
 void World::createWorld()
 {
 	//TODO setup stuff for the world goes here.
+	testAi();
 }
 
 void World::updateWorld(const Ogre::FrameEvent& fe)
@@ -307,4 +308,9 @@ void World::boom(void* context, const Ogre::FrameEvent& fe)
 			(*it)->kill();
 		}
 	}
+}
+
+void World::testAi()
+{
+	//Luke's Ai testing Code here!!!
 }

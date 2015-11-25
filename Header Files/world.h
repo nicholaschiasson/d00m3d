@@ -16,7 +16,7 @@
 #include "black_hole.h"
 #include "item.h"
 #include "TextRenderer.h"
-
+#include "ai_manager.h"
 class World
 {
 public:
@@ -82,6 +82,7 @@ private:
 	Ogre::SceneManager* sceneManager;
 	Camera *camera;
 	PhysicsEngine physicsEngine;
+	aiManager aiManager;
 
 	bool exists;
 	float timer;
@@ -97,6 +98,8 @@ private:
 	//setup the control schemes
 	void initControls(InputManager *inputManager);
 	void cleanupLists(bool cleanupNeeded = true);
+
+	void testAi();
 
 	// InputManager Callbacks
 	static void PlayerMoveForward(void *context, const Ogre::FrameEvent& fe);
