@@ -97,6 +97,25 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 		}
 
 		//first we update all of our entities in our list.
+
+		//enemy spacecraft list
+		for(std::vector<EnemySpacecraft*>::iterator it = fleet.begin(); it != fleet.end(); ++it){
+			(*it)->Update(fe);
+
+			if(!(*it)->isAlive()){
+				deadEntity = (*it);
+				//(*it)->explode(); //TODO PARTCILE STUFF
+
+				//removing our now dead enetity from the list of physicsOBject
+				physicsEngine.RemovePhysicsEntity((PhysicsEntity*) deadEntity);
+				if (!deadEntity->isSpaghettified())
+				{
+					itemList.push_back(new Item(sceneManager, worldSceneNode, physicsEngine, deadEntity->getPosition(), Item::FUEL));
+				}
+			}
+		}
+
+		//asteroid list
 		for(std::vector<Asteroid*>::iterator it = asteroidList.begin(); it != asteroidList.end(); ++it){
 			(*it)->Update(fe);
 
@@ -112,6 +131,8 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 				}
 			}
 		}
+
+		//itemlist
 		for(std::vector<Item*>::iterator it = itemList.begin(); it != itemList.end(); ++it){
 			(*it)->Update(fe);
 		}
@@ -129,6 +150,25 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 void World::cleanupLists(bool cleanupNeeded)
 {
 	Entity* deadEntity;
+
+	//enemyspacecraft cleanup
+	std::vector<EnemySpacecraft*>::iterator i = fleet.begin();
+	while(i != fleet.end()){
+		if((*i)->isAlive()){
+			++i;
+			continue;
+		}
+
+		//we need to delete if they are not alive.
+		deadEntity = (*i);
+		i = fleet.erase(i);
+		if(cleanupNeeded)
+			deadEntity->cleanup();
+		delete deadEntity;
+		deadEntity = NULL;
+	}
+
+	//asteroid cleanup
 	std::vector<Asteroid*>::iterator it = asteroidList.begin();
 	while(it != asteroidList.end()){
 		if((*it)->isAlive()){
@@ -145,6 +185,7 @@ void World::cleanupLists(bool cleanupNeeded)
 		deadEntity = NULL;
 	}
 
+	//item cleanup
 	std::vector<Item*>::iterator iter = itemList.begin();
 	while(iter != itemList.end()){
 		if((*iter)->isAlive()){
