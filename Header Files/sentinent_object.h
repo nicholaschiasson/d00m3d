@@ -1,17 +1,17 @@
 #ifndef SENTINENT_H
 #define SENTINENT_H
 
-#include "enemy_spacecraft.h"
 #include "physics_engine.h"
+#include "Spacecraft.h"
 
 class SentinentObject{
 public:
 	SentinentObject();
-	~SentinentObject();
+	virtual ~SentinentObject() =0;
 	//passes in a physicsEngine* to add ships to it, keeps a reference to physicsEngine, does not clean up the physicsEngine
-	virtual void initialize(PhysicsEngine *physicsEngineRef);
+	virtual void Initialize(PhysicsEngine& physicsEngineRef);
 
-	virtual void update(const Ogre::FrameEvent &fe) =0;
+	virtual void Update(const Ogre::FrameEvent &fe);
 private:
 	PhysicsEngine *physicsEngine;
 	Spacecraft* target;
