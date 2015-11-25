@@ -1,6 +1,6 @@
 #include "sentinent_object.h"
 
-SentinentObject::SentinentObject(): physicsEngine(NULL), target(NULL)
+SentinentObject::SentinentObject(): physicsEngine(NULL), target(NULL), currState(STATE_IDLE)
 {
 }
 SentinentObject::~SentinentObject()

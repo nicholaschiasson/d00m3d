@@ -6,6 +6,11 @@
 
 class SentinentObject{
 public:
+	enum mindState{
+		STATE_IDLE,
+		STATE_PURSUE,
+		STATE_TURN,
+	};
 	SentinentObject();
 	virtual ~SentinentObject() =0;
 	//passes in a physicsEngine* to add ships to it, keeps a reference to physicsEngine, does not clean up the physicsEngine
@@ -15,6 +20,7 @@ public:
 private:
 	PhysicsEngine *physicsEngine;
 	Spacecraft* target;
+	mindState currState;
 };
 
 #endif //SENTINENT_H
