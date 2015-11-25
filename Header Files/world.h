@@ -12,11 +12,11 @@
 
 #include "physics_engine.h"
 #include "player_spacecraft.h"
+#include "enemy_spacecraft.h"
 #include "asteroid.h"
 #include "black_hole.h"
 #include "item.h"
 #include "TextRenderer.h"
-#include "ai_manager.h"
 class World
 {
 public:
@@ -82,7 +82,6 @@ private:
 	Ogre::SceneManager* sceneManager;
 	Camera *camera;
 	PhysicsEngine physicsEngine;
-	aiManager aiManager;
 
 	bool exists;
 	float timer;
@@ -92,6 +91,7 @@ private:
 
 	std::vector<Item *> itemList;
 	std::vector<Asteroid *> asteroidList;
+	std::vector<EnemySpacecraft*> fleet;
 
 	void SpawnAsteroid();
 

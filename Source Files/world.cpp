@@ -31,8 +31,6 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 	spawnTime = 2.0f;
 	timer = spawnTime;
 
-	//AI setup
-	aiManager.initialize(sceneManager, worldSceneNode, &physicsEngine);
 	//tr = new TextRenderer;
 
 	//creating the player entity
@@ -42,6 +40,7 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 	//Setting up the basic control scheme
 	initControls(inMan);
 
+	createWorld();
 }
 
 /*
@@ -294,10 +293,14 @@ void World::JudgementDay()
 		(*it)->kill();
 	}
 
+	for(std::vector<EnemySpacecraft*>::iterator it = fleet.begin(); it != fleet.end(); ++it){
+		(*it)->kill();
+	}
 	cleanupLists(false);
 
 	itemList.clear();
 	asteroidList.clear();
+	fleet.clear();
 }
 
 
@@ -314,5 +317,4 @@ void World::boom(void* context, const Ogre::FrameEvent& fe)
 
 void World::testAi()
 {
-	//Luke's Ai testing Code here!!!
 }
