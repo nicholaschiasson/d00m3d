@@ -13,7 +13,6 @@ BlackHole::~BlackHole()
 void BlackHole::Initialize(Ogre::SceneManager* sceneManager, Ogre::SceneNode *parentNode, PhysicsEngine &physicsEngine, unsigned int parentID)
 {
 	PhysicsEntity::Initialize(sceneManager, parentNode, physicsEngine, parentID);
-	absoluteGravitationalPull = true;
 	bodyType = ENTITY_BODY_METAPHYSICAL_SPHERE;
 	dynamic = false;
 	gravitational = true;

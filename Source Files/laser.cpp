@@ -1,6 +1,6 @@
 #include "laser.h"
 
-Laser::Laser(): cooldown(5), duration(5), timer(0), damage(10), active(false), myState(LASER_READY)
+Laser::Laser(): cooldown(5), duration(5), timer(0), damage(100), active(false), myState(LASER_READY)
 {
 	//lalala
 }

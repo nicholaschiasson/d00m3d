@@ -84,11 +84,9 @@ private:
 	PhysicsEngine physicsEngine;
 
 	bool exists;
-	float worldRadius;
 	float timer;
 	float spawnTime;
 
-	BlackHole blackHole;
 	PlayerSpacecraft player;
 
 	std::vector<Item *> itemList;

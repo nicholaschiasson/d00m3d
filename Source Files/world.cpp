@@ -2,7 +2,7 @@
 
 #include "world.h"
 
-World::World(): worldSceneNode(NULL), camera(NULL), sceneManager(NULL), worldRadius(1000.0f)
+World::World(): worldSceneNode(NULL), camera(NULL), sceneManager(NULL)
 {
 	//lattahdah lattahdah
 }
@@ -28,18 +28,14 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 	camera = cam;
 
 	exists = true;
-	worldRadius = 1000.0f;
 	spawnTime = 2.0f;
 	timer = spawnTime;
 
 	//tr = new TextRenderer;
-	// The source of all our frustrations
-	blackHole.Initialize(sceneManager, worldSceneNode, physicsEngine);
 
 	//creating the player entity
 	player.Initialize(sceneManager, worldSceneNode, physicsEngine);
 	camera->attachTo(&player);
-	player.translate(0.0f, 0.0f, 300.0f);
 	
 	//Setting up the basic control scheme
 	initControls(inMan);
@@ -72,7 +68,7 @@ void World::SpawnAsteroid()
 	Asteroid *asteroid = new Asteroid(sceneManager, worldSceneNode, physicsEngine);
 	float theta = Ogre::Math::RangeRandom(0.0f, Ogre::Math::TWO_PI);
 	float phi = Ogre::Math::RangeRandom(0.0f, Ogre::Math::TWO_PI);
-	Ogre::Vector3 initialPosition = Ogre::Vector3(cos(theta) * sin(phi), sin(theta) * sin(phi), -cos(phi)) * worldRadius;
+	Ogre::Vector3 initialPosition = Ogre::Vector3(cos(theta) * sin(phi), sin(theta) * sin(phi), -cos(phi)) * 10.0f;
 	asteroid->translate(initialPosition);
 	asteroidList.push_back(asteroid);
 }
