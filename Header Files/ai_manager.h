@@ -14,7 +14,7 @@ public:
 	void trainNewShip(Ogre::Vector3 position);
 private:
 	std::vector<EnemySpacecraft*> fleet;
-	PhysicsEngine* physicsEngine;
+	PhysicsEngine *physicsEngine;
 	Ogre::SceneManager* sceneManager;
 	Ogre::SceneNode*	parentNode;
 
