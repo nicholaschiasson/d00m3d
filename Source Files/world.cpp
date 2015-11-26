@@ -359,7 +359,7 @@ void World::boom(void* context, const Ogre::FrameEvent& fe)
 void World::testAi()
 {
 	EnemySpacecraft* recruit = new EnemySpacecraft(sceneManager, worldSceneNode, physicsEngine);
-	recruit->translate(player.getPosition() + Ogre::Vector3(0,0,-6));
+	recruit->translate(player.getPosition() + Ogre::Vector3(0,0,-25));
 	recruit->setTarget(&player);
 	fleet.push_back(recruit);
 }

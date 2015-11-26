@@ -28,10 +28,13 @@ private:
 	PhysicsEngine *physicsEngine;
 	mindState currState;
 	Spacecraft* target;
+	float lastShot;
+	float reload;
 
 	void handleIdle(const Ogre::FrameEvent &fe);
 	void handlePursue(const Ogre::FrameEvent &fe);
 	void handleTurn(const Ogre::FrameEvent &fe);
+	void handleFire(const Ogre::FrameEvent &fe, bool warningShot);
 	void findTarget(const Ogre::FrameEvent &fe);
 
 };

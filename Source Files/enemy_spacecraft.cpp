@@ -1,11 +1,11 @@
 #include "enemy_spacecraft.h"
 
-EnemySpacecraft::EnemySpacecraft(): physicsEngine(NULL), currState(STATE_IDLE), target(NULL)
+EnemySpacecraft::EnemySpacecraft(): physicsEngine(NULL), currState(STATE_IDLE), target(NULL), lastShot(0.0), reload(2.0)
 {
 }
 
 EnemySpacecraft::EnemySpacecraft(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, unsigned int parentID):
-	physicsEngine(NULL), currState(STATE_IDLE), target(NULL)
+	physicsEngine(NULL), currState(STATE_IDLE), target(NULL), lastShot(0.0), reload(2.0)
 {
 	Initialize(sceneManager, parentNode, physicsEngine, parentID);
 }
@@ -34,10 +34,15 @@ void EnemySpacecraft::Update(const Ogre::FrameEvent &fe)
 			handleTurn(fe);
 			break;
 		case STATE_FIRE:
+			handlePursue(fe);
+			handleFire(fe, false);
 			break;
 		case STATE_WARN:
+			handlePursue(fe);
+			handleFire(fe, true);
 			break;
 		default:
+			currState = STATE_IDLE;
 			break;
 
 		}
@@ -66,12 +71,16 @@ void EnemySpacecraft::handlePursue(const Ogre::FrameEvent &fe)
 	std::cout << "Distance: " <<distance.length() <<std::endl;
 	findTarget(fe);
 	if(distance.length() < 10){
+		currState = STATE_WARN;
 		if(velocity.length() > target->GetVelocity().length()){
 			std::cout << "Speed: " << velocity.length() << std::endl;
 			ThrustersBackward();
 		}
 
 	}else{
+		if(currState != STATE_PURSUE){
+			currState = STATE_PURSUE;
+		}
 		ThrustersForward();
 	}
 	
@@ -85,4 +94,8 @@ void EnemySpacecraft::handleTurn(const Ogre::FrameEvent &fe)
 void EnemySpacecraft::findTarget(const Ogre::FrameEvent &fe)
 {
 	sceneNode->lookAt(target->getPosition(), Ogre::Node::TS_PARENT);
+}
+
+void EnemySpacecraft::handleFire(const Ogre::FrameEvent &fe, bool warningShot){
+	fireLaser();	
 }
