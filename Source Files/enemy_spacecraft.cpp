@@ -1,11 +1,11 @@
 #include "enemy_spacecraft.h"
 
-EnemySpacecraft::EnemySpacecraft(): physicsEngine(NULL), currState(STATE_IDLE), target(NULL), thrusterCount(0)
+EnemySpacecraft::EnemySpacecraft(): physicsEngine(NULL), currState(STATE_IDLE), target(NULL)
 {
 }
 
 EnemySpacecraft::EnemySpacecraft(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, unsigned int parentID):
-	physicsEngine(NULL), currState(STATE_IDLE), target(NULL), thrusterCount(0)
+	physicsEngine(NULL), currState(STATE_IDLE), target(NULL)
 {
 	Initialize(sceneManager, parentNode, physicsEngine, parentID);
 }
@@ -32,6 +32,10 @@ void EnemySpacecraft::Update(const Ogre::FrameEvent &fe)
 			break;
 		case STATE_TURN:
 			handleTurn(fe);
+			break;
+		case STATE_FIRE:
+			break;
+		case STATE_WARN:
 			break;
 		default:
 			break;
@@ -69,7 +73,6 @@ void EnemySpacecraft::handlePursue(const Ogre::FrameEvent &fe)
 
 	}else{
 		ThrustersForward();
-		thrusterCount++;
 	}
 	
 }
