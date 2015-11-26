@@ -1,11 +1,11 @@
 #include "enemy_spacecraft.h"
 
-EnemySpacecraft::EnemySpacecraft()
+EnemySpacecraft::EnemySpacecraft(): physicsEngine(NULL), currState(STATE_IDLE), target(NULL), thrusterCount(0)
 {
 }
 
 EnemySpacecraft::EnemySpacecraft(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, unsigned int parentID):
-	physicsEngine(NULL), currState(STATE_IDLE), target(NULL)
+	physicsEngine(NULL), currState(STATE_IDLE), target(NULL), thrusterCount(0)
 {
 	Initialize(sceneManager, parentNode, physicsEngine, parentID);
 }
@@ -61,7 +61,17 @@ void EnemySpacecraft::handlePursue(const Ogre::FrameEvent &fe)
 	Ogre::Vector3 distance = target->getPosition() - sceneNode->getPosition();
 	std::cout << "Distance: " <<distance.length() <<std::endl;
 	findTarget(fe);
-	ThrustersForward();
+	if(distance.length() < 10){
+		if(velocity.length() > target->GetVelocity().length()){
+			std::cout << "Speed: " << velocity.length() << std::endl;
+			ThrustersBackward();
+		}
+
+	}else{
+		ThrustersForward();
+		thrusterCount++;
+	}
+	
 }
 
 void EnemySpacecraft::handleTurn(const Ogre::FrameEvent &fe)

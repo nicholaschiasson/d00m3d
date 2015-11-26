@@ -16,6 +16,7 @@ public:
 		STATE_IDLE,
 		STATE_PURSUE,
 		STATE_TURN,
+		STATE_FIRE,
 	};
 
 	virtual ~EnemySpacecraft();
@@ -26,6 +27,7 @@ private:
 	PhysicsEngine *physicsEngine;
 	mindState currState;
 	Spacecraft* target;
+	int thrusterCount;
 
 	void handleIdle(const Ogre::FrameEvent &fe);
 	void handlePursue(const Ogre::FrameEvent &fe);
