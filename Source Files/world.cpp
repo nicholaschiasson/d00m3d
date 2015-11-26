@@ -360,5 +360,6 @@ void World::testAi()
 {
 	EnemySpacecraft* recruit = new EnemySpacecraft(sceneManager, worldSceneNode, physicsEngine);
 	recruit->translate(player.getPosition() + Ogre::Vector3(0,0,-6));
+	recruit->setTarget(&player);
 	fleet.push_back(recruit);
 }

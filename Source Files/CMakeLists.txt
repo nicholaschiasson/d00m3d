@@ -20,11 +20,9 @@ set(HDRS
 	"${HDR_DIR}/laser.h"
 	"${HDR_DIR}/item.h"
 	"${HDR_DIR}/TextRenderer.h"
-	"${HDR_DIR}/sentinent_object.h"
 )
 
 set(SRCS
-	sentinent_object.cpp
     enemy_spacecraft.cpp
     asteroid.cpp
     black_hole.cpp
