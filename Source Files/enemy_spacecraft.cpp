@@ -49,10 +49,19 @@ void EnemySpacecraft::handleIdle(const Ogre::FrameEvent &fe)
 {
 	//need to orientate to the target.
 	findTarget(fe);
+	Ogre::Vector3 distance = target->getPosition() - sceneNode->getPosition();
+	std::cout << "Distance: " <<distance.length() <<std::endl;
+	if(distance.length() < 50){
+		currState = STATE_PURSUE;
+	}
 }
 
 void EnemySpacecraft::handlePursue(const Ogre::FrameEvent &fe)
 {
+	Ogre::Vector3 distance = target->getPosition() - sceneNode->getPosition();
+	std::cout << "Distance: " <<distance.length() <<std::endl;
+	findTarget(fe);
+	ThrustersForward();
 }
 
 void EnemySpacecraft::handleTurn(const Ogre::FrameEvent &fe)
