@@ -134,7 +134,7 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 			(*it)->Update(fe);
 		}
 		//cleanup any dead entities from those lists
-		cleanupLists();
+		cleanupLists(true);
 	
 		//now that our lists our clean we can update the player.
 		player.Update(fe);
