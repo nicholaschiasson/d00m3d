@@ -1,6 +1,6 @@
 #include "laser.h"
 
-Laser::Laser(): cooldown(5), duration(5), timer(0), damage(100), active(false), myState(LASER_READY)
+Laser::Laser(): cooldown(5), duration(5), timer(0), damage(100), myState(LASER_READY)
 {
 	//lalala
 }
@@ -17,6 +17,11 @@ int Laser::getDamage() const
 int Laser::getCooldown() const
 {
 	return cooldown;
+}
+
+Laser::LASER_STATE Laser::getState() const
+{
+	return myState;
 }
 
 void Laser::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, unsigned int parentID)

@@ -28,7 +28,7 @@ public:
 
 	int getDamage() const;
 	int getCooldown() const;
-
+	LASER_STATE getState() const;
 	
 
 private:

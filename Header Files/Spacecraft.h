@@ -27,7 +27,7 @@ public:
 	void ThrustersUpward();
 	void ThrustersDownward();
 
-private:
+protected:
 	Laser laser;
 	float thrusterForce;
 };

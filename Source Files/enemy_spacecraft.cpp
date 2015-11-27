@@ -69,7 +69,9 @@ void EnemySpacecraft::handlePursue(const Ogre::FrameEvent &fe)
 {
 	Ogre::Vector3 distance = target->getPosition() - sceneNode->getPosition();
 	std::cout << "Distance: " <<distance.length() <<std::endl;
-	findTarget(fe);
+	if(laser.getState() != Laser::LASER_FIRING){ //ensure we dont turn as the laser is firing
+		findTarget(fe);
+	}
 	if(distance.length() < 10){
 		currState = STATE_WARN;
 		if(velocity.length() > target->GetVelocity().length()){
@@ -97,5 +99,19 @@ void EnemySpacecraft::findTarget(const Ogre::FrameEvent &fe)
 }
 
 void EnemySpacecraft::handleFire(const Ogre::FrameEvent &fe, bool warningShot){
-	fireLaser();	
+	if(lastShot + fe.timeSinceLastFrame > reload){
+		lastShot = 0; 
+		if(warningShot){
+			Ogre::Vector3 targetDirection = target->getOrientation() * Ogre::Vector3::NEGATIVE_UNIT_Z;
+			targetDirection.normalise(); //in case its not normalized;
+
+			sceneNode->lookAt(target->getPosition() + 2*targetDirection, Ogre::Node::TS_PARENT);
+			currState = STATE_FIRE;
+		}else{
+			}
+		fireLaser();	
+	}else{
+		lastShot += fe.timeSinceLastFrame;
+	}
+	
 }
