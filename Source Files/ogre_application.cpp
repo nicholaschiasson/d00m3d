@@ -297,8 +297,7 @@ namespace ogre_application
 	
 	void OgreApplication::RegisterInputCallbacks()
 	{
-		inputManager.RegisterCallback(this, ExitOgreApplication, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_RELEASE, false, (int)OIS::KC_ESCAPE);
-		inputManager.RegisterCallback(this, ExitOgreApplication, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_RELEASE, true, (int)OIS::KC_ESCAPE);
+		inputManager.RegisterCallback(this, ExitOgreApplication, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_RELEASE, MOUSE_MOTION_STATE_EITHER, (int)OIS::KC_ESCAPE);
 	}
 
 	void OgreApplication::MainLoop()

@@ -15,6 +15,7 @@ InputManager::InputManager()
 	previousMouseLocation = Ogre::Vector3(0.0f, 0.0f, 0.0f);
 	mouseLocationCompensation = Ogre::Vector2(0.0f, 0.0f);
 	firstMoustMove = false;
+	mouseMoved = MOUSE_MOTION_STATE_STATIONARY;
 }
 
 InputManager::~InputManager()
@@ -46,11 +47,11 @@ void InputManager::Update(const Ogre::FrameEvent& fe)
 
 	if (previousMouseLocation != mouseLocation)
 	{
-			mouseMoved = true;
+		mouseMoved = MOUSE_MOTION_STATE_MOVING;
 	}
 	else
 	{
-		mouseMoved = false;
+		mouseMoved = MOUSE_MOTION_STATE_STATIONARY;
 	}
 
 	for (int i = 0; i < 8; i++)
@@ -60,6 +61,18 @@ void InputManager::Update(const Ogre::FrameEvent& fe)
 			if (GetMouseButtonState((OIS::MouseButtonID)i) == INPUT_STATE_UP)
 			{
 				// Press
+				for (std::vector<void(*)(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)>::iterator it = 
+					mouseCallbacks[INPUT_EVENT_PRESS][MOUSE_MOTION_STATE_EITHER][(OIS::MouseButtonID)i].begin();
+					it != mouseCallbacks[INPUT_EVENT_PRESS][MOUSE_MOTION_STATE_EITHER][(OIS::MouseButtonID)i].end(); ++it)
+				{
+					int index = (int)(it - mouseCallbacks[INPUT_EVENT_PRESS][MOUSE_MOTION_STATE_EITHER][(OIS::MouseButtonID)i].begin());
+					(*it)(mouseCallbacks[INPUT_EVENT_PRESS][MOUSE_MOTION_STATE_EITHER][(OIS::MouseButtonID)i][index], fe, (int)previousMouseLocation.x, (int)previousMouseLocation.y, (int)mouseLocation.x, (int)mouseLocation.y);
+					if (interrupted)
+					{
+						interrupted = false;
+						return;
+					}
+				}
 				for (std::vector<void(*)(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)>::iterator it = 
 					mouseCallbacks[INPUT_EVENT_PRESS][mouseMoved][(OIS::MouseButtonID)i].begin();
 					it != mouseCallbacks[INPUT_EVENT_PRESS][mouseMoved][(OIS::MouseButtonID)i].end(); ++it)
@@ -74,6 +87,18 @@ void InputManager::Update(const Ogre::FrameEvent& fe)
 				}
 			}
 			// Hold
+			for (std::vector<void(*)(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)>::iterator it = 
+				mouseCallbacks[INPUT_EVENT_HOLD][MOUSE_MOTION_STATE_EITHER][(OIS::MouseButtonID)i].begin();
+				it != mouseCallbacks[INPUT_EVENT_HOLD][MOUSE_MOTION_STATE_EITHER][(OIS::MouseButtonID)i].end(); ++it)
+			{
+				int index = (int)(it - mouseCallbacks[INPUT_EVENT_HOLD][MOUSE_MOTION_STATE_EITHER][(OIS::MouseButtonID)i].begin());
+				(*it)(mouseCallbacks[INPUT_EVENT_HOLD][MOUSE_MOTION_STATE_EITHER][(OIS::MouseButtonID)i][index], fe, (int)previousMouseLocation.x, (int)previousMouseLocation.y, (int)mouseLocation.x, (int)mouseLocation.y);
+				if (interrupted)
+				{
+					interrupted = false;
+					return;
+				}
+			}
 			for (std::vector<void(*)(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)>::iterator it = 
 				mouseCallbacks[INPUT_EVENT_HOLD][mouseMoved][(OIS::MouseButtonID)i].begin();
 				it != mouseCallbacks[INPUT_EVENT_HOLD][mouseMoved][(OIS::MouseButtonID)i].end(); ++it)
@@ -93,6 +118,18 @@ void InputManager::Update(const Ogre::FrameEvent& fe)
 			{
 				// Release
 				for (std::vector<void(*)(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)>::iterator it = 
+					mouseCallbacks[INPUT_EVENT_RELEASE][MOUSE_MOTION_STATE_EITHER][(OIS::MouseButtonID)i].begin();
+					it != mouseCallbacks[INPUT_EVENT_RELEASE][MOUSE_MOTION_STATE_EITHER][(OIS::MouseButtonID)i].end(); ++it)
+				{
+					int index = (int)(it - mouseCallbacks[INPUT_EVENT_RELEASE][MOUSE_MOTION_STATE_EITHER][(OIS::MouseButtonID)i].begin());
+					(*it)(mouseCallbacks[INPUT_EVENT_RELEASE][MOUSE_MOTION_STATE_EITHER][(OIS::MouseButtonID)i][index], fe, (int)previousMouseLocation.x, (int)previousMouseLocation.y, (int)mouseLocation.x, (int)mouseLocation.y);
+					if (interrupted)
+					{
+						interrupted = false;
+						return;
+					}
+				}
+				for (std::vector<void(*)(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)>::iterator it = 
 					mouseCallbacks[INPUT_EVENT_RELEASE][mouseMoved][(OIS::MouseButtonID)i].begin();
 					it != mouseCallbacks[INPUT_EVENT_RELEASE][mouseMoved][(OIS::MouseButtonID)i].end(); ++it)
 				{
@@ -106,6 +143,18 @@ void InputManager::Update(const Ogre::FrameEvent& fe)
 				}
 			}
 			// Up
+			for (std::vector<void(*)(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)>::iterator it = 
+				mouseCallbacks[INPUT_EVENT_UP][MOUSE_MOTION_STATE_EITHER][(OIS::MouseButtonID)i].begin();
+				it != mouseCallbacks[INPUT_EVENT_UP][MOUSE_MOTION_STATE_EITHER][(OIS::MouseButtonID)i].end(); ++it)
+			{
+				int index = (int)(it - mouseCallbacks[INPUT_EVENT_UP][MOUSE_MOTION_STATE_EITHER][(OIS::MouseButtonID)i].begin());
+				(*it)(mouseCallbacks[INPUT_EVENT_UP][MOUSE_MOTION_STATE_EITHER][(OIS::MouseButtonID)i][index], fe, (int)previousMouseLocation.x, (int)previousMouseLocation.y, (int)mouseLocation.x, (int)mouseLocation.y);
+				if (interrupted)
+				{
+					interrupted = false;
+					return;
+				}
+			}
 			for (std::vector<void(*)(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)>::iterator it = 
 				mouseCallbacks[INPUT_EVENT_UP][mouseMoved][(OIS::MouseButtonID)i].begin();
 				it != mouseCallbacks[INPUT_EVENT_UP][mouseMoved][(OIS::MouseButtonID)i].end(); ++it)
@@ -130,6 +179,18 @@ void InputManager::Update(const Ogre::FrameEvent& fe)
 			{
 				// Press
 				for (std::vector<void(*)(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)>::iterator it = 
+					keyboardCallbacks[INPUT_EVENT_PRESS][MOUSE_MOTION_STATE_EITHER][(OIS::KeyCode)i].begin();
+					it != keyboardCallbacks[INPUT_EVENT_PRESS][MOUSE_MOTION_STATE_EITHER][(OIS::KeyCode)i].end(); ++it)
+				{
+					int index = (int)(it - keyboardCallbacks[INPUT_EVENT_PRESS][MOUSE_MOTION_STATE_EITHER][(OIS::KeyCode)i].begin());
+					(*it)(keyboardContexts[INPUT_EVENT_PRESS][MOUSE_MOTION_STATE_EITHER][(OIS::KeyCode)i][index], fe, (int)previousMouseLocation.x, (int)previousMouseLocation.y, (int)mouseLocation.x, (int)mouseLocation.y);
+					if (interrupted)
+					{
+						interrupted = false;
+						return;
+					}
+				}
+				for (std::vector<void(*)(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)>::iterator it = 
 					keyboardCallbacks[INPUT_EVENT_PRESS][mouseMoved][(OIS::KeyCode)i].begin();
 					it != keyboardCallbacks[INPUT_EVENT_PRESS][mouseMoved][(OIS::KeyCode)i].end(); ++it)
 				{
@@ -143,6 +204,18 @@ void InputManager::Update(const Ogre::FrameEvent& fe)
 				}
 			}
 			// Hold
+			for (std::vector<void(*)(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)>::iterator it = 
+				keyboardCallbacks[INPUT_EVENT_HOLD][MOUSE_MOTION_STATE_EITHER][(OIS::KeyCode)i].begin();
+				it != keyboardCallbacks[INPUT_EVENT_HOLD][MOUSE_MOTION_STATE_EITHER][(OIS::KeyCode)i].end(); ++it)
+			{
+				int index = (int)(it - keyboardCallbacks[INPUT_EVENT_HOLD][MOUSE_MOTION_STATE_EITHER][(OIS::KeyCode)i].begin());
+				(*it)(keyboardContexts[INPUT_EVENT_HOLD][MOUSE_MOTION_STATE_EITHER][(OIS::KeyCode)i][index], fe, (int)previousMouseLocation.x, (int)previousMouseLocation.y, (int)mouseLocation.x, (int)mouseLocation.y);
+				if (interrupted)
+				{
+					interrupted = false;
+					return;
+				}
+			}
 			for (std::vector<void(*)(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)>::iterator it = 
 				keyboardCallbacks[INPUT_EVENT_HOLD][mouseMoved][(OIS::KeyCode)i].begin();
 				it != keyboardCallbacks[INPUT_EVENT_HOLD][mouseMoved][(OIS::KeyCode)i].end(); ++it)
@@ -162,6 +235,18 @@ void InputManager::Update(const Ogre::FrameEvent& fe)
 			{
 				// Release
 				for (std::vector<void(*)(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)>::iterator it = 
+					keyboardCallbacks[INPUT_EVENT_RELEASE][MOUSE_MOTION_STATE_EITHER][(OIS::KeyCode)i].begin();
+					it != keyboardCallbacks[INPUT_EVENT_RELEASE][MOUSE_MOTION_STATE_EITHER][(OIS::KeyCode)i].end(); ++it)
+				{
+					int index = (int)(it - keyboardCallbacks[INPUT_EVENT_RELEASE][MOUSE_MOTION_STATE_EITHER][(OIS::KeyCode)i].begin());
+					(*it)(keyboardContexts[INPUT_EVENT_RELEASE][MOUSE_MOTION_STATE_EITHER][(OIS::KeyCode)i][index], fe, (int)previousMouseLocation.x, (int)previousMouseLocation.y, (int)mouseLocation.x, (int)mouseLocation.y);
+					if (interrupted)
+					{
+						interrupted = false;
+						return;
+					}
+				}
+				for (std::vector<void(*)(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)>::iterator it = 
 					keyboardCallbacks[INPUT_EVENT_RELEASE][mouseMoved][(OIS::KeyCode)i].begin();
 					it != keyboardCallbacks[INPUT_EVENT_RELEASE][mouseMoved][(OIS::KeyCode)i].end(); ++it)
 				{
@@ -175,6 +260,18 @@ void InputManager::Update(const Ogre::FrameEvent& fe)
 				}
 			}
 			// Up
+			for (std::vector<void(*)(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)>::iterator it = 
+				keyboardCallbacks[INPUT_EVENT_UP][MOUSE_MOTION_STATE_EITHER][(OIS::KeyCode)i].begin();
+				it != keyboardCallbacks[INPUT_EVENT_UP][MOUSE_MOTION_STATE_EITHER][(OIS::KeyCode)i].end(); ++it)
+			{
+				int index = (int)(it - keyboardCallbacks[INPUT_EVENT_UP][MOUSE_MOTION_STATE_EITHER][(OIS::KeyCode)i].begin());
+				(*it)(keyboardContexts[INPUT_EVENT_UP][MOUSE_MOTION_STATE_EITHER][(OIS::KeyCode)i][index], fe, (int)previousMouseLocation.x, (int)previousMouseLocation.y, (int)mouseLocation.x, (int)mouseLocation.y);
+				if (interrupted)
+				{
+					interrupted = false;
+					return;
+				}
+			}
 			for (std::vector<void(*)(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)>::iterator it = 
 				keyboardCallbacks[INPUT_EVENT_UP][mouseMoved][(OIS::KeyCode)i].begin();
 				it != keyboardCallbacks[INPUT_EVENT_UP][mouseMoved][(OIS::KeyCode)i].end(); ++it)
@@ -190,7 +287,18 @@ void InputManager::Update(const Ogre::FrameEvent& fe)
 		}
 	}
 	keyboard->copyKeyStates(keys);
-
+	
+	for (std::vector<void(*)(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)>::iterator it = 
+		noInputCallbacks[MOUSE_MOTION_STATE_EITHER].begin(); it != noInputCallbacks[MOUSE_MOTION_STATE_EITHER].end(); ++it)
+	{
+		int index = (int)(it - noInputCallbacks[MOUSE_MOTION_STATE_EITHER].begin());
+		(*it)(noInputContexts[MOUSE_MOTION_STATE_EITHER][index], fe, (int)previousMouseLocation.x, (int)previousMouseLocation.y, (int)mouseLocation.x, (int)mouseLocation.y);
+		if (interrupted)
+		{
+			interrupted = false;
+			return;
+		}
+	}
 	for (std::vector<void(*)(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)>::iterator it = 
 		noInputCallbacks[mouseMoved].begin(); it != noInputCallbacks[mouseMoved].end(); ++it)
 	{
@@ -209,7 +317,7 @@ void InputManager::Update(const Ogre::FrameEvent& fe)
 }
 
 void InputManager::RegisterCallback(void *context, void(*callback)(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2), 
-									INPUT_SOURCE triggerSource, INPUT_EVENT triggerEvent, bool onMouseMove, int keyOrButtonCode)
+									INPUT_SOURCE triggerSource, INPUT_EVENT triggerEvent, MOUSE_MOTION_STATE onMouseMove, int keyOrButtonCode)
 {
 	if (triggerSource == INPUT_SOURCE_NONE)
 	{
@@ -229,7 +337,7 @@ void InputManager::RegisterCallback(void *context, void(*callback)(void *context
 }
 
 void InputManager::UnregisterCallback(void *context, void(*callback)(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2), 
-									  INPUT_SOURCE triggerSource, INPUT_EVENT triggerEvent, bool onMouseMove, int keyOrButtonCode)
+									  INPUT_SOURCE triggerSource, INPUT_EVENT triggerEvent, MOUSE_MOTION_STATE onMouseMove, int keyOrButtonCode)
 {
 	if (triggerSource == INPUT_SOURCE_NONE)
 	{
