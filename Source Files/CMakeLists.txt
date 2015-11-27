@@ -20,7 +20,7 @@ set(HDRS
 	"${HDR_DIR}/laser.h"
 	"${HDR_DIR}/item.h"
 	"${HDR_DIR}/TextRenderer.h"
-	"${HDR_DIR}/particle.h"
+	"${HDR_DIR}/particle_effect.h"
 	"${HDR_DIR}/particle_engine.h"
 )
 
@@ -54,7 +54,7 @@ set(SRCS
     SkyboxFp.glsl
     SkyboxVp.glsl
 	MyFont.fontdef
-	particle.cpp
+	particle_effect.cpp
 	particle_engine.cpp
 	Fire.material
 	FireMaterialFp.glsl
