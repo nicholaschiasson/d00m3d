@@ -16,7 +16,7 @@ namespace ogre_application
 	const Ogre::String custom_window_capacities_g = "";
 	const unsigned int window_width_g = 1200;
 	const unsigned int window_height_g = (int)((float)window_width_g / (16.0f / 9.0f));
-	const bool window_full_screen_g = true;
+	const bool window_full_screen_g = false;
 
 	/* Viewport and camera settings */
 	float viewport_width_g = 1.0f;
