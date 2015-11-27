@@ -1,11 +1,12 @@
 #include "particle_effect.h"
 
-ParticleEffect::ParticleEffect(Ogre::SceneManager* sceneManager, Ogre::SceneNode* parentNode, Ogre::String object_name, Ogre::String material_name, PhysicsEngine &physicsEngine,  Ogre::Vector3 position)
+ParticleEffect::ParticleEffect(Ogre::SceneManager* sceneManager, Ogre::SceneNode* parentNode, Ogre::String object_name, Ogre::String material_name, PhysicsEngine &physicsEngine):
+	timer(0), duration(3 + ((float) rand() / (float) (RAND_MAX /4)))
 {
-	Initialize(sceneManager, parentNode, object_name, material_name, physicsEngine, position);
+	Initialize(sceneManager, parentNode, object_name, material_name, physicsEngine);
 }
 
-void ParticleEffect::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, Ogre::String object_name, Ogre::String material_name, PhysicsEngine &physicsEngine, Ogre::Vector3 position, unsigned int parentID)
+void ParticleEffect::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, Ogre::String object_name, Ogre::String material_name, PhysicsEngine &physicsEngine, unsigned int parentID)
 {
 	PhysicsEntity::Initialize(sceneManager, parentNode, physicsEngine, parentID);
 
@@ -16,10 +17,10 @@ void ParticleEffect::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNod
 	entity->setMaterialName(materialName);
 
 	sceneNode->attachObject(entity);
-	sceneNode->translate(position);
+	sceneNode->translate(0,0,0);
 	
 }
-void ParticleEffect::update(const Ogre::FrameEvent& fe)
+void ParticleEffect::Update(const Ogre::FrameEvent& fe)
 {
 	if(alive){
 		timer += fe.timeSinceLastFrame;
@@ -30,4 +31,8 @@ void ParticleEffect::update(const Ogre::FrameEvent& fe)
 			alive = false;
 		}
 	}
+}
+
+void ParticleEffect::Collide(const Ogre::FrameEvent &fe, PhysicsEntity *physicsEntity)
+{
 }

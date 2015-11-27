@@ -56,10 +56,10 @@ set(SRCS
 	MyFont.fontdef
 	particle_effect.cpp
 	particle_engine.cpp
-	Fire.material
-	FireMaterialFp.glsl
-	FireMaterialVp.glsl
-	FireMaterialGp.glsl
+	explosion.material
+	explosionMaterialFp.glsl
+	explosionMaterialVp.glsl
+	explosionMaterialGp.glsl
 )
 
 # The rules here are specific to Windows Systems

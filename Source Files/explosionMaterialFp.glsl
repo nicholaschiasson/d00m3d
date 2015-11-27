@@ -15,5 +15,6 @@ void main (void)
 	vec4 outval = texture(tex_samp, tex_coord);
 	// Adjust specified object colour according to the grayscale texture value
     outval = vec4(outval.r*object_colour.r, outval.g*object_colour.g, outval.b*object_colour.b, sqrt(sqrt(outval.r))*frag_colour.a);
+	
 	gl_FragColor = outval;
 }
