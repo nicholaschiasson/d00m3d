@@ -1,6 +1,6 @@
 #include "laser.h"
 
-Laser::Laser(): cooldown(5), duration(5), timer(0), damage(250), active(false), myState(LASER_READY)
+Laser::Laser(): cooldown(5), duration(5), timer(0), damage(100), myState(LASER_READY)
 {
 	//lalala
 }
@@ -19,6 +19,11 @@ int Laser::getCooldown() const
 	return cooldown;
 }
 
+Laser::LASER_STATE Laser::getState() const
+{
+	return myState;
+}
+
 void Laser::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, unsigned int parentID)
 {
 	PhysicsEntity::Initialize(sceneManager, parentNode, physicsEngine, parentID);
@@ -34,7 +39,7 @@ void Laser::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parent
 	laserSceneNode->attachObject(laserEntity);
 	laserSceneNode->scale(0.05f, 100.0f, 0.05f);
 	laserSceneNode->pitch(Ogre::Radian(-Ogre::Math::HALF_PI));
-	laserSceneNode->translate(0,0,-50.5f);
+	laserSceneNode->translate(0,0,-50.0f);
 
 	sceneNode->setVisible(false);
 }
@@ -88,7 +93,7 @@ void Laser::Update(const Ogre::FrameEvent &fe)
 			}
 		}
 		else{
-			timer--;
+			timer-= fe.timeSinceLastFrame;
 		}
 	}
 }
