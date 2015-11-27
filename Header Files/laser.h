@@ -36,7 +36,6 @@ private:
 	int duration;
 	int timer;
 	int damage;
-	bool active;
 
 	LASER_STATE myState;
 };

@@ -63,7 +63,7 @@ namespace ogre_application
 		Camera camera;
 
 		/* Input Callbacks */
-		static void ExitOgreApplication(void *context, const Ogre::FrameEvent& fe);
+		static void ExitOgreApplication(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2);
 
     }; // class OgreApplication
 } // namespace ogre_application
