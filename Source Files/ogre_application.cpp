@@ -14,9 +14,9 @@ namespace ogre_application
 	/* Main window settings */
 	const Ogre::String window_title_g = PROJECT_NAME;
 	const Ogre::String custom_window_capacities_g = "";
-	const unsigned int window_width_g = 800;
-	const unsigned int window_height_g = 600;
-	const bool window_full_screen_g = false;
+	const unsigned int window_width_g = 1200;
+	const unsigned int window_height_g = (int)((float)window_width_g / (16.0f / 9.0f));
+	const bool window_full_screen_g = true;
 
 	/* Viewport and camera settings */
 	float viewport_width_g = 1.0f;
@@ -24,7 +24,8 @@ namespace ogre_application
 	float viewport_left_g = (1.0f - viewport_width_g) * 0.5f;
 	float viewport_top_g = (1.0f - viewport_height_g) * 0.5f;
 	unsigned short viewport_z_order_g = 100;
-	const Ogre::ColourValue viewport_background_color_g((100.0f / 255.0f), (149.0f / 255.0f), (237.0f / 255.0f));
+	//const Ogre::ColourValue viewport_background_color_g((100.0f / 255.0f), (149.0f / 255.0f), (237.0f / 255.0f));
+	const Ogre::ColourValue viewport_background_color_g(0.0f, 0.0f, 0.0f);
 	float camera_near_clip_distance_g = 0.01f;
 	float camera_far_clip_distance_g = 1000.0f;
 	Ogre::Vector3 camera_position_g(0.0, 1.0, 2.0);
@@ -154,7 +155,7 @@ namespace ogre_application
 			Ogre::NameValuePairList params;
 			params["FSAA"] = "0";
 			params["vsync"] = "true";
-			ogre_window_ = ogre_root_->createRenderWindow(window_title_g, window_width_g, window_height_g, window_full_screen_g, &params);
+			ogre_window_ = ogre_root_->createRenderWindow(window_title_g, GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN), window_full_screen_g, &params);
 
 			ogre_window_->setActive(true);
 			ogre_window_->setAutoUpdated(false);
@@ -244,8 +245,8 @@ namespace ogre_application
 			ogre_window_->getCustomAttribute("WINDOW", &windowHnd);
 			windowHndStr << windowHnd;
 			pl.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
-			pl.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_FOREGROUND" )));
-			pl.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_NONEXCLUSIVE")));
+			//pl.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_FOREGROUND" )));
+			//pl.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_NONEXCLUSIVE")));
 			ogre_input_manager_ = OIS::InputManager::createInputSystem(pl);
 
 			/*size_t hWnd = 0;
@@ -297,6 +298,7 @@ namespace ogre_application
 	void OgreApplication::RegisterInputCallbacks()
 	{
 		inputManager.RegisterCallback(this, ExitOgreApplication, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_RELEASE, false, (int)OIS::KC_ESCAPE);
+		inputManager.RegisterCallback(this, ExitOgreApplication, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_RELEASE, true, (int)OIS::KC_ESCAPE);
 	}
 
 	void OgreApplication::MainLoop()
@@ -315,6 +317,17 @@ namespace ogre_application
 				ogre_root_->renderOneFrame();
 
 				Ogre::WindowEventUtilities::messagePump();
+
+				unsigned int width, height, depth;
+				int top, left;
+				ogre_window_->getMetrics(width, height, depth, left, top);
+
+				LPPOINT point = new tagPOINT();
+				GetCursorPos(point);
+				SetCursorPos(left + (width / 2), top + (height / 2));
+				inputManager.CompensateManualMouseSetPosition((left + (width / 2)) - point->x,
+					(top + (height / 2)) - point->y);
+				delete point;
 			}
 		}
 		catch (Ogre::Exception &e)
@@ -366,7 +379,7 @@ namespace ogre_application
 		ogre_window_->update();
 	}
 
-	void OgreApplication::ExitOgreApplication(void *context, const Ogre::FrameEvent& fe)
+	void OgreApplication::ExitOgreApplication(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)
 	{
 		if (context)
 		{
@@ -374,6 +387,7 @@ namespace ogre_application
 			app->ogre_root_->shutdown();
 			app->ogre_window_->destroy();
 			app->world.JudgementDay();
+			app->inputManager.Interrupt();
 		}
 	}
 }
