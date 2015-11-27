@@ -93,8 +93,8 @@ private:
 	std::vector<Asteroid *> asteroidList;
 	std::vector<EnemySpacecraft*> fleet;
 
-	void SpawnAsteroid();
-
+	void SpawnAsteroid(Ogre::Vector3);
+	void DeleteFarAsteroids(void);
 	//setup the control schemes
 	void initControls(InputManager *inputManager);
 	void cleanupLists(bool cleanupNeeded = true);

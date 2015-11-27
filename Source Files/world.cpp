@@ -64,14 +64,38 @@ void World::initControls(InputManager *inputManager)
 	
 }
 
-void World::SpawnAsteroid()
+/*void World::SpawnAsteroid()
 {
 	Asteroid *asteroid = new Asteroid(sceneManager, worldSceneNode, physicsEngine);
 	float theta = Ogre::Math::RangeRandom(0.0f, Ogre::Math::TWO_PI);
 	float phi = Ogre::Math::RangeRandom(0.0f, Ogre::Math::TWO_PI);
-	Ogre::Vector3 initialPosition = Ogre::Vector3(cos(theta) * sin(phi), sin(theta) * sin(phi), -cos(phi)) * 10.0f;
+	Ogre::Vector3 initialPosition = Ogre::Vector3( cos(theta) * sin(phi), sin(theta) * sin(phi), -cos(phi)) * 10.0f;
 	asteroid->translate(initialPosition);
 	asteroidList.push_back(asteroid);
+}*/
+
+void World::SpawnAsteroid(Ogre::Vector3 pos)
+{
+	Asteroid *asteroid = new Asteroid(sceneManager, worldSceneNode, physicsEngine);
+	float theta = Ogre::Math::RangeRandom(0.0f, Ogre::Math::TWO_PI);
+	float phi = Ogre::Math::RangeRandom(0.0f, Ogre::Math::TWO_PI);
+	Ogre::Vector3 initialPosition = pos + Ogre::Vector3(cos(theta) * sin(phi),sin(theta) * sin(phi), -cos(phi)) * 10.0f;
+	asteroid->translate(initialPosition);
+	asteroidList.push_back(asteroid);
+}
+
+void World::DeleteFarAsteroids(){
+	float distance = 0.0f;
+	for(std::vector<Asteroid*>::iterator it = asteroidList.begin(); it != asteroidList.end(); ++it){
+
+		distance = sqrt(((*it)->getPosition().x - player.getPosition().x)*((*it)->getPosition().x - player.getPosition().x) +
+			            ((*it)->getPosition().y - player.getPosition().y)*((*it)->getPosition().y - player.getPosition().y) +
+						((*it)->getPosition().z - player.getPosition().z)*((*it)->getPosition().z - player.getPosition().z));
+		//std::cout << distance << std::endl;
+		if(distance > 30.0){
+			(*it)->kill(); 
+		}
+	}
 }
 
 void World::createWorld()
@@ -83,12 +107,17 @@ void World::createWorld()
 void World::updateWorld(const Ogre::FrameEvent& fe)
 {
 	Entity* deadEntity = NULL;
+
+	DeleteFarAsteroids();  
+
 	if (exists)
 	{
 		//TODO update stuff
 		if (timer <= 0.0f)
 		{
-			SpawnAsteroid();
+			for(int i = 0; i<10; i++){
+				SpawnAsteroid(player.getPosition());
+			}
 			timer = spawnTime;
 		}
 		else
@@ -135,7 +164,21 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 		//itemlist
 		for(std::vector<Item*>::iterator it = itemList.begin(); it != itemList.end(); ++it){
 			(*it)->Update(fe);
+
+			if(!(*it)->isAlive()){
+				deadEntity = (*it);
+				//(*it)->explode(); //TODO PARTCILE STUFF
+
+				//removing our now dead enetity from the list of physicsOBject
+				physicsEngine.RemovePhysicsEntity((PhysicsEntity*) deadEntity);
+				if (!deadEntity->isSpaghettified())
+				{
+					itemList.push_back(new Item(sceneManager, worldSceneNode, physicsEngine, deadEntity->getPosition(), Item::FUEL));
+				}
+			}
 		}
+
+		
 		//cleanup any dead entities from those lists
 		cleanupLists();
 	
@@ -179,7 +222,7 @@ void World::cleanupLists(bool cleanupNeeded)
 		//we need to delete if they are not alive.
 		deadEntity = (*it);
 		it = asteroidList.erase(it);
-		if(cleanupNeeded)
+		if(cleanupNeeded) 
 			deadEntity->cleanup();
 		delete deadEntity;
 		deadEntity = NULL;
