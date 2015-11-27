@@ -10,6 +10,12 @@ Spacecraft::~Spacecraft()
 {
 }
 
+void Spacecraft::cleanup(PhysicsEngine &physicsEngine)
+{
+	laser.detachFrom(physicsEngine);
+	PhysicsEntity::cleanup(physicsEngine);
+}
+
 void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, unsigned int parentID)
 {
 	PhysicsEntity::Initialize(sceneManager, parentNode, physicsEngine, parentID);

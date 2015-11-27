@@ -77,7 +77,7 @@ void World::SpawnAsteroid()
 void World::createWorld()
 {
 	//TODO setup stuff for the world goes here.
-	testAi();
+	setupEnemies();
 }
 
 void World::updateWorld(const Ogre::FrameEvent& fe)
@@ -106,8 +106,6 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 				deadEntity = (*it);
 				//(*it)->explode(); //TODO PARTCILE STUFF
 
-				//removing our now dead enetity from the list of physicsOBject
-				physicsEngine.RemovePhysicsEntity((PhysicsEntity*) deadEntity);
 				if (!deadEntity->isSpaghettified())
 				{
 					itemList.push_back(new Item(sceneManager, worldSceneNode, physicsEngine, deadEntity->getPosition(), Item::FUEL));
@@ -123,8 +121,6 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 				deadEntity = (*it);
 				//(*it)->explode(); //TODO PARTCILE STUFF
 
-				//removing our now dead enetity from the list of physicsOBject
-				physicsEngine.RemovePhysicsEntity((PhysicsEntity*) deadEntity);
 				if (!deadEntity->isSpaghettified())
 				{
 					itemList.push_back(new Item(sceneManager, worldSceneNode, physicsEngine, deadEntity->getPosition(), Item::FUEL));
@@ -141,6 +137,9 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 	
 		//now that our lists our clean we can update the player.
 		player.Update(fe);
+		if(!player.isAlive()){
+			std::cout << "YOU DIED! GAME OVER" <<std::endl;
+		}
 
 		//Now that everything is updated we apply physics
 		physicsEngine.Update(fe);
@@ -149,7 +148,7 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 
 void World::cleanupLists(bool cleanupNeeded)
 {
-	Entity* deadEntity;
+	PhysicsEntity* deadEntity;
 
 	//enemyspacecraft cleanup
 	std::vector<EnemySpacecraft*>::iterator i = fleet.begin();
@@ -163,7 +162,7 @@ void World::cleanupLists(bool cleanupNeeded)
 		deadEntity = (*i);
 		i = fleet.erase(i);
 		if(cleanupNeeded)
-			deadEntity->cleanup();
+			deadEntity->cleanup(physicsEngine);
 		delete deadEntity;
 		deadEntity = NULL;
 	}
@@ -180,7 +179,7 @@ void World::cleanupLists(bool cleanupNeeded)
 		deadEntity = (*it);
 		it = asteroidList.erase(it);
 		if(cleanupNeeded)
-			deadEntity->cleanup();
+			deadEntity->cleanup(physicsEngine);
 		delete deadEntity;
 		deadEntity = NULL;
 	}
@@ -197,7 +196,7 @@ void World::cleanupLists(bool cleanupNeeded)
 		deadEntity = (*iter);
 		iter = itemList.erase(iter);
 		if(cleanupNeeded)
-			deadEntity->cleanup();
+			deadEntity->cleanup(physicsEngine);
 		delete (Item *) deadEntity;
 		deadEntity = NULL;
 	}
@@ -356,10 +355,12 @@ void World::boom(void* context, const Ogre::FrameEvent& fe)
 	}
 }
 
-void World::testAi()
+void World::setupEnemies()
 {
 	EnemySpacecraft* recruit = new EnemySpacecraft(sceneManager, worldSceneNode, physicsEngine);
-	recruit->translate(player.getPosition() + Ogre::Vector3(0,0,-25));
+	recruit->translate(player.getPosition() + Ogre::Vector3(0,0,-75));
 	recruit->setTarget(&player);
 	fleet.push_back(recruit);
+
+	//TODO: Add more enemies.
 }

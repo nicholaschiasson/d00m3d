@@ -93,7 +93,7 @@ void Laser::Update(const Ogre::FrameEvent &fe)
 			}
 		}
 		else{
-			timer--;
+			timer-= fe.timeSinceLastFrame;
 		}
 	}
 }

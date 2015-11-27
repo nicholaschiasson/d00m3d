@@ -99,7 +99,7 @@ private:
 	void initControls(InputManager *inputManager);
 	void cleanupLists(bool cleanupNeeded = true);
 
-	void testAi();
+	void setupEnemies();
 
 	// InputManager Callbacks
 	static void PlayerMoveForward(void *context, const Ogre::FrameEvent& fe);

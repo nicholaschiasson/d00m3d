@@ -5,7 +5,7 @@ EnemySpacecraft::EnemySpacecraft(): physicsEngine(NULL), currState(STATE_IDLE), 
 }
 
 EnemySpacecraft::EnemySpacecraft(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, unsigned int parentID):
-	physicsEngine(NULL), currState(STATE_IDLE), target(NULL), lastShot(0.0), reload(2.0)
+	physicsEngine(NULL), currState(STATE_IDLE), target(NULL), lastShot(0.0), reload(6.0)
 {
 	Initialize(sceneManager, parentNode, physicsEngine, parentID);
 }
@@ -59,8 +59,8 @@ void EnemySpacecraft::handleIdle(const Ogre::FrameEvent &fe)
 	//need to orientate to the target.
 	findTarget(fe);
 	Ogre::Vector3 distance = target->getPosition() - sceneNode->getPosition();
-	std::cout << "Distance: " <<distance.length() <<std::endl;
 	if(distance.length() < 50){
+		std::cout << "TARGET AQUIRED, PURSUIT ENGAGED" << std::endl;
 		currState = STATE_PURSUE;
 	}
 }
@@ -68,21 +68,19 @@ void EnemySpacecraft::handleIdle(const Ogre::FrameEvent &fe)
 void EnemySpacecraft::handlePursue(const Ogre::FrameEvent &fe)
 {
 	Ogre::Vector3 distance = target->getPosition() - sceneNode->getPosition();
-	std::cout << "Distance: " <<distance.length() <<std::endl;
+	//std::cout << "Distance: " <<distance.length() <<std::endl;
 	if(laser.getState() != Laser::LASER_FIRING){ //ensure we dont turn as the laser is firing
 		findTarget(fe);
 	}
 	if(distance.length() < 10){
-		currState = STATE_WARN;
+		if(currState == STATE_PURSUE){
+			currState = STATE_WARN;
+		}
 		if(velocity.length() > target->GetVelocity().length()){
-			std::cout << "Speed: " << velocity.length() << std::endl;
 			ThrustersBackward();
 		}
 
 	}else{
-		if(currState != STATE_PURSUE){
-			currState = STATE_PURSUE;
-		}
 		ThrustersForward();
 	}
 	
@@ -102,13 +100,16 @@ void EnemySpacecraft::handleFire(const Ogre::FrameEvent &fe, bool warningShot){
 	if(lastShot + fe.timeSinceLastFrame > reload){
 		lastShot = 0; 
 		if(warningShot){
-			Ogre::Vector3 targetDirection = target->getOrientation() * Ogre::Vector3::NEGATIVE_UNIT_Z;
-			targetDirection.normalise(); //in case its not normalized;
+			Ogre::Vector3 targetUp = target->getOrientation() * Ogre::Vector3::UNIT_Y;
+			targetUp.normalise(); //in case its not normalized;
 
-			sceneNode->lookAt(target->getPosition() + 2*targetDirection, Ogre::Node::TS_PARENT);
+			sceneNode->lookAt(target->getPosition() + targetUp, Ogre::Node::TS_PARENT);
 			currState = STATE_FIRE;
 		}else{
+			findTarget(fe);
+			currState = STATE_PURSUE;
 			}
+		std::cout << "Warning Shot: " << warningShot <<std::endl;
 		fireLaser();	
 	}else{
 		lastShot += fe.timeSinceLastFrame;

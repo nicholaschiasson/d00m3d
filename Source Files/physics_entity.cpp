@@ -9,6 +9,16 @@ PhysicsEntity::PhysicsEntity()
 PhysicsEntity::~PhysicsEntity()
 {
 }
+void PhysicsEntity::cleanup(PhysicsEngine &physicsEngine)
+{
+	detachFrom(physicsEngine);
+	Entity::cleanup();
+}
+
+void PhysicsEntity::detachFrom(PhysicsEngine &physicsEngine)
+{
+	physicsEngine.RemovePhysicsEntity((PhysicsEntity*) this);
+}
 
 void PhysicsEntity::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, unsigned int parentID)
 {
