@@ -2,6 +2,8 @@
 #define PARTICLE_ENGINE_H
 
 class ParticleEngine{
+public:
+private:
 
 }
 
