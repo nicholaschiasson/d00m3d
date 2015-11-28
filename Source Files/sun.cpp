@@ -24,4 +24,12 @@ void Sun::Initialize(Ogre::SceneManager* sceneManager, Ogre::SceneNode *parentNo
 
 void Sun::Collide(const Ogre::FrameEvent &fe, PhysicsEntity *physicsEntity)
 {
+	physicsEntity->kill();
+	std::cout << " SUN : COLLISSION COLLISSIOON COLLISSION " <<std::endl;
+}
+
+float Sun::GetRadius()
+{
+	return PhysicsEntity::GetRadius();// + 500;
+
 }
