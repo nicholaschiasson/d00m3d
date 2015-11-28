@@ -22,10 +22,10 @@ set(HDRS
 	"${HDR_DIR}/player_spacecraft.h"
 	"${HDR_DIR}/resource.h"
 	"${HDR_DIR}/spacecraft.h"
+	"${HDR_DIR}/star.h"
 	"${HDR_DIR}/TextRenderer.h"
 	"${HDR_DIR}/weapon.h"
 	"${HDR_DIR}/world.h"
-	"${HDR_DIR}/sun.h"
 )
 
 set(SRCS
@@ -66,13 +66,13 @@ set(SRCS
     Skybox.material
     SkyboxFp.glsl
     SkyboxVp.glsl
+	star.cpp
+	star.material
 	TextRenderer.cpp
 	TextureMaterialFp.glsl
 	TextureMaterialVp.glsl
 	weapon.cpp
 	world.cpp
-	sun.cpp
-	sun.material
 )
 
 # The rules here are specific to Windows Systems
