@@ -9,6 +9,16 @@ PhysicsEntity::PhysicsEntity()
 PhysicsEntity::~PhysicsEntity()
 {
 }
+void PhysicsEntity::cleanup(PhysicsEngine &physicsEngine)
+{
+	detachFrom(physicsEngine);
+	Entity::cleanup();
+}
+
+void PhysicsEntity::detachFrom(PhysicsEngine &physicsEngine)
+{
+	physicsEngine.RemovePhysicsEntity((PhysicsEntity*) this);
+}
 
 void PhysicsEntity::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, unsigned int parentID)
 {
@@ -35,7 +45,9 @@ void PhysicsEntity::Update(const Ogre::FrameEvent &fe)
 			if (mass != 0.0f)
 			{
 				previousVelocity = velocity;
-				velocity += appliedForce / mass;
+				if((velocity+appliedForce / mass).length() < 100){
+					velocity += appliedForce / mass;
+				}
 			}
 			translate(velocity * fe.timeSinceLastFrame);
 			appliedForce = 0;

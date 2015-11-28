@@ -28,7 +28,7 @@ public:
 
 	int getDamage() const;
 	int getCooldown() const;
-
+	LASER_STATE getState() const;
 	
 
 private:
@@ -36,7 +36,6 @@ private:
 	int duration;
 	int timer;
 	int damage;
-	bool active;
 
 	LASER_STATE myState;
 };

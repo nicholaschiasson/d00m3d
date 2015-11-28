@@ -30,13 +30,14 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 	exists = true;
 	spawnTime = 2.0f;
 	timer = spawnTime;
-
+	numObjects = 0;
 	//tr = new TextRenderer;
 
 	//creating the player entity
 	player.Initialize(sceneManager, worldSceneNode, physicsEngine);
 	camera->attachTo(&player);
 	
+	initObjects();
 	//Setting up the basic control scheme
 	initControls(inMan);
 
@@ -49,39 +50,32 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 
 void World::initControls(InputManager *inputManager)
 {
-	inputManager->RegisterCallback(this, PlayerMoveForward, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_W);
-	inputManager->RegisterCallback(this, PlayerMoveLeft, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_A);
-	inputManager->RegisterCallback(this, PlayerMoveBackward, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_S);
-	inputManager->RegisterCallback(this, PlayerMoveRight, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_D);
-	inputManager->RegisterCallback(this, PlayerMoveUp, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_Q);
-	inputManager->RegisterCallback(this, PlayerMoveDown, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_C);
-	inputManager->RegisterCallback(this, PlayerPitchUp, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_UP);
-	inputManager->RegisterCallback(this, PlayerYawLeft, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_LEFT);
-	inputManager->RegisterCallback(this, PlayerPitchDown, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_DOWN);
-	inputManager->RegisterCallback(this, PlayerYawRight, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_RIGHT);
-	inputManager->RegisterCallback(this, playerFireLaser, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_SPACE);
-	inputManager->RegisterCallback(this, boom, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, false, (int)OIS::KC_B);
+	inputManager->RegisterCallback(this, PlayerMoveForward, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, MOUSE_MOTION_STATE_EITHER, (int)OIS::KC_W);
+	inputManager->RegisterCallback(this, PlayerMoveLeft, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, MOUSE_MOTION_STATE_EITHER, (int)OIS::KC_A);
+	inputManager->RegisterCallback(this, PlayerMoveBackward, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, MOUSE_MOTION_STATE_EITHER, (int)OIS::KC_S);
+	inputManager->RegisterCallback(this, PlayerMoveRight, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, MOUSE_MOTION_STATE_EITHER, (int)OIS::KC_D);
+	inputManager->RegisterCallback(this, PlayerMoveUp, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, MOUSE_MOTION_STATE_EITHER, (int)OIS::KC_Q);
+	inputManager->RegisterCallback(this, PlayerMoveDown, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, MOUSE_MOTION_STATE_EITHER, (int)OIS::KC_C);
+	inputManager->RegisterCallback(this, PlayerPitchUp, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, MOUSE_MOTION_STATE_EITHER, (int)OIS::KC_UP);
+	inputManager->RegisterCallback(this, PlayerYawLeft, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, MOUSE_MOTION_STATE_EITHER, (int)OIS::KC_LEFT);
+	inputManager->RegisterCallback(this, PlayerPitchDown, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, MOUSE_MOTION_STATE_EITHER, (int)OIS::KC_DOWN);
+	inputManager->RegisterCallback(this, PlayerYawRight, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, MOUSE_MOTION_STATE_EITHER, (int)OIS::KC_RIGHT);
+	inputManager->RegisterCallback(this, playerFireLaser, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, MOUSE_MOTION_STATE_EITHER, (int)OIS::KC_SPACE);
+	inputManager->RegisterCallback(this, boom, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, MOUSE_MOTION_STATE_EITHER, (int)OIS::KC_B);
+	inputManager->RegisterCallback(this, PlayerRotate, INPUT_SOURCE_NONE, INPUT_EVENT_NONE, MOUSE_MOTION_STATE_MOVING, 0);
 	
 }
 
-/*void World::SpawnAsteroid()
-{
-	Asteroid *asteroid = new Asteroid(sceneManager, worldSceneNode, physicsEngine);
-	float theta = Ogre::Math::RangeRandom(0.0f, Ogre::Math::TWO_PI);
-	float phi = Ogre::Math::RangeRandom(0.0f, Ogre::Math::TWO_PI);
-	Ogre::Vector3 initialPosition = Ogre::Vector3( cos(theta) * sin(phi), sin(theta) * sin(phi), -cos(phi)) * 10.0f;
-	asteroid->translate(initialPosition);
-	asteroidList.push_back(asteroid);
-}*/
-
 void World::SpawnAsteroid(Ogre::Vector3 pos)
 {
+	
 	Asteroid *asteroid = new Asteroid(sceneManager, worldSceneNode, physicsEngine);
 	float theta = Ogre::Math::RangeRandom(0.0f, Ogre::Math::TWO_PI);
 	float phi = Ogre::Math::RangeRandom(0.0f, Ogre::Math::TWO_PI);
-	Ogre::Vector3 initialPosition = pos + Ogre::Vector3(cos(theta) * sin(phi),sin(theta) * sin(phi), -cos(phi)) * 10.0f;
+	Ogre::Vector3 initialPosition = pos + Ogre::Vector3(cos(theta) * sin(phi),sin(theta) * sin(phi), -cos(phi)) * 1500.0f;
 	asteroid->translate(initialPosition);
 	asteroidList.push_back(asteroid);
+	numObjects++;
 }
 
 void World::DeleteFarAsteroids(){
@@ -91,32 +85,61 @@ void World::DeleteFarAsteroids(){
 		distance = sqrt(((*it)->getPosition().x - player.getPosition().x)*((*it)->getPosition().x - player.getPosition().x) +
 			            ((*it)->getPosition().y - player.getPosition().y)*((*it)->getPosition().y - player.getPosition().y) +
 						((*it)->getPosition().z - player.getPosition().z)*((*it)->getPosition().z - player.getPosition().z));
-		//std::cout << distance << std::endl;
-		if(distance > 30.0){
+
+		if(distance > 2100){
 			(*it)->kill(); 
 		}
 	}
+	
+}
+void World::DeleteFarItems(){
+	float distance = 0.0f;
+	for(std::vector<Item*>::iterator it = itemList.begin(); it != itemList.end(); ++it){
+
+		distance = sqrt(((*it)->getPosition().x - player.getPosition().x)*((*it)->getPosition().x - player.getPosition().x) +
+			            ((*it)->getPosition().y - player.getPosition().y)*((*it)->getPosition().y - player.getPosition().y) +
+						((*it)->getPosition().z - player.getPosition().z)*((*it)->getPosition().z - player.getPosition().z));
+
+		if(distance > 2100){
+			(*it)->kill(); 
+		}
+	}
+
 }
 
+void World::initObjects(){
+	Ogre::Vector3 pos = player.getPosition();
+	for (int i = 0; i<100; i++){
+		Asteroid *asteroid = new Asteroid(sceneManager, worldSceneNode, physicsEngine);
+		float theta = Ogre::Math::RangeRandom(0.0f, Ogre::Math::TWO_PI);
+		float phi = Ogre::Math::RangeRandom(0.0f, Ogre::Math::TWO_PI);
+		float dist = Ogre::Math::RangeRandom(300.0,2000.0);
+		Ogre::Vector3 initialPosition = pos + Ogre::Vector3(cos(theta) * sin(phi),sin(theta) * sin(phi), -cos(phi)) * dist;
+		asteroid->translate(initialPosition);
+		asteroidList.push_back(asteroid);
+		numObjects++;
+	}
+}
 void World::createWorld()
 {
 	//TODO setup stuff for the world goes here.
-	testAi();
+	setupEnemies();
 }
 
 void World::updateWorld(const Ogre::FrameEvent& fe)
 {
+	//std::cout << numObjects << std::endl;
 	Entity* deadEntity = NULL;
-
-	DeleteFarAsteroids();  
 
 	if (exists)
 	{
 		//TODO update stuff
 		if (timer <= 0.0f)
 		{
-			for(int i = 0; i<10; i++){
-				SpawnAsteroid(player.getPosition());
+			for(int i = 0; i<20; i++){
+				if(numObjects < MAX_NUM_OBJECTS){
+				    SpawnAsteroid(player.getPosition());
+				}
 			}
 			timer = spawnTime;
 		}
@@ -135,12 +158,6 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 				deadEntity = (*it);
 				//(*it)->explode(); //TODO PARTCILE STUFF
 
-				//removing our now dead enetity from the list of physicsOBject
-				physicsEngine.RemovePhysicsEntity((PhysicsEntity*) deadEntity);
-				if (!deadEntity->isSpaghettified())
-				{
-					itemList.push_back(new Item(sceneManager, worldSceneNode, physicsEngine, deadEntity->getPosition(), Item::FUEL));
-				}
 			}
 		}
 
@@ -151,13 +168,6 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 			if(!(*it)->isAlive()){
 				deadEntity = (*it);
 				//(*it)->explode(); //TODO PARTCILE STUFF
-
-				//removing our now dead enetity from the list of physicsOBject
-				physicsEngine.RemovePhysicsEntity((PhysicsEntity*) deadEntity);
-				if (!deadEntity->isSpaghettified())
-				{
-					itemList.push_back(new Item(sceneManager, worldSceneNode, physicsEngine, deadEntity->getPosition(), Item::FUEL));
-				}
 			}
 		}
 
@@ -168,22 +178,21 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 			if(!(*it)->isAlive()){
 				deadEntity = (*it);
 				//(*it)->explode(); //TODO PARTCILE STUFF
-
-				//removing our now dead enetity from the list of physicsOBject
-				physicsEngine.RemovePhysicsEntity((PhysicsEntity*) deadEntity);
-				if (!deadEntity->isSpaghettified())
-				{
-					itemList.push_back(new Item(sceneManager, worldSceneNode, physicsEngine, deadEntity->getPosition(), Item::FUEL));
-				}
+				
 			}
+			
 		}
 
-		
+		DeleteFarAsteroids(); 
+	    DeleteFarItems();
 		//cleanup any dead entities from those lists
-		cleanupLists();
+		cleanupLists(true);
 	
 		//now that our lists our clean we can update the player.
 		player.Update(fe);
+		if(!player.isAlive()){
+			std::cout << "YOU DIED! GAME OVER" <<std::endl;
+		}
 
 		//Now that everything is updated we apply physics
 		physicsEngine.Update(fe);
@@ -192,7 +201,7 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 
 void World::cleanupLists(bool cleanupNeeded)
 {
-	Entity* deadEntity;
+	PhysicsEntity* deadEntity;
 
 	//enemyspacecraft cleanup
 	std::vector<EnemySpacecraft*>::iterator i = fleet.begin();
@@ -206,7 +215,7 @@ void World::cleanupLists(bool cleanupNeeded)
 		deadEntity = (*i);
 		i = fleet.erase(i);
 		if(cleanupNeeded)
-			deadEntity->cleanup();
+			deadEntity->cleanup(physicsEngine);
 		delete deadEntity;
 		deadEntity = NULL;
 	}
@@ -218,12 +227,14 @@ void World::cleanupLists(bool cleanupNeeded)
 			++it;
 			continue;
 		}
+		numObjects--;
 
 		//we need to delete if they are not alive.
 		deadEntity = (*it);
 		it = asteroidList.erase(it);
-		if(cleanupNeeded) 
-			deadEntity->cleanup();
+		if(cleanupNeeded)
+			deadEntity->cleanup(physicsEngine);
+
 		delete deadEntity;
 		deadEntity = NULL;
 	}
@@ -235,12 +246,11 @@ void World::cleanupLists(bool cleanupNeeded)
 			++iter;
 			continue;
 		}
-
 		//we need to delete if they are not alive.
 		deadEntity = (*iter);
 		iter = itemList.erase(iter);
 		if(cleanupNeeded)
-			deadEntity->cleanup();
+			deadEntity->cleanup(physicsEngine);
 		delete (Item *) deadEntity;
 		deadEntity = NULL;
 	}
@@ -250,7 +260,7 @@ void World::cleanupLists(bool cleanupNeeded)
 * InputManger Callbacks
 */
 
-void World::PlayerMoveForward(void *context, const Ogre::FrameEvent& fe)
+void World::PlayerMoveForward(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)
 {
 	if (context)
 	{
@@ -260,7 +270,7 @@ void World::PlayerMoveForward(void *context, const Ogre::FrameEvent& fe)
 	}
 }
 
-void World::PlayerMoveLeft(void *context, const Ogre::FrameEvent& fe)
+void World::PlayerMoveLeft(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)
 {
 	if (context)
 	{
@@ -270,7 +280,7 @@ void World::PlayerMoveLeft(void *context, const Ogre::FrameEvent& fe)
 	}
 }
 
-void World::PlayerMoveBackward(void *context, const Ogre::FrameEvent& fe)
+void World::PlayerMoveBackward(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)
 {
 	if (context)
 	{
@@ -280,7 +290,7 @@ void World::PlayerMoveBackward(void *context, const Ogre::FrameEvent& fe)
 	}
 }
 
-void World::PlayerMoveRight(void *context, const Ogre::FrameEvent& fe)
+void World::PlayerMoveRight(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)
 {
 	if (context)
 	{
@@ -290,7 +300,7 @@ void World::PlayerMoveRight(void *context, const Ogre::FrameEvent& fe)
 	}
 }
 
-void World::PlayerMoveUp(void *context, const Ogre::FrameEvent& fe)
+void World::PlayerMoveUp(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)
 {
 	if (context)
 	{
@@ -300,7 +310,7 @@ void World::PlayerMoveUp(void *context, const Ogre::FrameEvent& fe)
 	}
 }
 
-void World::PlayerMoveDown(void *context, const Ogre::FrameEvent& fe)
+void World::PlayerMoveDown(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)
 {
 	if (context)
 	{
@@ -310,7 +320,7 @@ void World::PlayerMoveDown(void *context, const Ogre::FrameEvent& fe)
 	}
 }
 
-void World::PlayerPitchUp(void *context, const Ogre::FrameEvent& fe)
+void World::PlayerPitchUp(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)
 {
 	if (context)
 	{
@@ -321,7 +331,7 @@ void World::PlayerPitchUp(void *context, const Ogre::FrameEvent& fe)
 	}
 }
 
-void World::PlayerYawLeft(void *context, const Ogre::FrameEvent& fe)
+void World::PlayerYawLeft(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)
 {
 	if (context)
 	{
@@ -332,7 +342,7 @@ void World::PlayerYawLeft(void *context, const Ogre::FrameEvent& fe)
 	}
 }
 
-void World::PlayerPitchDown(void *context, const Ogre::FrameEvent& fe)
+void World::PlayerPitchDown(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)
 {
 	if (context)
 	{
@@ -343,7 +353,7 @@ void World::PlayerPitchDown(void *context, const Ogre::FrameEvent& fe)
 	}
 }
 
-void World::PlayerYawRight(void *context, const Ogre::FrameEvent& fe)
+void World::PlayerYawRight(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)
 {
 	if (context)
 	{
@@ -354,7 +364,7 @@ void World::PlayerYawRight(void *context, const Ogre::FrameEvent& fe)
 	}
 }
 
-void World::playerFireLaser(void* context, const Ogre::FrameEvent& fe)
+void World::playerFireLaser(void* context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)
 {
 	if(context)
 	{
@@ -388,7 +398,7 @@ void World::JudgementDay()
 }
 
 
-void World::boom(void* context, const Ogre::FrameEvent& fe)
+void World::boom(void* context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)
 {
 	if(context)
 	{
@@ -399,6 +409,24 @@ void World::boom(void* context, const Ogre::FrameEvent& fe)
 	}
 }
 
-void World::testAi()
+void World::PlayerRotate(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)
 {
+	if(context)
+	{
+		World *world = static_cast<World*>(context);
+		PlayerSpacecraft *player = &world->player;
+
+		player->pitch(Ogre::Radian(Ogre::Degree(-(float)(y2 - y1))) * fe.timeSinceLastFrame);
+		player->yaw(Ogre::Radian(Ogre::Degree(-(float)(x2 - x1))) * fe.timeSinceLastFrame);
+	}
+}
+
+void World::setupEnemies()
+{
+	EnemySpacecraft* recruit = new EnemySpacecraft(sceneManager, worldSceneNode, physicsEngine);
+	recruit->translate(player.getPosition() + Ogre::Vector3(0,0,-75));
+	recruit->setTarget(&player);
+	fleet.push_back(recruit);
+
+	//TODO: Add more enemies.
 }

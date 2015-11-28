@@ -10,7 +10,7 @@ class Spacecraft : public PhysicsEntity
 public:
 	Spacecraft();
 	virtual ~Spacecraft() = 0;
-	
+	virtual void cleanup(PhysicsEngine &physicsEngine);
 	virtual void Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, unsigned int parentID = -1);
 	virtual void Update(const Ogre::FrameEvent &fe);
 
@@ -27,7 +27,7 @@ public:
 	void ThrustersUpward();
 	void ThrustersDownward();
 
-private:
+protected:
 	Laser laser;
 	float thrusterForce;
 };

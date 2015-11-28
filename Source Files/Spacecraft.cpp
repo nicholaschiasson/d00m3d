@@ -10,6 +10,12 @@ Spacecraft::~Spacecraft()
 {
 }
 
+void Spacecraft::cleanup(PhysicsEngine &physicsEngine)
+{
+	laser.detachFrom(physicsEngine);
+	PhysicsEntity::cleanup(physicsEngine);
+}
+
 void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, unsigned int parentID)
 {
 	PhysicsEntity::Initialize(sceneManager, parentNode, physicsEngine, parentID);
@@ -23,7 +29,7 @@ void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* p
 	spacecraftBodyNode->pitch(Ogre::Radian(-(Ogre::Math::HALF_PI * 0.9f)));
 
 	laser.Initialize(sceneManager, sceneNode, physicsEngine, objectID);
-	laser.translate(0.0f, -0.5f, 0.0f);
+	laser.translate(0.0f, 0.0f, 0.0f);
 	
 	thrusterForce = 500.0f;
 }

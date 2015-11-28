@@ -20,11 +20,11 @@ set(HDRS
 	"${HDR_DIR}/laser.h"
 	"${HDR_DIR}/item.h"
 	"${HDR_DIR}/TextRenderer.h"
-	"${HDR_DIR}/sentinent_object.h"
+	"${HDR_DIR}/particle_effect.h"
+	"${HDR_DIR}/particle_engine.h"
 )
 
 set(SRCS
-	sentinent_object.cpp
     enemy_spacecraft.cpp
     asteroid.cpp
     black_hole.cpp
@@ -54,6 +54,12 @@ set(SRCS
     SkyboxFp.glsl
     SkyboxVp.glsl
 	MyFont.fontdef
+	particle_effect.cpp
+	particle_engine.cpp
+	Fire.material
+	FireMaterialFp.glsl
+	FireMaterialVp.glsl
+	FireMaterialGp.glsl
 )
 
 # The rules here are specific to Windows Systems

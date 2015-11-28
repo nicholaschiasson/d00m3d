@@ -1,0 +1,74 @@
+vertex_program fire_shader/vs glsl 
+{
+    source FireMaterialVp.glsl 
+
+    default_params
+    {
+        param_named_auto world_mat world_matrix
+        param_named_auto view_mat view_matrix
+		param_named_auto normal_mat inverse_transpose_world_matrix
+		param_named_auto up_vec view_up_vector
+		param_named timer float 0.0
+        //param_named_auto projection_mat projection_matrix
+    }
+}
+
+
+geometry_program fire_shader/gs glsl 
+{
+    source FireMaterialGp.glsl
+	input_operation_type point_list
+	output_operation_type triangle_strip
+	uses_adjacency_information false
+	max_output_vertices 4
+
+    default_params
+    {
+        param_named_auto projection_mat projection_matrix
+		param_named particle_size float 0.08;
+    }
+}
+
+
+fragment_program fire_shader/fs glsl 
+{
+    source FireMaterialFp.glsl 
+
+	default_params
+	{
+		param_named object_colour float3 0.8 0.4 0.03
+		param_named tex_samp int 0
+	}
+}
+
+
+material FireMaterial
+{
+    technique
+    {
+        pass
+        {
+			// Blending settings
+		    separate_scene_blend src_alpha one src_alpha one_minus_src_alpha
+			separate_scene_blend_op add max
+			depth_write off
+
+            vertex_program_ref fire_shader/vs
+            {
+            }
+			
+			geometry_program_ref fire_shader/gs
+            {
+            }
+
+            fragment_program_ref fire_shader/fs
+            {
+            }
+
+			texture_unit {
+				texture_alias tex_samp
+			    texture flame4x4orig.png 2d
+		    }
+        } 
+    }
+}
