@@ -2,7 +2,6 @@
 
 EnemySpacecraft::EnemySpacecraft(): physicsEngine(NULL), currState(STATE_IDLE), target(NULL), lastShot(0.0), reload(2.0)
 {
-	materialPrefix = "Enemy";
 }
 
 EnemySpacecraft::EnemySpacecraft(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, unsigned int parentID):
@@ -16,6 +15,7 @@ EnemySpacecraft::~EnemySpacecraft()
 }
 
 void EnemySpacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngineRef, unsigned int parentID){
+	materialPrefix = "Enemy";
 	Spacecraft::Initialize(sceneManager, parentNode, physicsEngineRef, parentID);
 	physicsEngine = &physicsEngineRef;
 }
