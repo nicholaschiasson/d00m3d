@@ -42,9 +42,8 @@ material SkyboxMaterial
 
 			texture_unit
 			{
-				cubic_texture Resources/space.jpg separateUV
+				cubic_texture Resources/skyboxes/MauveSpaceBox/Image1024.png separateUV
 				tex_address_mode clamp
-			  //  texture Resources/sspace.jpg
 			}
         } 
     }

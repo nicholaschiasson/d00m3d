@@ -17,8 +17,8 @@ void Camera::initCamera(Ogre::Camera* ogreCamera, Ogre::SceneNode* followNode)
 	camera = ogreCamera;
 	cameraNode = followNode->createChildSceneNode("cameraNode");
 	cameraNode->attachObject(camera);
-	camera->lookAt(cameraNode->_getDerivedPosition() + (cameraNode->getOrientation() * Ogre::Vector3::NEGATIVE_UNIT_Z) * 100.0f);
 	setDistance(Ogre::Vector3(0, 0.5f, 2));
+	camera->lookAt(cameraNode->_getDerivedPosition() + (cameraNode->_getDerivedOrientation() * Ogre::Vector3::NEGATIVE_UNIT_Z) * 100.0f);
 }
 
 
@@ -35,7 +35,7 @@ void Camera::attachTo(Entity* followEntity)
 }
 void Camera::setDistance(const Ogre::Vector3 positionFromNode)
 {
-	camera->setPosition(cameraNode->_getDerivedPosition() + positionFromNode);
+	camera->setPosition(positionFromNode);
 }
 
 void Camera::rotate(const Ogre::Quaternion& rot)

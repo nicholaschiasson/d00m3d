@@ -60,7 +60,9 @@ void PhysicsEngine::Update(const Ogre::FrameEvent &fe)
 
 		for (std::vector<PhysicsEntity *>::reverse_iterator it = collidableEntities.rbegin(); it != collidableEntities.rend(); ++it)
 		{
-			if (i != (*it) && i->isAlive() && (*it)->isAlive() && i->GetObjectID() != (*it)->GetParentID() && i->GetParentID() != (*it)->GetObjectID())
+			if (i != (*it) && i->isAlive() && (*it)->isAlive() && 
+				//i->GetObjectID() != (*it)->GetObjectID() && i->GetParentID() != (*it)->GetParentID() &&
+				i->GetObjectID() != (*it)->GetParentID() && i->GetParentID() != (*it)->GetObjectID())
 			{
 				if (i->GetBodyType() == ENTITY_BODY_SPHERE || i->GetBodyType() == ENTITY_BODY_METAPHYSICAL_SPHERE)
 				{

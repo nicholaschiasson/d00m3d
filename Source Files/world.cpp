@@ -21,8 +21,7 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 	}
 
 	sceneManager = sceneMan;
-//	sceneManager->setSkyDome(true, "SkyboxMaterial", 2, 9);
-	sceneManager->setSkyBox(true, "SkyboxMaterial", 550, true);
+	sceneManager->setSkyBox(true, "SkyboxMaterial");
 
 	worldSceneNode = sceneManager->getRootSceneNode()->createChildSceneNode("_worldSceneNode_");
 	camera = cam;
@@ -208,7 +207,7 @@ void World::cleanupLists(bool cleanupNeeded)
 * InputManger Callbacks
 */
 
-void World::PlayerMoveForward(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)
+void World::PlayerMoveForward(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int z1, int x2, int y2, int z2)
 {
 	if (context)
 	{
@@ -218,7 +217,7 @@ void World::PlayerMoveForward(void *context, const Ogre::FrameEvent& fe, int x1,
 	}
 }
 
-void World::PlayerMoveLeft(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)
+void World::PlayerMoveLeft(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int z1, int x2, int y2, int z2)
 {
 	if (context)
 	{
@@ -228,7 +227,7 @@ void World::PlayerMoveLeft(void *context, const Ogre::FrameEvent& fe, int x1, in
 	}
 }
 
-void World::PlayerMoveBackward(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)
+void World::PlayerMoveBackward(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int z1, int x2, int y2, int z2)
 {
 	if (context)
 	{
@@ -238,7 +237,7 @@ void World::PlayerMoveBackward(void *context, const Ogre::FrameEvent& fe, int x1
 	}
 }
 
-void World::PlayerMoveRight(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)
+void World::PlayerMoveRight(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int z1, int x2, int y2, int z2)
 {
 	if (context)
 	{
@@ -248,7 +247,7 @@ void World::PlayerMoveRight(void *context, const Ogre::FrameEvent& fe, int x1, i
 	}
 }
 
-void World::PlayerMoveUp(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)
+void World::PlayerMoveUp(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int z1, int x2, int y2, int z2)
 {
 	if (context)
 	{
@@ -258,7 +257,7 @@ void World::PlayerMoveUp(void *context, const Ogre::FrameEvent& fe, int x1, int 
 	}
 }
 
-void World::PlayerMoveDown(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)
+void World::PlayerMoveDown(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int z1, int x2, int y2, int z2)
 {
 	if (context)
 	{
@@ -268,7 +267,7 @@ void World::PlayerMoveDown(void *context, const Ogre::FrameEvent& fe, int x1, in
 	}
 }
 
-void World::PlayerPitchUp(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)
+void World::PlayerPitchUp(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int z1, int x2, int y2, int z2)
 {
 	if (context)
 	{
@@ -279,7 +278,7 @@ void World::PlayerPitchUp(void *context, const Ogre::FrameEvent& fe, int x1, int
 	}
 }
 
-void World::PlayerYawLeft(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)
+void World::PlayerYawLeft(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int z1, int x2, int y2, int z2)
 {
 	if (context)
 	{
@@ -290,7 +289,7 @@ void World::PlayerYawLeft(void *context, const Ogre::FrameEvent& fe, int x1, int
 	}
 }
 
-void World::PlayerPitchDown(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)
+void World::PlayerPitchDown(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int z1, int x2, int y2, int z2)
 {
 	if (context)
 	{
@@ -301,7 +300,7 @@ void World::PlayerPitchDown(void *context, const Ogre::FrameEvent& fe, int x1, i
 	}
 }
 
-void World::PlayerYawRight(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)
+void World::PlayerYawRight(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int z1, int x2, int y2, int z2)
 {
 	if (context)
 	{
@@ -312,7 +311,7 @@ void World::PlayerYawRight(void *context, const Ogre::FrameEvent& fe, int x1, in
 	}
 }
 
-void World::playerFireLaser(void* context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)
+void World::playerFireLaser(void* context, const Ogre::FrameEvent& fe, int x1, int y1, int z1, int x2, int y2, int z2)
 {
 	if(context)
 	{
@@ -346,7 +345,7 @@ void World::JudgementDay()
 }
 
 
-void World::boom(void* context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)
+void World::boom(void* context, const Ogre::FrameEvent& fe, int x1, int y1, int z1, int x2, int y2, int z2)
 {
 	if(context)
 	{
@@ -357,7 +356,7 @@ void World::boom(void* context, const Ogre::FrameEvent& fe, int x1, int y1, int 
 	}
 }
 
-void World::PlayerRotate(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)
+void World::PlayerRotate(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int z1, int x2, int y2, int z2)
 {
 	if(context)
 	{

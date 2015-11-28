@@ -44,3 +44,24 @@ material PlayerSpacecraftMaterial
         } 
     }
 }
+
+
+material PlayerSpacecraftPodMaterial
+{
+    technique
+    {
+        pass
+        {
+            vertex_program_ref player_spacecraft/vs
+            {
+            }
+
+            fragment_program_ref player_spacecraft/fs
+            {
+				param_named ambient_colour float4 0.0 0.25 0.25 1.0
+				param_named diffuse_colour float4 0.0 0.75 0.75 1.0
+				param_named specular_colour float4 1.0 1.0 1.0 1.0
+            }
+        } 
+    }
+}

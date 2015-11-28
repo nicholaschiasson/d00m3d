@@ -27,7 +27,7 @@ namespace ogre_application
 	//const Ogre::ColourValue viewport_background_color_g((100.0f / 255.0f), (149.0f / 255.0f), (237.0f / 255.0f));
 	const Ogre::ColourValue viewport_background_color_g(0.0f, 0.0f, 0.0f);
 	float camera_near_clip_distance_g = 0.01f;
-	float camera_far_clip_distance_g = 1000.0f;
+	float camera_far_clip_distance_g = 10000.0f;
 	Ogre::Vector3 camera_position_g(0.0, 1.0, 2.0);
 	Ogre::Vector3 camera_look_at_g(0.0, 0.0, 0.0);
 	Ogre::Vector3 camera_up_g(0.0, 1.0, 0.0);
@@ -298,6 +298,7 @@ namespace ogre_application
 	void OgreApplication::RegisterInputCallbacks()
 	{
 		inputManager.RegisterCallback(this, ExitOgreApplication, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_RELEASE, MOUSE_MOTION_STATE_EITHER, (int)OIS::KC_ESCAPE);
+		inputManager.RegisterCallback(this, CameraZoom, INPUT_SOURCE_NONE, INPUT_EVENT_NONE, MOUSE_MOTION_STATE_MOVING, 0);
 	}
 
 	void OgreApplication::MainLoop()
@@ -378,7 +379,7 @@ namespace ogre_application
 		ogre_window_->update();
 	}
 
-	void OgreApplication::ExitOgreApplication(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2)
+	void OgreApplication::ExitOgreApplication(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int z1, int x2, int y2, int z2)
 	{
 		if (context)
 		{
@@ -387,6 +388,22 @@ namespace ogre_application
 			app->ogre_window_->destroy();
 			app->world.JudgementDay();
 			app->inputManager.Interrupt();
+		}
+	}
+
+	void OgreApplication::CameraZoom(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int z1, int x2, int y2, int z2)
+	{
+		if (context && z1 != z2)
+		{
+			OgreApplication *app = static_cast<OgreApplication *>(context);
+			Ogre::Vector3 dist = app->camera.getPosition();
+			Ogre::Vector3 dir = dist.normalisedCopy();
+			Ogre::Vector3 minDist = Ogre::Vector3(dir.x * 0.1f, dir.y * 0.1f, dir.z * 0.1f);
+			Ogre::Vector3 maxDist = Ogre::Vector3(dir.x * 4.0f, dir.y * 4.0f, dir.z * 4.0f);
+			Ogre::Vector3 newDist = dist - dir * ((float)(z2 - z1) / 240.0f);
+			Ogre::Vector3 finalDist = Ogre::Vector3(std::min(maxDist.x, std::max(minDist.x, newDist.x)),
+				std::min(maxDist.y, std::max(minDist.y, newDist.y)), std::min(maxDist.z, std::max(minDist.z, newDist.z)));
+			app->camera.setDistance(finalDist);
 		}
 	}
 }

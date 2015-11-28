@@ -3,7 +3,7 @@
 
 #include "physics_entity.h"
 #include "input_manager.h"
-#include "laser.h"
+#include "laser_cannon.h"
 
 class Spacecraft : public PhysicsEntity
 {
@@ -28,8 +28,8 @@ public:
 	void ThrustersDownward();
 
 private:
-	Laser laser;
 	float thrusterForce;
+	Weapon *weapon;
 };
 
 #endif // SPACECRAFT_H

@@ -18,9 +18,11 @@ set(HDRS
 	"${HDR_DIR}/spacecraft.h"
 	"${HDR_DIR}/physics_engine.h"
 	"${HDR_DIR}/laser.h"
+	"${HDR_DIR}/laser_cannon.h"
 	"${HDR_DIR}/item.h"
 	"${HDR_DIR}/TextRenderer.h"
 	"${HDR_DIR}/sentinent_object.h"
+	"${HDR_DIR}/weapon.h"
 )
 
 set(SRCS
@@ -48,12 +50,14 @@ set(SRCS
     spacecraft.cpp
 	physics_engine.cpp
 	laser.cpp
+	laser_cannon.cpp
 	item.cpp
 	TextRenderer.cpp
     Skybox.material
     SkyboxFp.glsl
     SkyboxVp.glsl
 	MyFont.fontdef
+	weapon.cpp
 )
 
 # The rules here are specific to Windows Systems

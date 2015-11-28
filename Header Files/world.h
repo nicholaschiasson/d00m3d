@@ -102,20 +102,20 @@ private:
 	void testAi();
 
 	// InputManager Callbacks
-	static void PlayerMoveForward(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2);
-	static void PlayerMoveLeft(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2);
-	static void PlayerMoveBackward(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2);
-	static void PlayerMoveRight(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2);
-	static void PlayerMoveUp(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2);
-	static void PlayerMoveDown(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2);
-	static void PlayerPitchUp(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2);
-	static void PlayerYawLeft(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2);
-	static void PlayerPitchDown(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2);
-	static void PlayerYawRight(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2);
-	static void playerFireLaser(void* context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2);
-	static void boom(void* context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2);
-
-	static void PlayerRotate(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2);
+	static void PlayerMoveForward(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int z1, int x2, int y2, int z2);
+	static void PlayerMoveLeft(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int z1, int x2, int y2, int z2);
+	static void PlayerMoveBackward(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int z1, int x2, int y2, int z2);
+	static void PlayerMoveRight(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int z1, int x2, int y2, int z2);
+	static void PlayerMoveUp(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int z1, int x2, int y2, int z2);
+	static void PlayerMoveDown(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int z1, int x2, int y2, int z2);
+	static void PlayerPitchUp(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int z1, int x2, int y2, int z2);
+	static void PlayerYawLeft(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int z1, int x2, int y2, int z2);
+	static void PlayerPitchDown(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int z1, int x2, int y2, int z2);
+	static void PlayerYawRight(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int z1, int x2, int y2, int z2);
+	static void playerFireLaser(void* context, const Ogre::FrameEvent& fe, int x1, int y1, int z1, int x2, int y2, int z2);
+	static void boom(void* context, const Ogre::FrameEvent& fe, int x1, int y1, int z1, int x2, int y2, int z2);
+	
+	static void PlayerRotate(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int z1, int x2, int y2, int z2);
 
 };
 
