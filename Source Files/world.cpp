@@ -171,7 +171,7 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 
 			if(!(*it)->isAlive()){
 				deadEntity = (*it);
-				//(*it)->explode(); //TODO PARTCILE STUFF
+				particleEngine.createParticleEffect(ParticleEngine::EFFECT_EXPLOSION, worldSceneNode, (*it)->getPosition());
 
 			}
 		}
