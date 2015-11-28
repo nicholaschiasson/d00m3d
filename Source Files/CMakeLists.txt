@@ -33,6 +33,7 @@ set(SRCS
     black_hole.material
 	camera.cpp
     enemy_spacecraft.cpp
+	enemy_spacecraft.material
 	entity.cpp
 	input_manager.cpp
 	item.cpp
@@ -52,6 +53,7 @@ set(SRCS
 	red_laser.material
 	sentinent_object.cpp
     spacecraft.cpp
+	spacecraft.material
     Skybox.material
     SkyboxFp.glsl
     SkyboxVp.glsl

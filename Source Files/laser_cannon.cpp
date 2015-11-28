@@ -15,22 +15,14 @@ void LaserCannon::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* 
 
 	unsigned int pid = (parentID == -1 ? objectID : parentID);
 
-	Ogre::Entity *cannonArmEntity = sceneManager->createEntity("Cylinder");
-	cannonArmEntity->setMaterialName("PlayerSpacecraftMaterial");
-	Ogre::SceneNode *cannonArmNode = sceneNode->createChildSceneNode("CannonArm" + Ogre::StringConverter::toString(entityCount));
-	cannonArmNode->attachObject(cannonArmEntity);
-	cannonArmNode->scale(0.1f, 0.25f, 0.1f);
-
 	Ogre::Entity *cannonPivotEntity = sceneManager->createEntity("Sphere");
-	cannonPivotEntity->setMaterialName("PlayerSpacecraftMaterial");
-	Ogre::SceneNode *cannonPivotNode = cannonArmNode->createChildSceneNode("CannonPivot" + Ogre::StringConverter::toString(entityCount));
+	cannonPivotEntity->setMaterialName("SpacecraftCannonMaterial");
+	Ogre::SceneNode *cannonPivotNode = sceneNode->createChildSceneNode("CannonPivot" + Ogre::StringConverter::toString(entityCount));
 	cannonPivotNode->attachObject(cannonPivotEntity);
-	cannonPivotNode->scale(1.0f / 0.1f, 1.0f / 0.25f, 1.0f / 0.1f);
 	cannonPivotNode->scale(0.25f, 0.25f, 0.25f);
-	cannonPivotNode->translate(0.0f, -0.95f, 0.0f);
 
 	Ogre::Entity *cannonBarrelEntity = sceneManager->createEntity("Torus");
-	cannonBarrelEntity->setMaterialName("PlayerSpacecraftMaterial");
+	cannonBarrelEntity->setMaterialName("SpacecraftCannonMaterial");
 	Ogre::SceneNode *cannonBarrelNode = cannonPivotNode->createChildSceneNode("CannonBarrel" + Ogre::StringConverter::toString(entityCount));
 	cannonBarrelNode->attachObject(cannonBarrelEntity);
 	cannonBarrelNode->scale(1.0f / 0.25f, 1.0f / 0.25f, 1.0f / 0.25f);

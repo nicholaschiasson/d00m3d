@@ -49,7 +49,7 @@ fragment_program textureshader/fs glsl
 
 	default_params
 	{
-		param_named ambient_colour float4 0.0 0.0 0.0 1.0
+		param_named ambient_colour float4 0.1 0.1 0.1 1.0
 		param_named diffuse_colour float4 1.0 1.0 1.0 1.0
 		param_named specular_colour float4 1.0 1.0 1.0 1.0
 		param_named phong_exponent float 128.0

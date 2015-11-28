@@ -1,4 +1,4 @@
-material PlayerSpacecraftShortMaterial
+material EnemySpacecraftShortMaterial
 {
     technique
     {
@@ -14,14 +14,14 @@ material PlayerSpacecraftShortMaterial
 
 			texture_unit
 			{
-				texture Resources/textures/Spacecraft/Hull/hull_02_short.jpg 2d
+				texture Resources/textures/Spacecraft/Hull/hull_01_short.jpg 2d
 			}
         } 
     }
 }
 
 
-material PlayerSpacecraftMediumMaterial
+material EnemySpacecraftMediumMaterial
 {
     technique
     {
@@ -37,14 +37,14 @@ material PlayerSpacecraftMediumMaterial
 
 			texture_unit
 			{
-				texture Resources/textures/Spacecraft/Hull/hull_02_medium.jpg 2d
+				texture Resources/textures/Spacecraft/Hull/hull_01_medium.jpg 2d
 			}
         } 
     }
 }
 
 
-material PlayerSpacecraftLongMaterial
+material EnemySpacecraftLongMaterial
 {
     technique
     {
@@ -60,7 +60,7 @@ material PlayerSpacecraftLongMaterial
 
 			texture_unit
 			{
-				texture Resources/textures/Spacecraft/Hull/hull_02_long.jpg 2d
+				texture Resources/textures/Spacecraft/Hull/hull_01_long.jpg 2d
 			}
         } 
     }

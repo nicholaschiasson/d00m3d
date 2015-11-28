@@ -1,4 +1,4 @@
-material PlayerSpacecraftShortMaterial
+material SpacecraftThrusterMaterial
 {
     technique
     {
@@ -14,14 +14,14 @@ material PlayerSpacecraftShortMaterial
 
 			texture_unit
 			{
-				texture Resources/textures/Spacecraft/Hull/hull_02_short.jpg 2d
+				texture Resources/textures/Spacecraft/Thruster/thruster_01_longer.jpg 2d
 			}
         } 
     }
 }
 
 
-material PlayerSpacecraftMediumMaterial
+material SpacecraftCannonMaterial
 {
     technique
     {
@@ -37,31 +37,29 @@ material PlayerSpacecraftMediumMaterial
 
 			texture_unit
 			{
-				texture Resources/textures/Spacecraft/Hull/hull_02_medium.jpg 2d
+				texture Resources/textures/Spacecraft/Thruster/thruster_01_medium.jpg 2d
 			}
         } 
     }
 }
 
 
-material PlayerSpacecraftLongMaterial
+material SpacecraftPodMaterial
 {
     technique
     {
         pass
         {
-            vertex_program_ref textureshader/vs
+            vertex_program_ref shader/vs
             {
             }
 
-            fragment_program_ref textureshader/fs
+            fragment_program_ref shader/fs
             {
+				param_named ambient_colour float4 0.1 0.2 0.2 1.0
+				param_named diffuse_colour float4 0.4 1.0 1.0 1.0
+				param_named specular_colour float4 1.0 1.0 1.0 1.0
             }
-
-			texture_unit
-			{
-				texture Resources/textures/Spacecraft/Hull/hull_02_long.jpg 2d
-			}
         } 
     }
 }
