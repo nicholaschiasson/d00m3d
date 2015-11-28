@@ -19,7 +19,7 @@ public:
 	};
 	void initialize(Ogre::SceneManager* scene_manager, PhysicsEngine& physics_engine);
 	
-	void createParticleEffect(EFFECT_TYPE effect, Ogre::SceneNode* parentNode, Ogre::Vector3 position);
+	void createParticleEffect(EFFECT_TYPE effect, Ogre::SceneNode* parentNode, Ogre::Vector3 position, Ogre::Vector3 scale);
 	void update(const Ogre::FrameEvent& fe);
 	
 private:

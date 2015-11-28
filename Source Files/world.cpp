@@ -161,7 +161,7 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 
 			if(!(*it)->isAlive()){
 				deadEntity = (*it);
-				particleEngine.createParticleEffect(ParticleEngine::EFFECT_EXPLOSION, worldSceneNode, (*it)->getPosition());
+				particleEngine.createParticleEffect(ParticleEngine::EFFECT_EXPLOSION, worldSceneNode, (*it)->getPosition(), Ogre::Vector3(1,1,1));
 			}
 		}
 
@@ -171,7 +171,7 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 
 			if(!(*it)->isAlive()){
 				deadEntity = (*it);
-				particleEngine.createParticleEffect(ParticleEngine::EFFECT_EXPLOSION, worldSceneNode, (*it)->getPosition());
+				particleEngine.createParticleEffect(ParticleEngine::EFFECT_EXPLOSION, worldSceneNode, (*it)->getPosition(), Ogre::Vector3(1,1,1));
 
 			}
 		}

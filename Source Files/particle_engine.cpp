@@ -65,7 +65,7 @@ void ParticleEngine::createExplosionGeometry(int numParticles)
     object->convertToMesh(object_name);
 }
 
-void ParticleEngine::createParticleEffect(EFFECT_TYPE effect, Ogre::SceneNode* parentNode, Ogre::Vector3 position)
+void ParticleEngine::createParticleEffect(EFFECT_TYPE effect, Ogre::SceneNode* parentNode, Ogre::Vector3 position, Ogre::Vector3 scale)
 {
 	std::string material_name;
 	std::string object_name;
@@ -82,6 +82,7 @@ void ParticleEngine::createParticleEffect(EFFECT_TYPE effect, Ogre::SceneNode* p
 
 	particleEffect = new ParticleEffect(sceneManager, parentNode, object_name,material_name, *physicsEngine);
 	particleEffect->translate(position);
+	particleEffect->scale(scale);
 	particles.push_back(particleEffect);
 }
 
