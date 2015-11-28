@@ -56,6 +56,18 @@ void LaserCannon::Update(const Ogre::FrameEvent &fe)
 	}
 }
 
+void LaserCannon::cleanup(PhysicsEngine &physicsEngine)
+{
+	laser.detachFrom(physicsEngine);
+	Weapon::cleanup(physicsEngine);
+}
+
+void LaserCannon::detachFrom(PhysicsEngine &physicsEngine)
+{
+	laser.detachFrom(physicsEngine);
+	Weapon::detachFrom(physicsEngine);
+}
+
 void LaserCannon::fire()
 {
 	if(myState == WEAPON_READY){

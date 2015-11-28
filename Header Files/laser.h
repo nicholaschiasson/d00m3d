@@ -18,9 +18,7 @@ public:
 	void cooldown();
 	void upgrade(int dmg);
 
-	int getDamage() const;
-
-	
+	int getDamage() const;	
 
 private:
 	int damage;

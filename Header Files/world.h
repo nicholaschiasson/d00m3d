@@ -17,6 +17,7 @@
 #include "black_hole.h"
 #include "item.h"
 #include "TextRenderer.h"
+#include "particle_engine.h"
 class World
 {
 public:
@@ -82,10 +83,14 @@ private:
 	Ogre::SceneManager* sceneManager;
 	Camera *camera;
 	PhysicsEngine physicsEngine;
-
+	ParticleEngine particleEngine;
 	bool exists;
 	float timer;
 	float spawnTime;
+
+    #define MAX_NUM_OBJECTS 200 // right now only keeps track of asteroids
+	
+	int numObjects;
 
 	PlayerSpacecraft player;
 
@@ -93,13 +98,14 @@ private:
 	std::vector<Asteroid *> asteroidList;
 	std::vector<EnemySpacecraft*> fleet;
 
-	void SpawnAsteroid();
-
+	void SpawnAsteroid(Ogre::Vector3);
+	void DeleteFarAsteroids(void);
+	void DeleteFarItems(void);
 	//setup the control schemes
 	void initControls(InputManager *inputManager);
 	void cleanupLists(bool cleanupNeeded = true);
-
-	void testAi();
+	void setupEnemies();
+	void initObjects();
 
 	// InputManager Callbacks
 	static void PlayerMoveForward(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int z1, int x2, int y2, int z2);

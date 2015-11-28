@@ -3,13 +3,19 @@
 #include "OgreEntity.h"
 
 Spacecraft::Spacecraft() :
-	thrusterForce(500.0f), weapon(new LaserCannon())
+	materialPrefix("Player"), thrusterForce(500.0f), weapon(new LaserCannon())
 {
 }
 
 Spacecraft::~Spacecraft()
 {
 	
+}
+
+void Spacecraft::cleanup(PhysicsEngine &physicsEngine)
+{
+	weapon->detachFrom(physicsEngine);
+	PhysicsEntity::cleanup(physicsEngine);
 }
 
 void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, unsigned int parentID)
@@ -22,7 +28,7 @@ void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* p
 	float spacecraftScaleX = 1.6f, spacecraftScaleY = 0.6f, spacecraftScaleZ = 1.0f;
 	float invSpacecraftScaleX = 1.0f / spacecraftScaleX, invSpacecraftScaleY = 1.0f / spacecraftScaleY, invSpacecraftScaleZ = 1.0f / spacecraftScaleZ;
 	Ogre::Entity *spacecraftBodyEntity = sceneManager->createEntity("Cylinder");
-	spacecraftBodyEntity->setMaterialName("PlayerSpacecraftLongMaterial");
+	spacecraftBodyEntity->setMaterialName(materialPrefix + "SpacecraftLongMaterial");
 	Ogre::SceneNode *spacecraftBodyNode = sceneNode->createChildSceneNode("SpacecraftBody" + Ogre::StringConverter::toString(entityCount));
 	spacecraftBodyNode->attachObject(spacecraftBodyEntity);
 	spacecraftBodyNode->scale(0.75f, 0.75f, 0.75f);
@@ -48,7 +54,7 @@ void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* p
 	spacecraftRightThrusterNode->translate(0.1f, -0.3f, 0.0f);
 	
 	Ogre::Entity *spacecraftLeftWingEntity = sceneManager->createEntity("Pyramid");
-	spacecraftLeftWingEntity->setMaterialName("PlayerSpacecraftMediumMaterial");
+	spacecraftLeftWingEntity->setMaterialName(materialPrefix + "SpacecraftMediumMaterial");
 	Ogre::SceneNode *spacecraftLeftWingNode = spacecraftBodyNode->createChildSceneNode("SpacecraftLeftWing" + Ogre::StringConverter::toString(entityCount));
 	spacecraftLeftWingNode->attachObject(spacecraftLeftWingEntity);
 	spacecraftLeftWingNode->scale(invSpacecraftScaleX, invSpacecraftScaleY, invSpacecraftScaleZ);
@@ -57,7 +63,7 @@ void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* p
 	spacecraftLeftWingNode->translate(-0.375f, 0.0f, 0.0f);
 	
 	Ogre::Entity *spacecraftRightWingEntity = sceneManager->createEntity("Pyramid");
-	spacecraftRightWingEntity->setMaterialName("PlayerSpacecraftMediumMaterial");
+	spacecraftRightWingEntity->setMaterialName(materialPrefix + "SpacecraftMediumMaterial");
 	Ogre::SceneNode *spacecraftRightWingNode = spacecraftBodyNode->createChildSceneNode("SpacecraftRightWing" + Ogre::StringConverter::toString(entityCount));
 	spacecraftRightWingNode->attachObject(spacecraftRightWingEntity);
 	spacecraftRightWingNode->scale(invSpacecraftScaleX, invSpacecraftScaleY, invSpacecraftScaleZ);
@@ -66,7 +72,7 @@ void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* p
 	spacecraftRightWingNode->translate(0.375f, 0.0f, 0.0f);
 
 	Ogre::Entity *spacecraftNoseEntity = sceneManager->createEntity("Sphere");
-	spacecraftNoseEntity->setMaterialName("PlayerSpacecraftLongMaterial");
+	spacecraftNoseEntity->setMaterialName(materialPrefix + "SpacecraftLongMaterial");
 	Ogre::SceneNode *spacecraftNoseNode = spacecraftBodyNode->createChildSceneNode("SpacecraftNose" + Ogre::StringConverter::toString(entityCount));
 	spacecraftNoseNode->attachObject(spacecraftNoseEntity);
 	spacecraftNoseNode->scale(0.502f, 1.5f, 0.502f);
@@ -81,7 +87,7 @@ void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* p
 	spacecraftPodNode->translate(0.0f, 0.28f, 0.175f);
 
 	Ogre::Entity *weaponArmEntity = sceneManager->createEntity("Cylinder");
-	weaponArmEntity->setMaterialName("PlayerSpacecraftShortMaterial");
+	weaponArmEntity->setMaterialName(materialPrefix + "SpacecraftShortMaterial");
 	Ogre::SceneNode *weaponArmNode = spacecraftBodyNode->createChildSceneNode("WeaponArm" + Ogre::StringConverter::toString(entityCount));
 	weaponArmNode->attachObject(weaponArmEntity);
 	weaponArmNode->pitch(Ogre::Radian(Ogre::Math::HALF_PI));
@@ -106,7 +112,17 @@ void Spacecraft::Update(const Ogre::FrameEvent &fe)
 
 void Spacecraft::Collide(const Ogre::FrameEvent &fe, PhysicsEntity *physicsEntity)
 {
+	Resource resource = physicsEntity->collect();
 
+	//todo implement tracking
+	switch(resource.getType()){
+	case Resource::FUEL:
+		break;
+	case Resource::ENERGY:
+		break;
+	default:
+		break;
+	}
 }
 
 void Spacecraft::spaghettify()

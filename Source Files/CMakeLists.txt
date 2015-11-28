@@ -15,10 +15,12 @@ set(HDRS
 	"${HDR_DIR}/mesh_factory.h"
 	"${HDR_DIR}/ogre_app_exception.h"
 	"${HDR_DIR}/ogre_application.h"
+	"${HDR_DIR}/particle_effect.h"
+	"${HDR_DIR}/particle_engine.h"
 	"${HDR_DIR}/physics_engine.h"
 	"${HDR_DIR}/physics_entity.h"
 	"${HDR_DIR}/player_spacecraft.h"
-	"${HDR_DIR}/sentinent_object.h"
+	"${HDR_DIR}/resource.h"
 	"${HDR_DIR}/spacecraft.h"
 	"${HDR_DIR}/TextRenderer.h"
 	"${HDR_DIR}/weapon.h"
@@ -35,6 +37,10 @@ set(SRCS
     enemy_spacecraft.cpp
 	enemy_spacecraft.material
 	entity.cpp
+	explosion.material
+	explosionMaterialFp.glsl
+	explosionMaterialGp.glsl
+	explosionMaterialVp.glsl
 	input_manager.cpp
 	item.cpp
 	item.material
@@ -46,12 +52,14 @@ set(SRCS
 	mesh_factory.cpp
 	MyFont.fontdef
 	ogre_application.cpp
+	particle_effect.cpp
+	particle_engine.cpp
 	physics_engine.cpp
 	physics_entity.cpp
     player_spacecraft.cpp
 	player_spacecraft.material
 	red_laser.material
-	sentinent_object.cpp
+	resource.cpp
     spacecraft.cpp
 	spacecraft.material
     Skybox.material
