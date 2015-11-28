@@ -22,6 +22,7 @@ set(HDRS
 	"${HDR_DIR}/TextRenderer.h"
 	"${HDR_DIR}/particle_effect.h"
 	"${HDR_DIR}/particle_engine.h"
+	"${HDR_DIR}/resource.h"
 )
 
 set(SRCS
@@ -54,6 +55,7 @@ set(SRCS
     SkyboxFp.glsl
     SkyboxVp.glsl
 	MyFont.fontdef
+	resource.cpp
 	particle_effect.cpp
 	particle_engine.cpp
 	explosion.material

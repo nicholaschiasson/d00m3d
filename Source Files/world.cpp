@@ -110,7 +110,7 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 
 				if (!deadEntity->isSpaghettified())
 				{
-					itemList.push_back(new Item(sceneManager, worldSceneNode, physicsEngine, deadEntity->getPosition(), Item::FUEL));
+					itemList.push_back(new Item(sceneManager, worldSceneNode, physicsEngine, deadEntity->getPosition(), Resource::FUEL));
 				}
 			}
 		}
@@ -125,7 +125,7 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 
 				if (!deadEntity->isSpaghettified())
 				{
-					itemList.push_back(new Item(sceneManager, worldSceneNode, physicsEngine, deadEntity->getPosition(), Item::FUEL));
+					itemList.push_back(new Item(sceneManager, worldSceneNode, physicsEngine, deadEntity->getPosition(), Resource::FUEL));
 				}
 			}
 		}
