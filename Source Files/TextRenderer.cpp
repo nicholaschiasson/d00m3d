@@ -41,7 +41,7 @@ TextRenderer::~TextRenderer(){
     text_area->setFontName("MyFont");
     text_area->setCaption("Hello World");
     text_area->setCharHeight(26);
-    text_area->setColour(Ogre::ColourValue(0.8, 0.0, 0.0));
+    text_area->setColour(Ogre::ColourValue(0.8f, 0.0f, 0.0f));
     panel->addChild(text_area);
 
     // Create an overlay using the panel
