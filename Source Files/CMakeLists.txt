@@ -4,60 +4,62 @@ set(HDR_DIR "${PROJECT_SOURCE_DIR}/Header Files")
 set(HDRS
     "${HDR_DIR}/asteroid.h"
     "${HDR_DIR}/black_hole.h"
+	"${HDR_DIR}/camera.h"
 	"${HDR_DIR}/defines.h"
 	"${HDR_DIR}/enemy_spacecraft.h"
 	"${HDR_DIR}/entity.h"
+	"${HDR_DIR}/input_manager.h"
+	"${HDR_DIR}/item.h"
+	"${HDR_DIR}/laser.h"
+	"${HDR_DIR}/laser_cannon.h"
 	"${HDR_DIR}/mesh_factory.h"
 	"${HDR_DIR}/ogre_app_exception.h"
 	"${HDR_DIR}/ogre_application.h"
-	"${HDR_DIR}/world.h"
-	"${HDR_DIR}/camera.h"
-	"${HDR_DIR}/input_manager.h"
+	"${HDR_DIR}/physics_engine.h"
 	"${HDR_DIR}/physics_entity.h"
 	"${HDR_DIR}/player_spacecraft.h"
-	"${HDR_DIR}/spacecraft.h"
-	"${HDR_DIR}/physics_engine.h"
-	"${HDR_DIR}/laser.h"
-	"${HDR_DIR}/laser_cannon.h"
-	"${HDR_DIR}/item.h"
-	"${HDR_DIR}/TextRenderer.h"
 	"${HDR_DIR}/sentinent_object.h"
+	"${HDR_DIR}/spacecraft.h"
+	"${HDR_DIR}/TextRenderer.h"
 	"${HDR_DIR}/weapon.h"
+	"${HDR_DIR}/world.h"
 )
 
 set(SRCS
-	sentinent_object.cpp
-    enemy_spacecraft.cpp
+	.ShaderDefs.material
     asteroid.cpp
-    black_hole.cpp
-	entity.cpp
-	main.cpp
-    black_hole.material
     asteroid.material
-	item.material
-	player_spacecraft.material
-	red_laser.material
-	MaterialFp.glsl
-	MaterialFile.material
-	MaterialVp.glsl
-	mesh_factory.cpp
-	ogre_application.cpp
-	world.cpp
+    black_hole.cpp
+    black_hole.material
 	camera.cpp
+    enemy_spacecraft.cpp
+	entity.cpp
 	input_manager.cpp
-	physics_entity.cpp
-    player_spacecraft.cpp
-    spacecraft.cpp
-	physics_engine.cpp
+	item.cpp
+	item.material
 	laser.cpp
 	laser_cannon.cpp
-	item.cpp
-	TextRenderer.cpp
+	main.cpp
+	MaterialFp.glsl
+	MaterialVp.glsl
+	mesh_factory.cpp
+	MyFont.fontdef
+	ogre_application.cpp
+	physics_engine.cpp
+	physics_entity.cpp
+    player_spacecraft.cpp
+	player_spacecraft.material
+	red_laser.material
+	sentinent_object.cpp
+    spacecraft.cpp
     Skybox.material
     SkyboxFp.glsl
     SkyboxVp.glsl
-	MyFont.fontdef
+	TextRenderer.cpp
+	TextureMaterialFp.glsl
+	TextureMaterialVp.glsl
 	weapon.cpp
+	world.cpp
 )
 
 # The rules here are specific to Windows Systems

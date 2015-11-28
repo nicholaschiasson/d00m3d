@@ -1,6 +1,6 @@
-vertex_program shader/vs glsl 
+vertex_program textureshader/vs glsl 
 {
-    source MaterialVp.glsl 
+    source TextureMaterialVp.glsl 
 
     default_params
     {
@@ -13,34 +13,39 @@ vertex_program shader/vs glsl
 }
 
 
-fragment_program shader/fs glsl 
+fragment_program textureshader/fs glsl 
 {
-    source MaterialFp.glsl 
+    source TextureMaterialFp.glsl 
 
 	default_params
 	{
-		param_named ambient_colour float4 0.0 0.0 0.1 1.0
-		param_named diffuse_colour float4 0.0 0.0 0.5 1.0
+		param_named ambient_colour float4 0.0 0.0 0.0 1.0
+		param_named diffuse_colour float4 1.0 1.0 1.0 1.0
 		param_named specular_colour float4 1.0 1.0 1.0 1.0
 		param_named phong_exponent float 128.0
-		param_named custom_colour float 0.0
+		param_named texture_map int 0
 	}
 }
 
 
-material ObjectMaterial
+material SpacecraftHullMaterial
 {
     technique
     {
         pass
         {
-            vertex_program_ref shader/vs
+            vertex_program_ref textureshader/vs
             {
             }
 
-            fragment_program_ref shader/fs
+            fragment_program_ref textureshader/fs
             {
             }
+
+			texture_unit
+			{
+				texture Resources/textures/Spacecraft/Hull/hull_02.jpg 2d
+			}
         } 
     }
 }

@@ -1,46 +1,21 @@
-vertex_program player_spacecraft/vs glsl 
-{
-    source MaterialVp.glsl 
-
-    default_params
-    {
-        param_named_auto world_mat world_matrix
-        param_named_auto view_mat view_matrix
-        param_named_auto projection_mat projection_matrix
-		param_named_auto normal_mat inverse_transpose_worldview_matrix
-		param_named light_position float3 2.0 2.0 2.0
-    }
-}
-
-
-fragment_program player_spacecraft/fs glsl 
-{
-    source MaterialFp.glsl 
-
-	default_params
-	{
-		param_named ambient_colour float4 0.0 0.25 0.0 1.0
-		param_named diffuse_colour float4 0.0 0.5 0.0 1.0
-		param_named specular_colour float4 1.0 1.0 1.0 1.0
-		param_named phong_exponent float 128.0
-		param_named custom_colour float 0.0
-	}
-}
-
-
 material PlayerSpacecraftMaterial
 {
     technique
     {
         pass
         {
-            vertex_program_ref player_spacecraft/vs
+            vertex_program_ref textureshader/vs
             {
             }
 
-            fragment_program_ref player_spacecraft/fs
+            fragment_program_ref textureshader/fs
             {
             }
+
+			texture_unit
+			{
+				texture Resources/textures/Spacecraft/Hull/hull_02.jpg 2d
+			}
         } 
     }
 }
@@ -52,11 +27,11 @@ material PlayerSpacecraftPodMaterial
     {
         pass
         {
-            vertex_program_ref player_spacecraft/vs
+            vertex_program_ref shader/vs
             {
             }
 
-            fragment_program_ref player_spacecraft/fs
+            fragment_program_ref shader/fs
             {
 				param_named ambient_colour float4 0.0 0.25 0.25 1.0
 				param_named diffuse_colour float4 0.0 0.75 0.75 1.0
