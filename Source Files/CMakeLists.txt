@@ -25,6 +25,7 @@ set(HDRS
 	"${HDR_DIR}/TextRenderer.h"
 	"${HDR_DIR}/weapon.h"
 	"${HDR_DIR}/world.h"
+	"${HDR_DIR}/sun.h"
 )
 
 set(SRCS
@@ -70,6 +71,7 @@ set(SRCS
 	TextureMaterialVp.glsl
 	weapon.cpp
 	world.cpp
+	sun.cpp
 )
 
 # The rules here are specific to Windows Systems
