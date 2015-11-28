@@ -23,7 +23,7 @@ void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* p
 	float invSpacecraftScaleX = 1.0f / spacecraftScaleX, invSpacecraftScaleY = 1.0f / spacecraftScaleY, invSpacecraftScaleZ = 1.0f / spacecraftScaleZ;
 	Ogre::Entity *spacecraftBodyEntity = sceneManager->createEntity("Cylinder");
 	spacecraftBodyEntity->setMaterialName("PlayerSpacecraftMaterial");
-	Ogre::SceneNode *spacecraftBodyNode = parentNode->createChildSceneNode("SpacecraftBody" + Ogre::StringConverter::toString(entityCount));
+	Ogre::SceneNode *spacecraftBodyNode = sceneNode->createChildSceneNode("SpacecraftBody" + Ogre::StringConverter::toString(entityCount));
 	spacecraftBodyNode->attachObject(spacecraftBodyEntity);
 	spacecraftBodyNode->scale(0.75f, 0.75f, 0.75f);
 	spacecraftBodyNode->scale(spacecraftScaleX, spacecraftScaleY, spacecraftScaleZ);
