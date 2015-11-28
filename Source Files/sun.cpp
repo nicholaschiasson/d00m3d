@@ -30,6 +30,6 @@ void Sun::Collide(const Ogre::FrameEvent &fe, PhysicsEntity *physicsEntity)
 
 float Sun::GetRadius()
 {
-	return PhysicsEntity::GetRadius();// + 500;
+	return PhysicsEntity::GetRadius() + 1000.0;
 
 }

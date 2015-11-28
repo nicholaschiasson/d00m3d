@@ -45,7 +45,7 @@ public:
 	bool IsDynamic();
 	bool IsGravitational();
 
-	float GetRadius();
+	virtual float GetRadius();
 
 protected:
 	Ogre::Vector3 appliedForce;
