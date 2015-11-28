@@ -10,8 +10,8 @@ material ItemMaterial
 
             fragment_program_ref shader/fs
             {
-				param_named ambient_colour float4 0.25 0.25 0.0 1.0
-				param_named diffuse_colour float4 0.75 0.75 0.0 1.0
+				param_named ambient_colour float4 0.25 0.0 0.0 1.0
+				param_named diffuse_colour float4 0.75 0.0 0.0 1.0
             }
         } 
     }

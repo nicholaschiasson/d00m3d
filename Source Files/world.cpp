@@ -85,32 +85,11 @@ void World::SpawnAsteroid(Ogre::Vector3 pos)
 	asteroidList.push_back(asteroid);
 	numObjects++;
 }
+void World::checkDistance(Entity* entity){
+	Ogre::Vector3 distance = entity->getPosition() - player.getPosition(); 
+	if(distance.squaredLength() > Ogre::Math::Sqr(2100)){
+		entity->kill(); 
 
-void World::DeleteFarAsteroids(){
-	float distance = 0.0f;
-	for(std::vector<Asteroid*>::iterator it = asteroidList.begin(); it != asteroidList.end(); ++it){
-
-		distance = sqrt(((*it)->getPosition().x - player.getPosition().x)*((*it)->getPosition().x - player.getPosition().x) +
-			            ((*it)->getPosition().y - player.getPosition().y)*((*it)->getPosition().y - player.getPosition().y) +
-						((*it)->getPosition().z - player.getPosition().z)*((*it)->getPosition().z - player.getPosition().z));
-
-		if(distance > 4000){
-			(*it)->kill(); 
-		}
-	}
-	
-}
-void World::DeleteFarItems(){
-	float distance = 0.0f;
-	for(std::vector<Item*>::iterator it = itemList.begin(); it != itemList.end(); ++it){
-
-		distance = sqrt(((*it)->getPosition().x - player.getPosition().x)*((*it)->getPosition().x - player.getPosition().x) +
-			            ((*it)->getPosition().y - player.getPosition().y)*((*it)->getPosition().y - player.getPosition().y) +
-						((*it)->getPosition().z - player.getPosition().z)*((*it)->getPosition().z - player.getPosition().z));
-
-		if(distance > 4000){
-			(*it)->kill(); 
-		}
 	}
 
 }
@@ -160,11 +139,13 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 
 		//enemy spacecraft list
 		for(std::vector<EnemySpacecraft*>::iterator it = fleet.begin(); it != fleet.end(); ++it){
+			//checkDistance(*it); todo determine if enemies should be deleted
 			(*it)->Update(fe);
 
 			if(!(*it)->isAlive()){
 				deadEntity = (*it);
-				particleEngine.createParticleEffect(ParticleEngine::EFFECT_EXPLOSION, worldSceneNode, (*it)->getPosition());
+				particleEngine.createParticleEffect(ParticleEngine::EFFECT_EXPLOSION, worldSceneNode, (*it)->getPosition(), Ogre::Vector3(1,1,1));
+				itemList.push_back(new Item(sceneManager, worldSceneNode, physicsEngine, deadEntity->getPosition(), Resource::FUEL));
 			}
 		}
 
@@ -174,9 +155,11 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 
 			if(!(*it)->isAlive()){
 				deadEntity = (*it);
-				//(*it)->explode(); //TODO PARTCILE STUFF
+				particleEngine.createParticleEffect(ParticleEngine::EFFECT_EXPLOSION, worldSceneNode, (*it)->getPosition(), Ogre::Vector3(1,1,1));
+				itemList.push_back(new Item(sceneManager, worldSceneNode, physicsEngine, deadEntity->getPosition(), Resource::FUEL));
 
 			}
+			checkDistance(*it);
 		}
 
 		//itemlist
@@ -188,11 +171,8 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 				//(*it)->explode(); //TODO PARTCILE STUFF
 				
 			}
-			
+			checkDistance(*it);
 		}
-
-		DeleteFarAsteroids(); 
-	    DeleteFarItems();
 		//cleanup any dead entities from those lists
 		cleanupLists(true);
 	

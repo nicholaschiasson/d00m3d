@@ -30,7 +30,7 @@ void Item::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentN
 	Ogre::Entity *itemEntity = sceneManager->createEntity("Cube");
 	itemEntity->setMaterialName("ItemMaterial");
 	sceneNode->attachObject(itemEntity);
-	scale(0.1f, 0.1f, 0.1f);
+	scale(0.25f, 0.25f, 0.25f);
 	translate(location);
 
 	myType = type;

@@ -31,7 +31,7 @@ void LaserCannon::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* 
 
 	laser.Initialize(sceneManager, cannonBarrelNode, physicsEngine, pid);
 	laser.scale(1.0f / 0.25f, 1.0f / 0.25f, 1.0f / 1.5f);
-	laser.translate(0.0f, 0.0f, 0.3f);
+	laser.translate(0.0f, 0.0f, 0.0f);
 }
 
 void LaserCannon::Update(const Ogre::FrameEvent &fe)

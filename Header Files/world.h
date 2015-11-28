@@ -101,8 +101,7 @@ private:
 	std::vector<EnemySpacecraft*> fleet;
 
 	void SpawnAsteroid(Ogre::Vector3);
-	void DeleteFarAsteroids(void);
-	void DeleteFarItems(void);
+	void checkDistance(Entity* entity);
 	//setup the control schemes
 	void initControls(InputManager *inputManager);
 	void cleanupLists(bool cleanupNeeded = true);
