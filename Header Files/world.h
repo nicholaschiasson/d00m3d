@@ -87,6 +87,10 @@ private:
 	float timer;
 	float spawnTime;
 
+    #define MAX_NUM_OBJECTS 200 // right now only keeps track of asteroids
+	
+	int numObjects;
+
 	PlayerSpacecraft player;
 
 	std::vector<Item *> itemList;
@@ -95,11 +99,12 @@ private:
 
 	void SpawnAsteroid(Ogre::Vector3);
 	void DeleteFarAsteroids(void);
+	void DeleteFarItems(void);
 	//setup the control schemes
 	void initControls(InputManager *inputManager);
 	void cleanupLists(bool cleanupNeeded = true);
-
 	void setupEnemies();
+	void initObjects();
 
 	// InputManager Callbacks
 	static void PlayerMoveForward(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int x2, int y2);

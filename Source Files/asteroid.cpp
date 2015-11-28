@@ -23,7 +23,8 @@ void Asteroid::Initialize(Ogre::SceneManager* sceneManager, Ogre::SceneNode *par
 	asteroidEntity->setMaterialName("AsteroidMaterial");
 	Ogre::String s = "Asteroid" + Ogre::StringConverter::toString(entityCount);
 	Ogre::SceneNode *asteroidNode = sceneNode->createChildSceneNode("Asteroid" + Ogre::StringConverter::toString(entityCount));
-	scale(3.0f, 3.0f, 3.0f);
+	float radius = Ogre::Math::RangeRandom(50.0f, 90.0f);
+	scale(radius, radius, radius);
 	sceneNode->attachObject(asteroidEntity);
 }
 
