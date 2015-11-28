@@ -20,8 +20,11 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 		throw std::runtime_error("Camera or InputManager not initialized!");
 	}
 
+
 	sceneManager = sceneMan;
 	sceneManager->setSkyBox(true, "SkyboxMaterial");
+
+	health.InitOverlay(sceneMan);
 
 	worldSceneNode = sceneManager->getRootSceneNode()->createChildSceneNode("_worldSceneNode_");
 	camera = cam;
@@ -77,7 +80,7 @@ void World::SpawnAsteroid(Ogre::Vector3 pos)
 	Asteroid *asteroid = new Asteroid(sceneManager, worldSceneNode, physicsEngine);
 	float theta = Ogre::Math::RangeRandom(0.0f, Ogre::Math::TWO_PI);
 	float phi = Ogre::Math::RangeRandom(0.0f, Ogre::Math::TWO_PI);
-	Ogre::Vector3 initialPosition = pos + Ogre::Vector3(cos(theta) * sin(phi),sin(theta) * sin(phi), -cos(phi)) * 1500.0f;
+	Ogre::Vector3 initialPosition = pos + Ogre::Vector3(cos(theta) * sin(phi),sin(theta) * sin(phi), -cos(phi)) * 3000.0f;
 	asteroid->translate(initialPosition);
 	asteroidList.push_back(asteroid);
 	numObjects++;
@@ -91,7 +94,7 @@ void World::DeleteFarAsteroids(){
 			            ((*it)->getPosition().y - player.getPosition().y)*((*it)->getPosition().y - player.getPosition().y) +
 						((*it)->getPosition().z - player.getPosition().z)*((*it)->getPosition().z - player.getPosition().z));
 
-		if(distance > 2100){
+		if(distance > 4000){
 			(*it)->kill(); 
 		}
 	}
@@ -105,7 +108,7 @@ void World::DeleteFarItems(){
 			            ((*it)->getPosition().y - player.getPosition().y)*((*it)->getPosition().y - player.getPosition().y) +
 						((*it)->getPosition().z - player.getPosition().z)*((*it)->getPosition().z - player.getPosition().z));
 
-		if(distance > 2100){
+		if(distance > 4000){
 			(*it)->kill(); 
 		}
 	}
@@ -114,11 +117,11 @@ void World::DeleteFarItems(){
 
 void World::initObjects(){
 	Ogre::Vector3 pos = player.getPosition();
-	for (int i = 0; i<100; i++){
+	for (int i = 0; i<80; i++){
 		Asteroid *asteroid = new Asteroid(sceneManager, worldSceneNode, physicsEngine);
 		float theta = Ogre::Math::RangeRandom(0.0f, Ogre::Math::TWO_PI);
 		float phi = Ogre::Math::RangeRandom(0.0f, Ogre::Math::TWO_PI);
-		float dist = Ogre::Math::RangeRandom(300.0,2000.0);
+		float dist = Ogre::Math::RangeRandom(500.0,3000.0);
 		Ogre::Vector3 initialPosition = pos + Ogre::Vector3(cos(theta) * sin(phi),sin(theta) * sin(phi), -cos(phi)) * dist;
 		asteroid->translate(initialPosition);
 		asteroidList.push_back(asteroid);

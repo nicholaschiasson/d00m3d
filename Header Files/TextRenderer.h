@@ -1,31 +1,21 @@
-#include <Ogre.h>
-#include <Overlay/OgreOverlayManager.h>
-#include <Overlay/OgreOverlay.h>
-#include <Overlay/OgreOverlayContainer.h>
-#include <OgreSingleton.h>
+#ifndef TEXT_RENDERER_H
+#define TEXT_RENDERER_H
+
+#include "Ogre.h"
+
+#include "OGRE/Overlay/OgreFontManager.h"
+#include "OGRE/Overlay/OgreTextAreaOverlayElement.h"
+#include "OGRE/Overlay/OgreOverlayManager.h"
+#include "OGRE/Overlay/OgreOverlaySystem.h"
  
-class TextRenderer : public Ogre::Singleton<TextRenderer>
+
+class TextRenderer
 {
-private:
- 
-    Ogre::OverlayManager*    _overlayMgr;
-    Ogre::Overlay*           _overlay;
-    Ogre::OverlayContainer*  _panel;
- 
 public:
- 
-    TextRenderer();
+	 TextRenderer();
     ~TextRenderer();
- 
-    void addTextBox(
-        const std::string& ID,
-        const std::string& text,
-        Ogre::Real x, Ogre::Real y,
-        Ogre::Real width, Ogre::Real height,
-        const Ogre::ColourValue& color = Ogre::ColourValue(1.0, 1.0, 1.0, 1.0));
- 
-    void removeTextBox(const std::string& ID);
- 
-    void setText(const std::string& ID, const std::string& Text);
-    const std::string& getText(const std::string& ID);
-}; 
+	void InitOverlay(Ogre::SceneManager*);
+private:
+
+};
+#endif

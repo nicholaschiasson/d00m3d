@@ -1,56 +1,51 @@
 #include "TextRenderer.h"
- 
-template<> TextRenderer* Ogre::Singleton<TextRenderer>::msSingleton = 0;
- 
-TextRenderer::TextRenderer()
-{
-    _overlayMgr = Ogre::OverlayManager::getSingletonPtr();
- 
-    _overlay = _overlayMgr->create("overlay1");
-    _panel = static_cast<Ogre::OverlayContainer*>(_overlayMgr->createOverlayElement("Panel", "container1"));
-    _panel->setDimensions(1, 1);
-    _panel->setPosition(0, 0);
- 
-    _overlay->add2D(_panel);
- 
-    _overlay->show();
+
+TextRenderer::TextRenderer(){
+
 }
- 
-void TextRenderer::addTextBox(const std::string& ID,
-                const std::string& text,
-                Ogre::Real x, Ogre::Real y,
-                Ogre::Real width, Ogre::Real height,
-                const Ogre::ColourValue& color)
-{
-    Ogre::OverlayElement* textBox = _overlayMgr->createOverlayElement("TextArea", ID);
-    textBox->setDimensions(width, height);
-    textBox->setMetricsMode(Ogre::GMM_PIXELS);
-    textBox->setPosition(x, y);
-    textBox->setWidth(width);
-    textBox->setHeight(height);
-    textBox->setParameter("font_name", "MyFont");
-    textBox->setParameter("char_height", "0.3");
-    textBox->setColour(color);
- 
-    textBox->setCaption(text);
- 
-    _panel->addChild(textBox);
+
+TextRenderer::~TextRenderer(){
+
 }
- 
-void TextRenderer::removeTextBox(const std::string& ID)
-{
-    _panel->removeChild(ID);
-    _overlayMgr->destroyOverlayElement(ID);
-}
- 
-void TextRenderer::setText(const std::string& ID, const std::string& Text)
-{
-    Ogre::OverlayElement* textBox = _overlayMgr->getOverlayElement(ID);
-    textBox->setCaption(Text);
-}
- 
-const std::string& TextRenderer::getText(const std::string& ID)
-{
-    Ogre::OverlayElement* textBox = _overlayMgr->getOverlayElement(ID);
-    return textBox->getCaption();
+
+ void TextRenderer::InitOverlay(Ogre::SceneManager* scene_manager){
+
+    // Create and initialize the overlay system
+    Ogre::OverlaySystem *os = new Ogre::OverlaySystem();
+	
+    scene_manager->addRenderQueueListener(os);
+
+    // Initialize a font: assumes a standard Windows system
+    Ogre::ResourceGroupManager& resource_group_manager = Ogre::ResourceGroupManager::getSingleton();
+    resource_group_manager.addResourceLocation("C:\\Windows\\Fonts", "FileSystem");
+    Ogre::FontManager& font_manager = Ogre::FontManager::getSingleton();
+    Ogre::ResourcePtr font = font_manager.create("MyFont", "General");
+    font->setParameter("type", "truetype");
+    font->setParameter("source", "arial.ttf");
+    font->setParameter("size", "26");
+    font->setParameter("resolution", "96");
+    font->load();
+
+    // Create a panel for the overlay
+    Ogre::OverlayManager& overlay_manager = Ogre::OverlayManager::getSingleton();
+    Ogre::OverlayContainer* panel = (Ogre::OverlayContainer*) overlay_manager.createOverlayElement("Panel", "MyPanel");
+    panel->setMetricsMode(Ogre::GMM_PIXELS);
+    panel->setPosition(0, 0);
+    panel->setDimensions(200, 100);
+        
+    // Create a text area and add it to the panel
+    Ogre::TextAreaOverlayElement* text_area = static_cast<Ogre::TextAreaOverlayElement*>(overlay_manager.createOverlayElement("TextArea", "MyTextArea"));
+    text_area->setMetricsMode(Ogre::GMM_PIXELS);
+    text_area->setPosition(0, 0);
+    text_area->setDimensions(200, 100);
+    text_area->setFontName("MyFont");
+    text_area->setCaption("Hello World");
+    text_area->setCharHeight(26);
+    text_area->setColour(Ogre::ColourValue(0.8, 0.0, 0.0));
+    panel->addChild(text_area);
+
+    // Create an overlay using the panel
+    Ogre::Overlay* overlay = overlay_manager.create("MyOverlay");
+    overlay->add2D(panel);
+    overlay->show();
 }

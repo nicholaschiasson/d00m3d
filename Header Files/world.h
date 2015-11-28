@@ -18,6 +18,8 @@
 #include "item.h"
 #include "TextRenderer.h"
 #include "particle_engine.h"
+#include "TextRenderer.h"
+
 class World
 {
 public:
@@ -88,7 +90,7 @@ private:
 	float timer;
 	float spawnTime;
 
-    #define MAX_NUM_OBJECTS 200 // right now only keeps track of asteroids
+    #define MAX_NUM_OBJECTS 100 // right now only keeps track of asteroids
 	
 	int numObjects;
 
@@ -106,6 +108,8 @@ private:
 	void cleanupLists(bool cleanupNeeded = true);
 	void setupEnemies();
 	void initObjects();
+
+	TextRenderer health;
 
 	// InputManager Callbacks
 	static void PlayerMoveForward(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int z1, int x2, int y2, int z2);
