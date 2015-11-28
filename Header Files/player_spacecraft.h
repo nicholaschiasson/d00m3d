@@ -8,6 +8,7 @@ class PlayerSpacecraft : public Spacecraft
 public:
 	PlayerSpacecraft();
 	virtual ~PlayerSpacecraft();
+	virtual void Update(const Ogre::FrameEvent &fe);
 
 private:
 

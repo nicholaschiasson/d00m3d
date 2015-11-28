@@ -15,6 +15,7 @@ Entity::~Entity()
 void Entity::kill()
 {
 	alive = false;
+	health = 0;
 }
 
 void Entity::spaghettify()

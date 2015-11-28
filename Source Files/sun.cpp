@@ -13,6 +13,7 @@ Sun::~Sun()
 void Sun::Initialize(Ogre::SceneManager* sceneManager, Ogre::SceneNode *parentNode, PhysicsEngine &physicsEngine, unsigned int parentID)
 {
 	PhysicsEntity::Initialize(sceneManager, parentNode, physicsEngine, parentID);
+	bodyType = ENTITY_BODY_METAPHYSICAL_SPHERE;
 	mass = 100000.0f;
 
 	Ogre::Entity *sunEntity = sceneManager->createEntity("Sphere");
@@ -24,8 +25,13 @@ void Sun::Initialize(Ogre::SceneManager* sceneManager, Ogre::SceneNode *parentNo
 
 void Sun::Collide(const Ogre::FrameEvent &fe, PhysicsEntity *physicsEntity)
 {
-	physicsEntity->kill();
-	std::cout << " SUN : COLLISSION COLLISSIOON COLLISSION " <<std::endl;
+	Ogre::Vector3 distance = sceneNode->getPosition() - physicsEntity->getPosition();
+	if(distance.squaredLength() <= Ogre::Math::Sqr(PhysicsEntity::GetRadius())){
+		physicsEntity->kill();
+	}
+	else{
+		std::cout << "COLLIDE!" <<std::endl;
+	}
 }
 
 float Sun::GetRadius()
