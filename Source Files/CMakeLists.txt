@@ -72,6 +72,7 @@ set(SRCS
 	weapon.cpp
 	world.cpp
 	sun.cpp
+	sun.material
 )
 
 # The rules here are specific to Windows Systems

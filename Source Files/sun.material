@@ -1,0 +1,21 @@
+material SunMaterial
+{
+    technique
+    {
+        pass
+        {
+            vertex_program_ref textureshader/vs
+            {
+            }
+
+            fragment_program_ref textureshader/fs
+            {
+				param_named ambient_colour float4 1.0 1.0 1.0 1.0
+            }
+			texture_unit
+			{
+				texture Resources/textures/sun.jpg 2d
+			}
+        } 
+    }
+}

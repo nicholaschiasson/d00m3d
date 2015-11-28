@@ -49,6 +49,9 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 	//Setting up the basic control scheme
 	initControls(inMan);
 
+	sun.Initialize(sceneManager, worldSceneNode, physicsEngine);
+	//todo replace with actual sun co-ordinates
+	sun.translate(5000,5000,5000);
 	createWorld();
 }
 
