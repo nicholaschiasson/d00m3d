@@ -82,32 +82,11 @@ void World::SpawnAsteroid(Ogre::Vector3 pos)
 	asteroidList.push_back(asteroid);
 	numObjects++;
 }
+void World::checkDistance(Entity* entity){
 
-void World::DeleteFarAsteroids(){
-	float distance = 0.0f;
-	for(std::vector<Asteroid*>::iterator it = asteroidList.begin(); it != asteroidList.end(); ++it){
-
-		distance = sqrt(((*it)->getPosition().x - player.getPosition().x)*((*it)->getPosition().x - player.getPosition().x) +
-			            ((*it)->getPosition().y - player.getPosition().y)*((*it)->getPosition().y - player.getPosition().y) +
-						((*it)->getPosition().z - player.getPosition().z)*((*it)->getPosition().z - player.getPosition().z));
-
-		if(distance > 2100){
-			(*it)->kill(); 
-		}
-	}
-	
-}
-void World::DeleteFarItems(){
-	float distance = 0.0f;
-	for(std::vector<Item*>::iterator it = itemList.begin(); it != itemList.end(); ++it){
-
-		distance = sqrt(((*it)->getPosition().x - player.getPosition().x)*((*it)->getPosition().x - player.getPosition().x) +
-			            ((*it)->getPosition().y - player.getPosition().y)*((*it)->getPosition().y - player.getPosition().y) +
-						((*it)->getPosition().z - player.getPosition().z)*((*it)->getPosition().z - player.getPosition().z));
-
-		if(distance > 2100){
-			(*it)->kill(); 
-		}
+	Ogre::Vector3 distance = entity->getPosition() - player.getPosition(); 
+	if(distance.squaredLength() > Ogre::Math::Sqr(2100)){
+		entity->kill(); 
 	}
 
 }
@@ -157,6 +136,7 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 
 		//enemy spacecraft list
 		for(std::vector<EnemySpacecraft*>::iterator it = fleet.begin(); it != fleet.end(); ++it){
+			//checkDistance(*it); todo determine if enemies should be deleted
 			(*it)->Update(fe);
 
 			if(!(*it)->isAlive()){
@@ -167,6 +147,7 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 
 		//asteroid list
 		for(std::vector<Asteroid*>::iterator it = asteroidList.begin(); it != asteroidList.end(); ++it){
+			checkDistance(*it);
 			(*it)->Update(fe);
 
 			if(!(*it)->isAlive()){
@@ -178,6 +159,7 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 
 		//itemlist
 		for(std::vector<Item*>::iterator it = itemList.begin(); it != itemList.end(); ++it){
+			checkDistance(*it);
 			(*it)->Update(fe);
 
 			if(!(*it)->isAlive()){
@@ -187,9 +169,6 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 			}
 			
 		}
-
-		DeleteFarAsteroids(); 
-	    DeleteFarItems();
 		//cleanup any dead entities from those lists
 		cleanupLists(true);
 	
