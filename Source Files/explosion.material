@@ -1,6 +1,6 @@
-vertex_program fire_shader/vs glsl 
+vertex_program explosion/vs glsl 
 {
-    source FireMaterialVp.glsl 
+    source explosionMaterialVp.glsl 
 
     default_params
     {
@@ -9,14 +9,13 @@ vertex_program fire_shader/vs glsl
 		param_named_auto normal_mat inverse_transpose_world_matrix
 		param_named_auto up_vec view_up_vector
 		param_named timer float 0.0
-        //param_named_auto projection_mat projection_matrix
     }
 }
 
 
-geometry_program fire_shader/gs glsl 
+geometry_program explosion/gs glsl 
 {
-    source FireMaterialGp.glsl
+    source explosionMaterialGp.glsl
 	input_operation_type point_list
 	output_operation_type triangle_strip
 	uses_adjacency_information false
@@ -25,24 +24,24 @@ geometry_program fire_shader/gs glsl
     default_params
     {
         param_named_auto projection_mat projection_matrix
-		param_named particle_size float 0.08;
+		param_named particle_size float 0.007;
     }
 }
 
 
-fragment_program fire_shader/fs glsl 
+fragment_program explosion/fs glsl 
 {
-    source FireMaterialFp.glsl 
+    source explosionMaterialFp.glsl 
 
 	default_params
 	{
-		param_named object_colour float3 0.8 0.4 0.03
+		param_named object_colour float3 1.0 1.0 1.0
 		param_named tex_samp int 0
 	}
 }
 
 
-material FireMaterial
+material ExplosionMaterial
 {
     technique
     {
@@ -53,21 +52,21 @@ material FireMaterial
 			separate_scene_blend_op add max
 			depth_write off
 
-            vertex_program_ref fire_shader/vs
+            vertex_program_ref explosion/vs
             {
             }
 			
-			geometry_program_ref fire_shader/gs
+			geometry_program_ref explosion/gs
             {
             }
 
-            fragment_program_ref fire_shader/fs
+            fragment_program_ref explosion/fs
             {
+				param_named object_colour float3 1.0 0.0 0.0
             }
-
 			texture_unit {
 				texture_alias tex_samp
-			    texture flame4x4orig.png 2d
+			    texture explosion.jpg 2d
 		    }
         } 
     }

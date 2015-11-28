@@ -3,7 +3,7 @@
 Item::Item()
 {
 }
-Item::Item(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, Ogre::Vector3 location, ITEM_TYPE type, unsigned int parentID)
+Item::Item(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, Ogre::Vector3 location, Resource::RESOURCE_TYPE type, unsigned int parentID)
 {
 	Initialize(sceneManager, parentNode, physicsEngine, location, type, parentID);
 }
@@ -18,10 +18,10 @@ void Item::Update(const Ogre::FrameEvent &fe)
 
 void Item::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, unsigned int parentID)
 {
-	Initialize(sceneManager, parentNode, physicsEngine, Ogre::Vector3(0,0,0), FAKE, parentID);
+	Initialize(sceneManager, parentNode, physicsEngine, Ogre::Vector3(0,0,0), Resource::NONE, parentID);
 }
 
-void Item::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, Ogre::Vector3 location, ITEM_TYPE type, unsigned int parentID)
+void Item::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, Ogre::Vector3 location, Resource::RESOURCE_TYPE type, unsigned int parentID)
 {
 	PhysicsEntity::Initialize(sceneManager, parentNode, physicsEngine, parentID);
 	//setting our mass to 0
@@ -54,7 +54,9 @@ int Item::getValue() const
 	return value;
 }
 
-Item::ITEM_TYPE Item::getType()
+Resource Item::collect()
 {
-	return myType;
+	//we kill the item since we collected it.
+	kill();
+	return Resource(myType, 5.0);
 }

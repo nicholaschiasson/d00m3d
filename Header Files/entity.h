@@ -3,6 +3,7 @@
 
 #include "OgreSceneManager.h"
 #include "OgreSceneNode.h"
+#include "resource.h"
 
 //#include "item.h"
 
@@ -43,6 +44,7 @@ public:
 	virtual Ogre::Quaternion getDerivedOrientation() const;
 	virtual bool isAlive() const;
 	virtual bool isSpaghettified() const;
+	virtual Resource collect();
 	
 	/*
 	*	Sets player to dead (alive false)

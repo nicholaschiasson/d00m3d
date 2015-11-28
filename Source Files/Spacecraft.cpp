@@ -45,7 +45,17 @@ void Spacecraft::Update(const Ogre::FrameEvent &fe)
 
 void Spacecraft::Collide(const Ogre::FrameEvent &fe, PhysicsEntity *physicsEntity)
 {
+	Resource resource = physicsEntity->collect();
 
+	//todo implement tracking
+	switch(resource.getType()){
+	case Resource::FUEL:
+		break;
+	case Resource::ENERGY:
+		break;
+	default:
+		break;
+	}
 }
 
 void Spacecraft::spaghettify()

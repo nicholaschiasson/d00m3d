@@ -22,6 +22,7 @@ set(HDRS
 	"${HDR_DIR}/TextRenderer.h"
 	"${HDR_DIR}/particle_effect.h"
 	"${HDR_DIR}/particle_engine.h"
+	"${HDR_DIR}/resource.h"
 )
 
 set(SRCS
@@ -54,12 +55,13 @@ set(SRCS
     SkyboxFp.glsl
     SkyboxVp.glsl
 	MyFont.fontdef
+	resource.cpp
 	particle_effect.cpp
 	particle_engine.cpp
-	Fire.material
-	FireMaterialFp.glsl
-	FireMaterialVp.glsl
-	FireMaterialGp.glsl
+	explosion.material
+	explosionMaterialFp.glsl
+	explosionMaterialVp.glsl
+	explosionMaterialGp.glsl
 )
 
 # The rules here are specific to Windows Systems

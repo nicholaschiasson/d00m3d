@@ -30,8 +30,14 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 	exists = true;
 	spawnTime = 2.0f;
 	timer = spawnTime;
+
 	numObjects = 0;
 	//tr = new TextRenderer;
+
+
+	//setting up the PartcileEffectGeometry
+	particleEngine.initialize(sceneManager, physicsEngine);
+
 
 	//creating the player entity
 	player.Initialize(sceneManager, worldSceneNode, physicsEngine);
@@ -156,8 +162,7 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 
 			if(!(*it)->isAlive()){
 				deadEntity = (*it);
-				//(*it)->explode(); //TODO PARTCILE STUFF
-
+				particleEngine.createParticleEffect(ParticleEngine::EFFECT_EXPLOSION, worldSceneNode, (*it)->getPosition());
 			}
 		}
 
@@ -168,6 +173,7 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 			if(!(*it)->isAlive()){
 				deadEntity = (*it);
 				//(*it)->explode(); //TODO PARTCILE STUFF
+
 			}
 		}
 
@@ -196,6 +202,7 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 
 		//Now that everything is updated we apply physics
 		physicsEngine.Update(fe);
+		particleEngine.update(fe);
 	}
 }
 

@@ -33,6 +33,7 @@ void PhysicsEntity::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode
 	restitution = 0.0f;
 	previousVelocity = 0.0f;
 	velocity = 0.0f;
+	alive = true;
 }
 
 void PhysicsEntity::Update(const Ogre::FrameEvent &fe)

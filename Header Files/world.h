@@ -17,6 +17,7 @@
 #include "black_hole.h"
 #include "item.h"
 #include "TextRenderer.h"
+#include "particle_engine.h"
 class World
 {
 public:
@@ -82,7 +83,7 @@ private:
 	Ogre::SceneManager* sceneManager;
 	Camera *camera;
 	PhysicsEngine physicsEngine;
-
+	ParticleEngine particleEngine;
 	bool exists;
 	float timer;
 	float spawnTime;

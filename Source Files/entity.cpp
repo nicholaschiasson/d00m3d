@@ -57,10 +57,6 @@ void Entity::Update(const Ogre::FrameEvent &fe)
 	}
 }
 
-//void PhysicsEntity::Collect(Item *item)
-//{
-//}
-
 void Entity::Damage(float damage)
 {
 	if (alive)
@@ -74,6 +70,10 @@ void Entity::Damage(float damage)
 			health = max(0.0f, health - (damage / durability));
 		}
 	}
+}
+Resource Entity::collect()
+{
+	return Resource(Resource::NONE, 0.0f);
 }
 
 void Entity::explode()
