@@ -83,7 +83,7 @@ void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* p
 	weapon->Initialize(sceneManager, spacecraftBodyNode, physicsEngine, pid);
 	weapon->scale(invSpacecraftScaleX, invSpacecraftScaleY, invSpacecraftScaleZ);
 	weapon->pitch(Ogre::Radian(Ogre::Math::HALF_PI));
-	weapon->translate(0.0f, 0.0f, -0.5f);
+	weapon->translate(0.0f, 0.0f, -((0.25f * 0.5f) + ((0.75f * spacecraftScaleY) * 0.5f)));
 	
 }
 
