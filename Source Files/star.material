@@ -1,4 +1,4 @@
-material SunMaterial
+material StarMaterial
 {
     technique
     {
