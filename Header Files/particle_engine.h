@@ -27,7 +27,7 @@ private:
 	PhysicsEngine* physicsEngine;
 	Ogre::SceneManager* sceneManager;
 	
-	void createExplosionGeometry(int numParticles = 3000);
+	void createExplosionGeometry(int numParticles = 6000);
 	void cleanupParticles();
 };
 

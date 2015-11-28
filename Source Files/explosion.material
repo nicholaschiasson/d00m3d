@@ -24,7 +24,7 @@ geometry_program explosion/gs glsl
     default_params
     {
         param_named_auto projection_mat projection_matrix
-		param_named particle_size float 0.007;
+		param_named particle_size float 0.01;
     }
 }
 
@@ -62,11 +62,11 @@ material ExplosionMaterial
 
             fragment_program_ref explosion/fs
             {
-				param_named object_colour float3 1.0 0.0 0.0
+				param_named object_colour float3 1.0 1.0 1.0
             }
 			texture_unit {
 				texture_alias tex_samp
-			    texture explosion.jpg 2d
+			    texture Resources/textures/particles/explosion.jpg 2d
 		    }
         } 
     }

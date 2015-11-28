@@ -147,7 +147,6 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 
 		//asteroid list
 		for(std::vector<Asteroid*>::iterator it = asteroidList.begin(); it != asteroidList.end(); ++it){
-			checkDistance(*it);
 			(*it)->Update(fe);
 
 			if(!(*it)->isAlive()){
@@ -155,11 +154,11 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 				particleEngine.createParticleEffect(ParticleEngine::EFFECT_EXPLOSION, worldSceneNode, (*it)->getPosition(), Ogre::Vector3(1,1,1));
 
 			}
+			checkDistance(*it);
 		}
 
 		//itemlist
 		for(std::vector<Item*>::iterator it = itemList.begin(); it != itemList.end(); ++it){
-			checkDistance(*it);
 			(*it)->Update(fe);
 
 			if(!(*it)->isAlive()){
@@ -167,7 +166,7 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 				//(*it)->explode(); //TODO PARTCILE STUFF
 				
 			}
-			
+			checkDistance(*it);
 		}
 		//cleanup any dead entities from those lists
 		cleanupLists(true);

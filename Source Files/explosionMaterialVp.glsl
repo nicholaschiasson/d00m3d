@@ -22,21 +22,19 @@ void main()
 	particle_id = colour.r;
     // Let time cycle every four seconds
 	float circtime = timer - 7.0 * floor(timer / 7);
-	float t = circtime; // Our time parameter
+	float t = timer; // Our time parameter
 	// Settings for the explosion
 	// Could also define these in the material file to have multiple particle systems with different settings
     float grav = 0.05; // Gravity
-    float slow = 1; // Allows to slow down the explosion, control the speed of the explosion
-	float velocity = 1 - grav*t*2;
-	velocity = max(velocity, 0);
+    float speed = 10; // Allows to slow down the explosion, control the speed of the explosio
 	// Let's first work in model space (apply only world matrix)
 	vec4 position = world_mat * vec4(vertex, 1.0);
 	vec4 norm = normal_mat * vec4(normal, 1.0);
 
     // Move point along normal and down with t*t (acceleration under gravity)
-    position.x +=  norm.x*t*slow*velocity - grav*slow*up_vec.x*t*t;
-    position.y += norm.y*t*slow*velocity - grav*slow*up_vec.y*t*t;
-    position.z += norm.z*t*slow*velocity - grav*slow*up_vec.z*t*t;
+    position.x +=  norm.x*t*speed;
+    position.y += norm.y*t*speed;
+    position.z += norm.z*t*speed;
 	
 
 	

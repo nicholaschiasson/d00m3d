@@ -33,7 +33,7 @@ void ParticleEngine::createExplosionGeometry(int numParticles)
 	/* Create a set of points which will be the particles */
 	/* This is similar to drawing a sphere: we will sample points on a sphere, but will allow them to also
 		deviate a bit from the sphere along the normal (change of radius) */
-	float trad = 0.4f; // Defines the starting point of the particles
+	float trad = 1.0f; // Defines the starting point of the particles
     float maxspray = 0.5f; // This is how much we allow the points to deviate from the sphere
 	float u, v, w, theta, phi, spray; // Work variables
 	for (int i = 0; i < numParticles; i++){
@@ -81,8 +81,8 @@ void ParticleEngine::createParticleEffect(EFFECT_TYPE effect, Ogre::SceneNode* p
 	}
 
 	particleEffect = new ParticleEffect(sceneManager, parentNode, object_name,material_name, *physicsEngine);
-	particleEffect->translate(position);
 	particleEffect->scale(scale);
+	particleEffect->translate(position);
 	particles.push_back(particleEffect);
 }
 
