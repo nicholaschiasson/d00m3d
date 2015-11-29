@@ -124,12 +124,16 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 {
 	//std::cout << numObjects << std::endl;
 	Entity* deadEntity = NULL;
+
 	UI.updateUI();
+
 	if (exists)
 	{
 		//TODO update stuff
 		if (timer <= 0.0f)
 		{
+			UI.updateFPS(1/fe.timeSinceLastFrame);
+
 			for(int i = 0; i<20; i++){
 				if(numObjects < MAX_NUM_OBJECTS){
 				    //SpawnAsteroid(player.getPosition());

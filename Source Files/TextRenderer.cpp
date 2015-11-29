@@ -82,13 +82,26 @@ void TextRenderer::initTextAreas(){
 	speed->setColour(Ogre::ColourValue(1.0,1.0,1.0));
     panel->addChild(speed);
 
+	FPS = static_cast<Ogre::TextAreaOverlayElement*>(overlayManager->createOverlayElement("TextArea","FPS"));
+    FPS->setMetricsMode(Ogre::GMM_PIXELS);
+	FPS->setPosition(1500,30);
+    FPS->setDimensions(200, 100);
+    FPS->setFontName("MyFont");
+	FPS->setCharHeight(30);
+	FPS->setColour(Ogre::ColourValue(1.0,1.0,1.0));
+    panel->addChild(FPS);
+
 }
 
 void TextRenderer::updateUI(){
 	health->setCaption("HEALTH: " + std::to_string((int)player->getHealth())+ "%");
 	fuel->setCaption("FUEL: " + std::to_string((int)player->getFuel())+ "%");
     energy->setCaption("ENERGY: " + std::to_string((int)player->getEnergy())+ "%");
-	speed->setCaption("SPEED: " + std::to_string((int)player->getSpeed())+ "mph");
+	speed->setCaption("SPEED: " + std::to_string((int)player->getSpeed())+ "AU/h");
+}
+
+void TextRenderer::updateFPS(int ff){
+	FPS->setCaption("FPS: " + std::to_string(ff));
 }
 
 void TextRenderer::CreateTextArea(std::string caption, int textSize, Ogre::ColourValue textColour, std::string uniqueTextID,Ogre::Vector2 textPosition){       

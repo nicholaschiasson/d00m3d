@@ -20,6 +20,7 @@ public:
 	void updateUI();
 	void CreateTextArea(Ogre::TextAreaOverlayElement* text_area,std::string caption, int textSize, Ogre::ColourValue textColour, std::string uniqueTextID,Ogre::Vector2 textPosition);
 	void CreateTextArea(std::string caption, int textSize, Ogre::ColourValue textColour, std::string uniqueTextID,Ogre::Vector2 textPosition);
+	void updateFPS(int FPS);
 
 private:
 	Ogre::OverlayContainer* panel;
@@ -30,6 +31,6 @@ private:
 	Ogre::TextAreaOverlayElement* speed;
 	Ogre::TextAreaOverlayElement* energy;
 	Ogre::TextAreaOverlayElement* fuel;
-//	Ogre::Overlay* overlay;
+	Ogre::TextAreaOverlayElement* FPS;
 };
 #endif
