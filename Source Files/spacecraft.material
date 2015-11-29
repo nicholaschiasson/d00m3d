@@ -63,3 +63,29 @@ material SpacecraftPodMaterial
         } 
     }
 }
+
+
+material SpacecraftPanelMaterial
+{
+    technique
+    {
+        pass
+        {
+            vertex_program_ref textureshader/vs
+            {
+            }
+
+            fragment_program_ref textureshader/fs
+            {
+				param_named ambient_colour float4 0.2 0.2 0.2 1.0
+				param_named diffuse_colour float4 1.0 1.0 1.0 1.0
+				param_named specular_colour float4 0.4 0.4 0.4 1.0
+            }
+
+			texture_unit
+			{
+				texture Resources/textures/Spacecraft/Panel/panel_01.jpg 2d
+			}
+        } 
+    }
+}

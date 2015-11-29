@@ -27,7 +27,7 @@ void ParticleEffect::Update(const Ogre::FrameEvent& fe)
 {
 	if(alive){
 		timer += fe.timeSinceLastFrame;
-		std::cout << "Passing in Timer: " <<timer <<std::endl;
+		//std::cout << "Passing in Timer: " <<timer <<std::endl;
 		Ogre::MaterialPtr mat = static_cast<Ogre::MaterialPtr>(Ogre::MaterialManager::getSingleton().getByName(materialName));
 		mat->getBestTechnique()->getPass(0)->getVertexProgramParameters()->setNamedConstant("timer", timer);
 

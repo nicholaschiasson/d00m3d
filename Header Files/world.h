@@ -19,7 +19,7 @@
 #include "TextRenderer.h"
 #include "particle_engine.h"
 #include "TextRenderer.h"
-
+#include "star.h"
 class World
 {
 public:
@@ -95,6 +95,7 @@ private:
 	
 	int numObjects;
 
+	Star star;
 	PlayerSpacecraft player;
 
 	std::vector<Item *> itemList;

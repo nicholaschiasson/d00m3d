@@ -15,6 +15,7 @@ Entity::~Entity()
 void Entity::kill()
 {
 	alive = false;
+	health = 0;
 }
 
 void Entity::spaghettify()
@@ -71,7 +72,7 @@ void Entity::Damage(float damage)
 		}
 	}
 }
-Resource Entity::collect()
+Resource Entity::collect(Entity* entity)
 {
 	return Resource(Resource::NONE, 0.0f);
 }

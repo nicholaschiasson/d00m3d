@@ -54,7 +54,7 @@ int Item::getValue() const
 	return value;
 }
 
-Resource Item::collect()
+Resource Item::collect(Entity* entity)
 {
 	//we kill the item since we collected it.
 	kill();

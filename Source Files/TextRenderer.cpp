@@ -66,6 +66,7 @@ void TextRenderer::CreateTextArea(std::string caption, int textSize, Ogre::Colou
 	text_area->setCaption(caption);
 	text_area->setCharHeight(textSize);
 	text_area->setColour(textColour);
+
     panel->addChild(text_area);
 
 }

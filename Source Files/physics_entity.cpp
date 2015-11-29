@@ -125,5 +125,5 @@ bool PhysicsEntity::IsGravitational()
 float PhysicsEntity::GetRadius()
 {
 	Ogre::Vector3 scale = sceneNode->getScale();
-	return max(scale.x, max(scale.y, scale.z)) / 2.25f;
+	return max(scale.x, max(scale.y, scale.z)) / 2.0f;
 }
