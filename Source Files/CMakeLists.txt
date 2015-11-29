@@ -4,6 +4,7 @@ set(HDR_DIR "${PROJECT_SOURCE_DIR}/Header Files")
 set(HDRS
     "${HDR_DIR}/asteroid.h"
     "${HDR_DIR}/black_hole.h"
+	"${HDR_DIR}/black_hole_cannon.h"
 	"${HDR_DIR}/camera.h"
 	"${HDR_DIR}/defines.h"
 	"${HDR_DIR}/enemy_spacecraft.h"
@@ -19,6 +20,7 @@ set(HDRS
 	"${HDR_DIR}/particle_engine.h"
 	"${HDR_DIR}/physics_engine.h"
 	"${HDR_DIR}/physics_entity.h"
+	"${HDR_DIR}/plasma_cannon.h"
 	"${HDR_DIR}/player_spacecraft.h"
 	"${HDR_DIR}/resource.h"
 	"${HDR_DIR}/spacecraft.h"
@@ -34,6 +36,7 @@ set(SRCS
     asteroid.material
     black_hole.cpp
     black_hole.material
+    black_hole_cannon.cpp
 	camera.cpp
     enemy_spacecraft.cpp
 	enemy_spacecraft.material
@@ -57,6 +60,7 @@ set(SRCS
 	particle_engine.cpp
 	physics_engine.cpp
 	physics_entity.cpp
+	plasma_cannon.cpp
     player_spacecraft.cpp
 	player_spacecraft.material
 	red_laser.material

@@ -19,7 +19,7 @@ void Star::Initialize(Ogre::SceneManager* sceneManager, Ogre::SceneNode *parentN
 	Ogre::Entity *starEntity = sceneManager->createEntity("Sphere");
 	starEntity->setMaterialName("StarMaterial");
 	Ogre::SceneNode *asteroidNode = sceneNode->createChildSceneNode("Star" + Ogre::StringConverter::toString(entityCount));
-	scale(1000, 1000, 1000);
+	scale(500, 500, 500);
 	sceneNode->attachObject(starEntity);
 }
 

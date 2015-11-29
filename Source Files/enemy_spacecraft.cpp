@@ -4,19 +4,19 @@ EnemySpacecraft::EnemySpacecraft(): physicsEngine(NULL), currState(STATE_IDLE), 
 {
 }
 
-EnemySpacecraft::EnemySpacecraft(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, unsigned int parentID):
+EnemySpacecraft::EnemySpacecraft(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, Ogre::Vector3 lightPos, unsigned int parentID):
 	physicsEngine(NULL), currState(STATE_IDLE), target(NULL), lastShot(0.0), reload(6.0)
 {
-	Initialize(sceneManager, parentNode, physicsEngine, parentID);
+	Initialize(sceneManager, parentNode, physicsEngine, lightPos, parentID);
 }
 
 EnemySpacecraft::~EnemySpacecraft()
 {
 }
 
-void EnemySpacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngineRef, unsigned int parentID){
+void EnemySpacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngineRef, Ogre::Vector3 lightPos, unsigned int parentID){
 	materialPrefix = "Enemy";
-	Spacecraft::Initialize(sceneManager, parentNode, physicsEngineRef, parentID);
+	Spacecraft::Initialize(sceneManager, parentNode, physicsEngineRef, lightPos, parentID);
 	physicsEngine = &physicsEngineRef;
 }
 

@@ -40,18 +40,18 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 	//setting up the PartcileEffectGeometry
 	particleEngine.initialize(sceneManager, physicsEngine);
 
+	star.Initialize(sceneManager, worldSceneNode, physicsEngine);
+	//todo replace with actual star co-ordinates
+	star.pitch(Ogre::Radian(Ogre::Math::HALF_PI));
+	star.translate(5000,5000,5000);
 
 	//creating the player entity
-	player.Initialize(sceneManager, worldSceneNode, physicsEngine);
+	player.Initialize(sceneManager, worldSceneNode, physicsEngine, star.getPosition());
 	camera->attachTo(&player);
 	
 	//initObjects();
 	//Setting up the basic control scheme
 	initControls(inMan);
-
-	star.Initialize(sceneManager, worldSceneNode, physicsEngine);
-	//todo replace with actual star co-ordinates
-	star.translate(5000,5000,5000);
 	createWorld();
 }
 
@@ -139,6 +139,8 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 		}
 
 		//first we update all of our entities in our list.
+
+		//star.roll(Ogre::Radian(-Ogre::Degree(2.0f * fe.timeSinceLastFrame)));
 
 		//enemy spacecraft list
 		for(std::vector<EnemySpacecraft*>::iterator it = fleet.begin(); it != fleet.end(); ++it){
@@ -415,7 +417,7 @@ void World::PlayerRotate(void *context, const Ogre::FrameEvent& fe, int x1, int 
 
 void World::setupEnemies()
 {
-	EnemySpacecraft* recruit = new EnemySpacecraft(sceneManager, worldSceneNode, physicsEngine);
+	EnemySpacecraft* recruit = new EnemySpacecraft(sceneManager, worldSceneNode, physicsEngine, star.getPosition());
 	recruit->translate(player.getPosition() + Ogre::Vector3(0,0,-75));
 	recruit->setTarget(&player);
 	fleet.push_back(recruit);

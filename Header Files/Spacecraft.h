@@ -1,6 +1,7 @@
 #ifndef SPACECRAFT_H
 #define SPACECRAFT_H
 
+#include <OgreVector3.h>
 #include "physics_entity.h"
 #include "input_manager.h"
 #include "laser_cannon.h"
@@ -11,7 +12,7 @@ public:
 	Spacecraft();
 	virtual ~Spacecraft() = 0;
 	virtual void cleanup(PhysicsEngine &physicsEngine);
-	virtual void Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, unsigned int parentID = -1);
+	virtual void Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, Ogre::Vector3 lightPos, unsigned int parentID = -1);
 	virtual void Update(const Ogre::FrameEvent &fe);
 
 	virtual void Collide(const Ogre::FrameEvent &fe, PhysicsEntity *physicsEntity);
@@ -29,6 +30,9 @@ public:
 
 protected:
 	Ogre::String materialPrefix;
+	Ogre::Vector3 light;
+	Ogre::SceneNode *leftPanelPivot;
+	Ogre::SceneNode *rightPanelPivot;
 	float thrusterForce;
 	Weapon *weapon;
 };

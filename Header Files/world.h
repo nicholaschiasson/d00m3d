@@ -94,8 +94,8 @@ private:
 	
 	int numObjects;
 
-	PlayerSpacecraft player;
 	Star star;
+	PlayerSpacecraft player;
 
 	std::vector<Item *> itemList;
 	std::vector<Asteroid *> asteroidList;

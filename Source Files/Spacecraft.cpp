@@ -3,7 +3,8 @@
 #include "OgreEntity.h"
 
 Spacecraft::Spacecraft() :
-	materialPrefix("Player"), thrusterForce(500.0f), weapon(new LaserCannon())
+	materialPrefix("Player"), light(Ogre::Vector3(0.0f, 0.0f, 0.0f)), leftPanelPivot(0), rightPanelPivot(0),
+	thrusterForce(500.0f), weapon(new LaserCannon())
 {
 }
 
@@ -18,10 +19,12 @@ void Spacecraft::cleanup(PhysicsEngine &physicsEngine)
 	PhysicsEntity::cleanup(physicsEngine);
 }
 
-void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, unsigned int parentID)
+void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, Ogre::Vector3 lightPos, unsigned int parentID)
 {
 	PhysicsEntity::Initialize(sceneManager, parentNode, physicsEngine, parentID);
 	mass = 5000.0f;
+
+	light = lightPos;
 
 	unsigned int pid = (parentID == -1 ? objectID : parentID);
 	
@@ -86,18 +89,74 @@ void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* p
 	spacecraftPodNode->pitch(Ogre::Radian(-Ogre::Math::PI / 5.5f));
 	spacecraftPodNode->translate(0.0f, 0.28f, 0.175f);
 
+	Ogre::Entity *leftPanelArmEntity = sceneManager->createEntity("Cylinder");
+	leftPanelArmEntity->setMaterialName(materialPrefix + "SpacecraftShortMaterial");
+	Ogre::SceneNode *leftPanelArmNode = spacecraftBodyNode->createChildSceneNode("LeftPanelArm" + Ogre::StringConverter::toString(entityCount));
+	leftPanelArmNode->attachObject(leftPanelArmEntity);
+	leftPanelArmNode->pitch(Ogre::Radian(Ogre::Math::HALF_PI));
+	leftPanelArmNode->scale(invSpacecraftScaleX, invSpacecraftScaleY, invSpacecraftScaleZ);
+	leftPanelArmNode->scale(0.1f, 0.25f, 0.1f);
+	leftPanelArmNode->roll(Ogre::Radian(Ogre::Math::PI / 6.0f));
+	leftPanelArmNode->translate(-0.2f, 0.0f, 0.3f);
+
+	Ogre::Entity *leftPanelPivotEntity = sceneManager->createEntity("Sphere");
+	leftPanelPivotEntity->setMaterialName(materialPrefix + "SpacecraftMediumMaterial");
+	leftPanelPivot = leftPanelArmNode->createChildSceneNode("LeftPanelPivot" + Ogre::StringConverter::toString(entityCount));
+	leftPanelPivot->attachObject(leftPanelPivotEntity);
+	leftPanelPivot->scale(1.0f / 0.1f, 1.0f / 0.25f, 1.0f / 0.1f);
+	leftPanelPivot->scale(0.1f, 0.1f, 0.1f);
+	leftPanelPivot->roll(-Ogre::Radian(Ogre::Math::PI / 6.0f));
+	leftPanelPivot->pitch(Ogre::Radian(Ogre::Math::HALF_PI));
+	leftPanelPivot->translate(0.0f, 0.65f, 0.0f);
+
+	Ogre::Entity *leftPanelEntity = sceneManager->createEntity("Cube");
+	leftPanelEntity->setMaterialName("SpacecraftPanelMaterial");
+	Ogre::SceneNode *leftPanelNode = leftPanelPivot->createChildSceneNode("LeftPanel" + Ogre::StringConverter::toString(entityCount));
+	leftPanelNode->attachObject(leftPanelEntity);
+	leftPanelNode->scale(1.0f / 0.1f, 1.0f / 0.1f, 1.0f / 0.1f);
+	leftPanelNode->scale(0.5f, 0.01f, 0.75f);
+	leftPanelNode->pitch(Ogre::Radian(-Ogre::Math::HALF_PI));
+
+	Ogre::Entity *rightPanelArmEntity = sceneManager->createEntity("Cylinder");
+	rightPanelArmEntity->setMaterialName(materialPrefix + "SpacecraftShortMaterial");
+	Ogre::SceneNode *rightPanelArmNode = spacecraftBodyNode->createChildSceneNode("RightPanelArm" + Ogre::StringConverter::toString(entityCount));
+	rightPanelArmNode->attachObject(rightPanelArmEntity);
+	rightPanelArmNode->pitch(Ogre::Radian(Ogre::Math::HALF_PI));
+	rightPanelArmNode->scale(invSpacecraftScaleX, invSpacecraftScaleY, invSpacecraftScaleZ);
+	rightPanelArmNode->scale(0.1f, 0.25f, 0.1f);
+	rightPanelArmNode->roll(-Ogre::Radian(Ogre::Math::PI / 6.0f));
+	rightPanelArmNode->translate(0.2f, 0.0f, 0.3f);
+
+	Ogre::Entity *rightPanelPivotEntity = sceneManager->createEntity("Sphere");
+	rightPanelPivotEntity->setMaterialName(materialPrefix + "SpacecraftMediumMaterial");
+	rightPanelPivot = rightPanelArmNode->createChildSceneNode("RightPanelPivot" + Ogre::StringConverter::toString(entityCount));
+	rightPanelPivot->attachObject(rightPanelPivotEntity);
+	rightPanelPivot->scale(1.0f / 0.1f, 1.0f / 0.25f, 1.0f / 0.1f);
+	rightPanelPivot->scale(0.1f, 0.1f, 0.1f);
+	rightPanelPivot->roll(Ogre::Radian(Ogre::Math::PI / 6.0f));
+	rightPanelPivot->pitch(Ogre::Radian(Ogre::Math::HALF_PI));
+	rightPanelPivot->translate(0.0f, 0.65f, 0.0f);
+
+	Ogre::Entity *rightPanelEntity = sceneManager->createEntity("Cube");
+	rightPanelEntity->setMaterialName("SpacecraftPanelMaterial");
+	Ogre::SceneNode *rightPanelNode = rightPanelPivot->createChildSceneNode("RightPanel" + Ogre::StringConverter::toString(entityCount));
+	rightPanelNode->attachObject(rightPanelEntity);
+	rightPanelNode->scale(1.0f / 0.1f, 1.0f / 0.1f, 1.0f / 0.1f);
+	rightPanelNode->scale(0.5f, 0.01f, 0.75f);
+	rightPanelNode->pitch(Ogre::Radian(-Ogre::Math::HALF_PI));
+
 	Ogre::Entity *weaponArmEntity = sceneManager->createEntity("Cylinder");
 	weaponArmEntity->setMaterialName(materialPrefix + "SpacecraftShortMaterial");
 	Ogre::SceneNode *weaponArmNode = spacecraftBodyNode->createChildSceneNode("WeaponArm" + Ogre::StringConverter::toString(entityCount));
 	weaponArmNode->attachObject(weaponArmEntity);
 	weaponArmNode->pitch(Ogre::Radian(Ogre::Math::HALF_PI));
 	weaponArmNode->scale(invSpacecraftScaleX, invSpacecraftScaleY, invSpacecraftScaleZ);
-	weaponArmNode->scale(0.1f, 0.25f, 0.1f);
-	weaponArmNode->translate(0.0f, 0.0f, -((0.25f * 0.5f) + ((0.75f * spacecraftScaleY) * 0.5f)));
+	weaponArmNode->scale(0.1f, 0.2f, 0.1f);
+	weaponArmNode->translate(0.0f, 0.0f, -((0.2f * 0.5f) + ((0.75f * spacecraftScaleY) * 0.5f)));
 
 	weapon->Initialize(sceneManager, weaponArmNode, physicsEngine, pid);
-	weapon->scale(1.0f / 0.1f, 1.0f / 0.25f, 1.0f / 0.1f);
-	weapon->translate(0.0f, -0.95f, 0.0f);
+	weapon->scale(1.0f / 0.1f, 1.0f / 0.2f, 1.0f / 0.1f);
+	weapon->translate(0.0f, -0.9f, 0.0f);
 	
 }
 
@@ -106,6 +165,33 @@ void Spacecraft::Update(const Ogre::FrameEvent &fe)
 	if(alive)
 	{
 		PhysicsEntity::Update(fe);
+        
+		Ogre::Quaternion orientation = leftPanelPivot->getOrientation();
+		leftPanelPivot->resetOrientation();
+		leftPanelPivot->roll(-Ogre::Radian(Ogre::Math::PI / 6.0f));
+		leftPanelPivot->pitch(Ogre::Radian(Ogre::Math::HALF_PI));
+        Ogre::Vector3 dir = light - leftPanelPivot->_getDerivedPosition();
+        Ogre::Vector3 ori = leftPanelPivot->_getDerivedOrientation() * Ogre::Vector3::NEGATIVE_UNIT_Z;
+        Ogre::Radian theta = ori.angleBetween(dir);
+		leftPanelPivot->setOrientation(orientation);
+		if (theta <= Ogre::Radian(Ogre::Math::PI / 4.0f))
+		{
+			leftPanelPivot->lookAt(light, Ogre::Node::TS_WORLD);
+		}
+        
+		orientation = rightPanelPivot->getOrientation();
+		rightPanelPivot->resetOrientation();
+		rightPanelPivot->roll(Ogre::Radian(Ogre::Math::PI / 6.0f));
+		rightPanelPivot->pitch(Ogre::Radian(Ogre::Math::HALF_PI));
+        dir = light - rightPanelPivot->_getDerivedPosition();
+        ori = rightPanelPivot->_getDerivedOrientation() * Ogre::Vector3::NEGATIVE_UNIT_Z;
+        theta = ori.angleBetween(dir);
+		rightPanelPivot->setOrientation(orientation);
+		if (theta <= Ogre::Radian(Ogre::Math::PI / 4.0f))
+		{
+			rightPanelPivot->lookAt(light, Ogre::Node::TS_WORLD);
+		}
+
 		weapon->Update(fe);
 	}
 }
