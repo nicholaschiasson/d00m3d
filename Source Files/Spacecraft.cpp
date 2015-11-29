@@ -251,38 +251,40 @@ void Spacecraft::Update(const Ogre::FrameEvent &fe)
 
 void Spacecraft::Damage(float damage)
 {
-	int randomval = rand() % 2;
-	if(randomval == 0){ //Hit the defenses
-		if(defenseSystems.size() == 0){
-			PhysicsEntity::Damage(damage);
+	if(alive){
+		int randomval = rand() % 2;
+		if(randomval == 0){ //Hit the defenses
+			if(defenseSystems.size() == 0){
+				PhysicsEntity::Damage(damage);
+			}
+			else{
+				defenseSystems.front().damage(damage);
+			}
 		}
-		else{
-			defenseSystems.front().damage(damage);
-		}
-	}
-	else{ //Damage System
-		randomval = rand() % 3;
-		switch(randomval){
-		case 0:
-			if(artillerySystems.size() == 0){
-				PhysicsEntity::Damage(damage);
-			}
-			else{
-				artillerySystems.front().damage(damage);
-			}
-		case 1:
-			if(navigationalSystems.size() == 0){
-				PhysicsEntity::Damage(damage);
-			}
-			else{
-				navigationalSystems.front().damage(damage);
-			}
-		case 2:
-			if(fuelSystems.size() == 0){
-				PhysicsEntity::Damage(damage);
-			}
-			else{
-				fuelSystems.front().damage(damage);
+		else{ //Damage System
+			randomval = rand() % 3;
+			switch(randomval){
+			case 0:
+				if(artillerySystems.size() == 0){
+					PhysicsEntity::Damage(damage);
+				}
+				else{
+					artillerySystems.front().damage(damage);
+				}
+			case 1:
+				if(navigationalSystems.size() == 0){
+					PhysicsEntity::Damage(damage);
+				}
+				else{
+					navigationalSystems.front().damage(damage);
+				}
+			case 2:
+				if(fuelSystems.size() == 0){
+					PhysicsEntity::Damage(damage);
+				}
+				else{
+					fuelSystems.front().damage(damage);
+				}
 			}
 		}
 	}

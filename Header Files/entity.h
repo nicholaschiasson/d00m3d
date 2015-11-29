@@ -18,6 +18,7 @@ public:
 	
 	//virtual void Collect(Item *item);
 	virtual void Damage(float damage);
+	virtual void absoluteDamage(float damage);
 	virtual void explode();
 
 	virtual unsigned int GetObjectID();

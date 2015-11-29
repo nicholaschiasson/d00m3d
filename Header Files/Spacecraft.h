@@ -33,12 +33,12 @@ public:
 	SystemComponent* getActiveSystem(SystemComponent::SYSTEM_TYPE);
 	int getNumSystemBackups(SystemComponent::SYSTEM_TYPE);
 
-	void ThrustersForward();
-	void ThrustersLeft();
-	void ThrustersBackward();
-	void ThrustersRight();
-	void ThrustersUpward();
-	void ThrustersDownward();
+	virtual void ThrustersForward();
+	virtual void ThrustersLeft();
+	virtual void ThrustersBackward();
+	virtual void ThrustersRight();
+	virtual void ThrustersUpward();
+	virtual void ThrustersDownward();
 
 	virtual void Damage(float damage);
 
