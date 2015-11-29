@@ -26,15 +26,31 @@ void Star::Initialize(Ogre::SceneManager* sceneManager, Ogre::SceneNode *parentN
 void Star::Collide(const Ogre::FrameEvent &fe, PhysicsEntity *physicsEntity)
 {
 	Ogre::Vector3 distance = sceneNode->getPosition() - physicsEntity->getPosition();
+	float points =0;
 	if(distance.squaredLength() <= Ogre::Math::Sqr(PhysicsEntity::GetRadius())){
 		physicsEntity->kill();
 	}
 	else{
-		std::cout << "COLLIDE!" <<std::endl;
+		//damage should be half of what the collect will return
+		physicsEntity->Damage(calcRadiation(physicsEntity)/2.0);
 	}
 }
 
 float Star::GetRadius()
 {
 	return PhysicsEntity::GetRadius() + 1000.0;
+}
+Resource Star::collect(Entity* entity)
+{
+	return Resource(Resource::ENERGY, calcRadiation(entity));
+}
+
+float Star::calcRadiation(Entity* entity)
+{
+	float value = 0.0;
+	Ogre::Vector3 distance = sceneNode->getPosition() - entity->getPosition();
+	value = distance.length() - PhysicsEntity::GetRadius(); //max should be 1000 on the edge of the radiation range
+	value = value/ 100.0; //making the max be 100.
+	value = 100.0 - value; //if we are the edge we only get 1, every 10 closer it increases by 1.
+	return value;
 }

@@ -44,7 +44,7 @@ public:
 	virtual Ogre::Quaternion getDerivedOrientation() const;
 	virtual bool isAlive() const;
 	virtual bool isSpaghettified() const;
-	virtual Resource collect();
+	virtual Resource collect(Entity* entity);
 	
 	/*
 	*	Sets player to dead (alive false)

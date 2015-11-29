@@ -72,7 +72,7 @@ void Entity::Damage(float damage)
 		}
 	}
 }
-Resource Entity::collect()
+Resource Entity::collect(Entity* entity)
 {
 	return Resource(Resource::NONE, 0.0f);
 }

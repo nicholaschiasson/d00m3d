@@ -112,7 +112,7 @@ void Spacecraft::Update(const Ogre::FrameEvent &fe)
 
 void Spacecraft::Collide(const Ogre::FrameEvent &fe, PhysicsEntity *physicsEntity)
 {
-	Resource resource = physicsEntity->collect();
+	Resource resource = physicsEntity->collect(this);
 
 	//todo implement tracking
 	switch(resource.getType()){

@@ -23,7 +23,7 @@ public:
 
 	int getValue() const;
 
-	virtual Resource collect();	
+	virtual Resource collect(Entity* entity);	
 
 private:
 	int value;

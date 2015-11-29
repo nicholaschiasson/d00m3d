@@ -12,7 +12,9 @@ public:
 	void Initialize(Ogre::SceneManager* sceneManager, Ogre::SceneNode *parentNode, PhysicsEngine &physicsEngine, unsigned int parentID = -1);
 	virtual void Collide(const Ogre::FrameEvent &fe, PhysicsEntity *physicsEntity);
 	virtual float GetRadius();
+	virtual Resource collect(Entity* entity);
 private:
+	float calcRadiation(Entity* entity);
 };
 
 #endif //STAR_H
