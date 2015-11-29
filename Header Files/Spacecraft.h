@@ -26,6 +26,7 @@ public:
 
 	float getEnergy();
 	float getFuel();
+	float getSpeed(); //returns the velocitySquared (to save on computation)
 
 	void ThrustersForward();
 	void ThrustersLeft();
