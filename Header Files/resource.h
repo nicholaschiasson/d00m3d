@@ -6,6 +6,7 @@ public:
 	enum RESOURCE_TYPE{
 		FUEL,
 		ENERGY,
+		PARTS,
 		NONE
 	};
 	Resource(RESOURCE_TYPE, float value);
