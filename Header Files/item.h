@@ -24,7 +24,7 @@ public:
 	int getValue() const;
 
 	virtual Resource collect(Entity* entity);	
-
+	virtual float GetRadius();
 private:
 	int value;
 	Resource::RESOURCE_TYPE myType;

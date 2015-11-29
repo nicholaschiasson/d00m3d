@@ -154,7 +154,7 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 			if(!(*it)->isAlive()){
 				deadEntity = (*it);
 				particleEngine.createParticleEffect(ParticleEngine::EFFECT_EXPLOSION, worldSceneNode, (*it)->getPosition(), Ogre::Vector3(1,1,1));
-				itemList.push_back(new Item(sceneManager, worldSceneNode, physicsEngine, deadEntity->getPosition(), Resource::FUEL));
+				itemList.push_back(new Item(sceneManager, worldSceneNode, physicsEngine, deadEntity->getPosition(), Resource::PARTS));
 			}
 		}
 

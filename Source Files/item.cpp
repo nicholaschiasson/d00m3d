@@ -60,3 +60,8 @@ Resource Item::collect(Entity* entity)
 	kill();
 	return Resource(myType, 5.0);
 }
+
+float Item::GetRadius()
+{
+	return PhysicsEntity::GetRadius() * 25.0;
+}
