@@ -25,6 +25,7 @@ set(HDRS
 	"${HDR_DIR}/resource.h"
 	"${HDR_DIR}/spacecraft.h"
 	"${HDR_DIR}/star.h"
+    "${HDR_DIR}/system_component.h"
 	"${HDR_DIR}/TextRenderer.h"
 	"${HDR_DIR}/weapon.h"
 	"${HDR_DIR}/world.h"
@@ -72,6 +73,7 @@ set(SRCS
     SkyboxVp.glsl
 	star.cpp
 	star.material
+    system_component.cpp
 	TextRenderer.cpp
 	TextureMaterialFp.glsl
 	TextureMaterialVp.glsl

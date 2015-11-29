@@ -4,7 +4,10 @@
 #include <OgreVector3.h>
 #include "physics_entity.h"
 #include "input_manager.h"
+#include "black_hole_cannon.h"
 #include "laser_cannon.h"
+#include "plasma_cannon.h"
+#include "system_component.h"
 
 class Spacecraft : public PhysicsEntity
 {
