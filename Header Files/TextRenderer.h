@@ -18,14 +18,18 @@ public:
 	void initPanel();
 	void initTextAreas();
 	void updateUI();
+	void CreateTextArea(Ogre::TextAreaOverlayElement* text_area,std::string caption, int textSize, Ogre::ColourValue textColour, std::string uniqueTextID,Ogre::Vector2 textPosition);
 	void CreateTextArea(std::string caption, int textSize, Ogre::ColourValue textColour, std::string uniqueTextID,Ogre::Vector2 textPosition);
+
 private:
 	Ogre::OverlayContainer* panel;
 	Ogre::OverlayManager* overlayManager;
 	PlayerSpacecraft* player;
-	Ogre::TextAreaOverlayElement* health;
 	Ogre::TextAreaOverlayElement* text_area;
-
+	Ogre::TextAreaOverlayElement* health;
+	Ogre::TextAreaOverlayElement* speed;
+	Ogre::TextAreaOverlayElement* energy;
+	Ogre::TextAreaOverlayElement* fuel;
 //	Ogre::Overlay* overlay;
 };
 #endif
