@@ -38,6 +38,7 @@ namespace ogre_application
 		std::auto_ptr<Ogre::Root> ogre_root_;
 		// Main Ogre window
 		Ogre::RenderWindow* ogre_window_;
+		bool isFocus;
 
 		// Input managers
 		OIS::InputManager *ogre_input_manager_;
@@ -58,7 +59,9 @@ namespace ogre_application
 
 		/* Methods to handle events */
 		bool frameRenderingQueued(const Ogre::FrameEvent& fe);
+		void windowFocusChange(Ogre::RenderWindow* rw);
 		void windowResized(Ogre::RenderWindow* rw);
+
 		World world;
 		Camera camera;
 

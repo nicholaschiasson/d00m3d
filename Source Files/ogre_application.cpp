@@ -159,6 +159,7 @@ namespace ogre_application
 
 			ogre_window_->setActive(true);
 			ogre_window_->setAutoUpdated(false);
+			isFocus = true;
 		}
 		catch (Ogre::Exception &e)
 		{
@@ -318,16 +319,19 @@ namespace ogre_application
 
 				Ogre::WindowEventUtilities::messagePump();
 
-				unsigned int width, height, depth;
-				int top, left;
-				ogre_window_->getMetrics(width, height, depth, left, top);
+				if (isFocus)
+				{
+					unsigned int width, height, depth;
+					int top, left;
+					ogre_window_->getMetrics(width, height, depth, left, top);
 
-				LPPOINT point = new tagPOINT();
-				GetCursorPos(point);
-				SetCursorPos(left + (width / 2), top + (height / 2));
-				inputManager.CompensateManualMouseSetPosition((left + (width / 2)) - point->x,
-					(top + (height / 2)) - point->y);
-				delete point;
+					LPPOINT point = new tagPOINT();
+					GetCursorPos(point);
+					SetCursorPos(left + (width / 2), top + (height / 2));
+					inputManager.CompensateManualMouseSetPosition((left + (width / 2)) - point->x,
+						(top + (height / 2)) - point->y);
+					delete point;
+				}
 			}
 		}
 		catch (Ogre::Exception &e)
@@ -342,18 +346,20 @@ namespace ogre_application
 
 	bool OgreApplication::frameRenderingQueued(const Ogre::FrameEvent& fe)
 	{
-		/* This event is called after a frame is queued for rendering */
-		/* Do stuff in this event since the GPU is rendering and the CPU is idle */
-		
-		/* Retrieve scene manager and root scene node */
-		Ogre::SceneManager* scene_manager = ogre_root_->getSceneManager("MySceneManager");
-		Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
+		if (isFocus)
+		{
+			/* Capture input */
+			inputManager.Update(fe);
 
-		/* Capture input */
-		inputManager.Update(fe);
-		world.updateWorld(fe);
+			world.updateWorld(fe);
+		}
 
 		return true;
+	}
+
+	void OgreApplication::windowFocusChange(Ogre::RenderWindow* rw)
+	{
+		isFocus = !isFocus;
 	}
 
 	void OgreApplication::windowResized(Ogre::RenderWindow* rw)
