@@ -14,7 +14,7 @@ void Star::Initialize(Ogre::SceneManager* sceneManager, Ogre::SceneNode *parentN
 {
 	PhysicsEntity::Initialize(sceneManager, parentNode, physicsEngine, parentID);
 	bodyType = ENTITY_BODY_METAPHYSICAL_SPHERE;
-	mass = 10000000000000000.0f; // SUBJECT TO TWEAKING!!!
+	mass = 100000000000000.0f; // 2 zeros
 	gravitational = true;
 
 	Ogre::Entity *StarEntity = sceneManager->createEntity("Sphere");
@@ -51,8 +51,6 @@ float Star::calcRadiation(Entity* entity)
 {
 	float value = 0.0;
 	Ogre::Vector3 distance = sceneNode->getPosition() - entity->getPosition();
-	std::cout << "Radius: " <<GetRadius()<< std::endl;
-	std::cout << "Distance: " <<distance.length() << std::endl;
 	value = GetRadius() - distance.length(); //max should be 1000 on the edge of the radiation range
 	value = value/ 1000.0; //making the max be 1 per instance.
 	value = value; //if we are the edge we only get 1, every 10 closer it increases by 1.

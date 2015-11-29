@@ -24,6 +24,9 @@ public:
 
 	void fireLaser();
 
+	float getEnergy();
+	float getFuel();
+
 	void ThrustersForward();
 	void ThrustersLeft();
 	void ThrustersBackward();
@@ -37,6 +40,8 @@ protected:
 	Ogre::SceneNode *leftPanelPivot;
 	Ogre::SceneNode *rightPanelPivot;
 	float thrusterForce;
+	float energy;
+	float fuel;
 	Weapon *weapon;
 };
 

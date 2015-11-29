@@ -3,7 +3,7 @@
 #include "OgreEntity.h"
 
 Spacecraft::Spacecraft() :
-	materialPrefix("Player"), light(Ogre::Vector3(0.0f, 0.0f, 0.0f)), leftPanelPivot(0), rightPanelPivot(0),
+	materialPrefix("Player"), light(Ogre::Vector3(0.0f, 0.0f, 0.0f)), fuel(0.0), energy(0.0), leftPanelPivot(0), rightPanelPivot(0),
 	thrusterForce(500.0f), weapon(new LaserCannon())
 {
 }
@@ -158,6 +158,15 @@ void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* p
 	weapon->scale(1.0f / 0.1f, 1.0f / 0.2f, 1.0f / 0.1f);
 	weapon->translate(0.0f, -0.9f, 0.0f);
 	
+}
+
+float Spacecraft::getEnergy()
+{
+	return energy;
+}
+float Spacecraft::getFuel()
+{
+	return fuel;
 }
 
 void Spacecraft::Update(const Ogre::FrameEvent &fe)
