@@ -184,7 +184,7 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 		//now that our lists our clean we can update the player.
 		player.Update(fe);
 		if(!player.isAlive()){
-			std::cout << "YOU DIED! GAME OVER" <<std::endl;
+			//std::cout << "YOU DIED! GAME OVER" <<std::endl;
 		}
 
 		//Now that everything is updated we apply physics
