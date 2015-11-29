@@ -28,6 +28,7 @@ public:
 
 	void setHealth(float h);
 	void setValue(float v);
+	void damage(float d);
 
 private:
 	float health;

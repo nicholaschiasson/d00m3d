@@ -60,3 +60,8 @@ void SystemComponent::setValue(float v)
 {
 	value = v;
 }
+
+void SystemComponent::damage(float d)
+{
+	health = std::max(health -d, 0.0f);
+}

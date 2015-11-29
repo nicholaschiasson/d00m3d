@@ -30,12 +30,17 @@ public:
 	float getFuel();
 	float getSpeed(); //returns the velocitySquared (to save on computation)
 
+	SystemComponent* getActiveSystem(SystemComponent::SYSTEM_TYPE);
+	int getNumSystemBackups(SystemComponent::SYSTEM_TYPE);
+
 	void ThrustersForward();
 	void ThrustersLeft();
 	void ThrustersBackward();
 	void ThrustersRight();
 	void ThrustersUpward();
 	void ThrustersDownward();
+
+	virtual void Damage(float damage);
 
 protected:
 	Ogre::String materialPrefix;

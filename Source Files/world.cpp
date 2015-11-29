@@ -21,6 +21,7 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 		throw std::runtime_error("Camera or InputManager not initialized!");
 	}
 
+	srand(time(0));
 
 	sceneManager = sceneMan;
 	sceneManager->setSkyBox(true, "SkyboxMaterial");
