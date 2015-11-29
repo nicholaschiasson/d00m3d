@@ -34,3 +34,13 @@ SystemComponent::SYSTEM_TYPE SystemComponent::getType()
 {
 	return type;
 }
+
+float SystemComponent::getValue()
+{
+	return value;
+}
+
+void SystemComponent::setValue(float v)
+{
+	value = v;
+}

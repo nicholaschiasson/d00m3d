@@ -20,10 +20,14 @@ public:
 	float getHealth();
 	Ogre::String getName();
 	SYSTEM_TYPE getType();
+	float getValue();
+
+	void setValue(float v);
 
 private:
 	float health;
 	SYSTEM_TYPE type;
+	float value;
 
 };
 
