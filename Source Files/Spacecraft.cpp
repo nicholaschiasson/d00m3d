@@ -3,9 +3,13 @@
 #include "OgreEntity.h"
 
 Spacecraft::Spacecraft() :
-	materialPrefix("Player"), light(Ogre::Vector3(0.0f, 0.0f, 0.0f)), fuel(0.0), energy(0.0), leftPanelPivot(0), rightPanelPivot(0),
+	materialPrefix("Player"), light(Ogre::Vector3(0.0f, 0.0f, 0.0f)), leftPanelPivot(0), rightPanelPivot(0),
 	thrusterForce(500.0f), weapon(new LaserCannon())
 {
+	artillerySystems.push_back(SystemComponent(SystemComponent::SYSTEM_ARTILLERY, 100.0f, 100.0f));
+	defenseSystems.push_back(SystemComponent(SystemComponent::SYSTEM_DEFENSE, 100.0f, 0.0f));
+	fuelSystems.push_back(SystemComponent(SystemComponent::SYSTEM_FUEL, 100.0f, 100.0f));
+	navigationalSystems.push_back(SystemComponent(SystemComponent::SYSTEM_NAVIGATIONAL, 100.0f, 0.0f)); // nav should probably always have value of 0
 }
 
 Spacecraft::~Spacecraft()
@@ -160,13 +164,30 @@ void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* p
 	
 }
 
+float Spacecraft::getDefense()
+{
+	if (defenseSystems.size() > 0)
+	{
+		return defenseSystems.front().getValue();
+	}
+	return 0.0f;
+}
+
 float Spacecraft::getEnergy()
 {
-	return energy;
+	if (artillerySystems.size() > 0)
+	{
+		return artillerySystems.front().getValue();
+	}
+	return 0.0f;
 }
 float Spacecraft::getFuel()
 {
-	return fuel;
+	if (fuelSystems.size() > 0)
+	{
+		return fuelSystems.front().getValue();
+	}
+	return 0.0f;
 }
 
 void Spacecraft::Update(const Ogre::FrameEvent &fe)
@@ -200,6 +221,26 @@ void Spacecraft::Update(const Ogre::FrameEvent &fe)
 		{
 			rightPanelPivot->lookAt(light, Ogre::Node::TS_WORLD);
 		}
+		
+		if (artillerySystems.size() > 0 && artillerySystems.front().getHealth() <= 0.0f)
+		{
+			artillerySystems.pop_front();
+		}
+		
+		if (defenseSystems.size() > 0 && defenseSystems.front().getHealth() <= 0.0f)
+		{
+			defenseSystems.pop_front();
+		}
+		
+		if (fuelSystems.size() > 0 && fuelSystems.front().getHealth() <= 0.0f)
+		{
+			fuelSystems.pop_front();
+		}
+		
+		if (navigationalSystems.size() > 0 && navigationalSystems.front().getHealth() <= 0.0f)
+		{
+			navigationalSystems.pop_front();
+		}
 
 		weapon->Update(fe);
 	}
@@ -217,16 +258,42 @@ void Spacecraft::Collide(const Ogre::FrameEvent &fe, PhysicsEntity *physicsEntit
 	//todo implement tracking
 	switch(resource.getType()){
 	case Resource::FUEL:
-		fuel += resource.getValue();
-		fuel = std::min(fuel, 100.0f);
+		if (fuelSystems.size() > 0)
+		{
+			fuelSystems.front().addValue(resource.getValue());
+			fuelSystems.front().setValue(std::min(fuelSystems.front().getValue(), 100.0f));
+		}
 		break;
 	case Resource::ENERGY:
-		energy += resource.getValue();
-		energy = std::min(energy, 100.0f);
+		if (artillerySystems.size() > 0)
+		{
+			artillerySystems.front().addValue(resource.getValue());
+			artillerySystems.front().setValue(std::min(artillerySystems.front().getValue(), 100.0f));
+		}
 		break;
 	case Resource::PARTS:
 		health += resource.getValue();
 		health = std::min(health, 100.0f);
+		break;
+	case Resource::BACKUP:
+		switch ((SystemComponent::SYSTEM_TYPE)((int)resource.getValue()))
+		{
+		case SystemComponent::SYSTEM_ARTILLERY:
+			artillerySystems.push_back(SystemComponent(SystemComponent::SYSTEM_ARTILLERY, 100.0f, 100.0f));
+			break;
+		case SystemComponent::SYSTEM_DEFENSE:
+			defenseSystems.push_back(SystemComponent(SystemComponent::SYSTEM_DEFENSE, 100.0f, 0.0f));
+			break;
+		case SystemComponent::SYSTEM_FUEL:
+			fuelSystems.push_back(SystemComponent(SystemComponent::SYSTEM_FUEL, 100.0f, 100.0f));
+			break;
+		case SystemComponent::SYSTEM_NAVIGATIONAL:
+			navigationalSystems.push_back(SystemComponent(SystemComponent::SYSTEM_NAVIGATIONAL, 100.0f, 0.0f)); // nav should probably always have value of 0
+			break;
+		default:
+			break;
+		}
+		break;
 	default:
 		break;
 	}

@@ -1,6 +1,7 @@
 #ifndef SPACECRAFT_H
 #define SPACECRAFT_H
 
+#include <list>
 #include <OgreVector3.h>
 #include "physics_entity.h"
 #include "input_manager.h"
@@ -23,7 +24,8 @@ public:
 	virtual void spaghettify();
 
 	void fireLaser();
-
+	
+	float getDefense();
 	float getEnergy();
 	float getFuel();
 	float getSpeed(); //returns the velocitySquared (to save on computation)
@@ -41,8 +43,10 @@ protected:
 	Ogre::SceneNode *leftPanelPivot;
 	Ogre::SceneNode *rightPanelPivot;
 	float thrusterForce;
-	float energy;
-	float fuel;
+	std::list<SystemComponent> artillerySystems;
+	std::list<SystemComponent> defenseSystems;
+	std::list<SystemComponent> fuelSystems;
+	std::list<SystemComponent> navigationalSystems;
 	Weapon *weapon;
 };
 

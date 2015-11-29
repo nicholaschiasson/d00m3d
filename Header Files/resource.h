@@ -7,6 +7,7 @@ public:
 		FUEL,
 		ENERGY,
 		PARTS,
+		BACKUP,
 		NONE
 	};
 	Resource(RESOURCE_TYPE, float value);

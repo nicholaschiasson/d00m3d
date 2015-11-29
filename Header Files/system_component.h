@@ -8,13 +8,14 @@ class SystemComponent
 public:
 	enum SYSTEM_TYPE
 	{
+		SYSTEM_UNKNOWN,
 		SYSTEM_ARTILLERY,
 		SYSTEM_DEFENSE,
 		SYSTEM_FUEL,
 		SYSTEM_NAVIGATIONAL,
 	};
 
-	SystemComponent();
+	SystemComponent(SYSTEM_TYPE t = SYSTEM_UNKNOWN, float h = 0.0f, float v = 0.0f);
 	~SystemComponent();
 
 	float getHealth();
@@ -22,6 +23,10 @@ public:
 	SYSTEM_TYPE getType();
 	float getValue();
 
+	void addHealth(float h);
+	void addValue(float v);
+
+	void setHealth(float h);
 	void setValue(float v);
 
 private:

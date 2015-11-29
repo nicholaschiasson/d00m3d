@@ -1,6 +1,7 @@
 #include "system_component.h"
 
-SystemComponent::SystemComponent()
+SystemComponent::SystemComponent(SystemComponent::SYSTEM_TYPE t, float h, float v) :
+	type(t), health(h), value(v)
 {
 }
 
@@ -39,6 +40,21 @@ float SystemComponent::getValue()
 {
 	return value;
 }
+
+void SystemComponent::addHealth(float h)
+{
+	health += h;
+};
+
+void SystemComponent::addValue(float v)
+{
+	value += v;
+}
+
+void SystemComponent::setHealth(float h)
+{
+	health = h;
+};
 
 void SystemComponent::setValue(float v)
 {

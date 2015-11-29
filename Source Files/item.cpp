@@ -58,10 +58,10 @@ Resource Item::collect(Entity* entity)
 {
 	//we kill the item since we collected it.
 	kill();
-	return Resource(myType, 5.0);
+	return Resource(myType, 5.0f);
 }
 
 float Item::GetRadius()
 {
-	return PhysicsEntity::GetRadius() * 25.0;
+	return PhysicsEntity::GetRadius() * 25.0f;
 }

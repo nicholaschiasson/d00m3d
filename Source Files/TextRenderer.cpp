@@ -96,10 +96,10 @@ void TextRenderer::CreateTextArea(std::string caption, int textSize, Ogre::Colou
     text_area = static_cast<Ogre::TextAreaOverlayElement*>(overlayManager->createOverlayElement("TextArea",uniqueTextID));
     text_area->setMetricsMode(Ogre::GMM_PIXELS);
 	text_area->setPosition(textPosition.x,textPosition.y);
-    text_area->setDimensions(200, 100);
+    text_area->setDimensions(200.0f, 100.0f);
     text_area->setFontName("MyFont");
 	text_area->setCaption(caption);
-	text_area->setCharHeight(textSize);
+	text_area->setCharHeight((float)textSize);
 	text_area->setColour(textColour);
 
     panel->addChild(text_area);
