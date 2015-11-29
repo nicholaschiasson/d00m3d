@@ -212,9 +212,16 @@ void Spacecraft::Collide(const Ogre::FrameEvent &fe, PhysicsEntity *physicsEntit
 	//todo implement tracking
 	switch(resource.getType()){
 	case Resource::FUEL:
+		fuel += resource.getValue();
+		fuel = std::min(fuel, 100.0f);
 		break;
 	case Resource::ENERGY:
+		energy += resource.getValue();
+		energy = std::min(energy, 100.0f);
 		break;
+	case Resource::PARTS:
+		health += resource.getValue();
+		health = std::min(health, 100.0f);
 	default:
 		break;
 	}
