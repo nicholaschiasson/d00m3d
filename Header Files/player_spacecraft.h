@@ -8,7 +8,7 @@ class PlayerSpacecraft : public Spacecraft
 public:
 	PlayerSpacecraft();
 	virtual ~PlayerSpacecraft();
-
+	float getHealth();
 private:
 
 };

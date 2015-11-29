@@ -13,6 +13,7 @@ World::~World()
 	JudgementDay();
 }
 
+//void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* inMan, Ogre::OverlayManager* overlay_manager)
 void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* inMan)
 {
 	if(cam == NULL || inMan == NULL)
@@ -24,7 +25,8 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 	sceneManager = sceneMan;
 	sceneManager->setSkyBox(true, "SkyboxMaterial");
 
-	health.InitOverlay(sceneMan);
+
+	//numAsteroids.InitOverlay(sceneMan,"YOU DIE",26,Ogre::Vector2(40,980),"ass",Ogre::ColourValue(1.0,1.0,1.0));
 
 	worldSceneNode = sceneManager->getRootSceneNode()->createChildSceneNode("_worldSceneNode_");
 	camera = cam;
@@ -44,6 +46,8 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 	//creating the player entity
 	player.Initialize(sceneManager, worldSceneNode, physicsEngine);
 	camera->attachTo(&player);
+
+	UI.InitOverlay(&player,sceneMan);
 	
 	initObjects();
 	//Setting up the basic control scheme
@@ -83,11 +87,11 @@ void World::SpawnAsteroid(Ogre::Vector3 pos)
 	Ogre::Vector3 initialPosition = pos + Ogre::Vector3(cos(theta) * sin(phi),sin(theta) * sin(phi), -cos(phi)) * 3000.0f;
 	asteroid->translate(initialPosition);
 	asteroidList.push_back(asteroid);
-	numObjects++;
+	numObjects++; 
 }
 void World::checkDistance(Entity* entity){
 	Ogre::Vector3 distance = entity->getPosition() - player.getPosition(); 
-	if(distance.squaredLength() > Ogre::Math::Sqr(2100)){
+	if(distance.squaredLength() > Ogre::Math::Sqr(4000)){
 		entity->kill(); 
 
 	}
@@ -117,7 +121,7 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 {
 	//std::cout << numObjects << std::endl;
 	Entity* deadEntity = NULL;
-
+	UI.updateUI();
 	if (exists)
 	{
 		//TODO update stuff

@@ -32,6 +32,7 @@ public:
 	*	in:			InputMangaer that has already been initialized
 	*	Purpose:	To give the world all the correct data
 	*/
+	//void initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* inMan, Ogre::OverlayManager* overlay_manager);
 	void initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* inMan);
 	
 	/*	createWorld()
@@ -108,7 +109,7 @@ private:
 	void setupEnemies();
 	void initObjects();
 
-	TextRenderer health;
+	TextRenderer UI;
 
 	// InputManager Callbacks
 	static void PlayerMoveForward(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int z1, int x2, int y2, int z2);

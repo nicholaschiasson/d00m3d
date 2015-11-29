@@ -9,6 +9,11 @@
 #include "world.h"
 #include "camera.h"
 
+#include "OGRE/Overlay/OgreFontManager.h"
+#include "OGRE/Overlay/OgreTextAreaOverlayElement.h"
+#include "OGRE/Overlay/OgreOverlayManager.h"
+#include "OGRE/Overlay/OgreOverlaySystem.h"
+
 #include "OGRE/OgreRoot.h"
 #include "OGRE/OgreRenderSystem.h"
 #include "OGRE/OgreRenderWindow.h"

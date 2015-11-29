@@ -69,8 +69,16 @@ namespace ogre_application
 		Ogre::SceneManager* scene_manager = ogre_root_->getSceneManager("MySceneManager");
 		Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
 
-		//setting up the world
-		world.initWorld(scene_manager, &camera, &inputManager);
+		//Ogre::OverlayManager* ovrly_ptr;
+		//Ogre::OverlayManager& overlay_manager = Ogre::OverlayManager::getSingleton();
+
+		////setting up the world
+		//
+		//ovrly_ptr = &overlay_manager;
+
+	//	world.initWorld(scene_manager, &camera, &inputManager, ovrly_ptr); 
+		world.initWorld(scene_manager, &camera, &inputManager); 
+
 	}
 
 	void OgreApplication::InitRootNode()
@@ -276,6 +284,7 @@ namespace ogre_application
 	{
 		try
 		{
+			
 			/* Load materials that can then be assigned to objects in the scene */
 			Ogre::String resource_group_name = "MyGame";
 			Ogre::ResourceGroupManager& resource_group_manager = Ogre::ResourceGroupManager::getSingleton();
@@ -284,6 +293,11 @@ namespace ogre_application
 			resource_group_manager.addResourceLocation(material_directory_g, "FileSystem", resource_group_name, is_recursive);
 			resource_group_manager.initialiseResourceGroup(resource_group_name);
 			resource_group_manager.loadResourceGroup(resource_group_name);
+
+			//load font 
+			//Ogre::ResourceGroupManager& resource_group_manager = Ogre::ResourceGroupManager::getSingleton();
+		    resource_group_manager.addResourceLocation("C:\\Windows\\Fonts", "FileSystem");
+            
 		}
 		catch (Ogre::Exception &e)
 		{
