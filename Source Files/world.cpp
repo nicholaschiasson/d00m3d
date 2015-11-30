@@ -101,7 +101,7 @@ void World::SpawnEnemies(){
 	EnemySpacecraft* recruit = new EnemySpacecraft(sceneManager, worldSceneNode, physicsEngine, star.getPosition());
 	float theta = Ogre::Math::RangeRandom(0.0f, Ogre::Math::TWO_PI);
 	float phi = Ogre::Math::RangeRandom(0.0f, Ogre::Math::TWO_PI);
-	Ogre::Vector3 initialPosition = pos + Ogre::Vector3(cos(theta) * sin(phi),sin(theta) * sin(phi), -cos(phi)) * 700.0f;
+	Ogre::Vector3 initialPosition = pos + Ogre::Vector3(cos(theta) * sin(phi),sin(theta) * sin(phi), -cos(phi)) * 200.0f;
 	recruit->translate(initialPosition);
 	recruit->setTarget(&player);
 	fleet.push_back(recruit);
@@ -116,16 +116,27 @@ void World::setupEnemies()
 		EnemySpacecraft* recruit = new EnemySpacecraft(sceneManager, worldSceneNode, physicsEngine, star.getPosition());
 		float theta = Ogre::Math::RangeRandom(0.0f, Ogre::Math::TWO_PI);
 		float phi = Ogre::Math::RangeRandom(0.0f, Ogre::Math::TWO_PI);
-		float dist = Ogre::Math::RangeRandom(70.0,1000.0);
+		float dist = Ogre::Math::RangeRandom(70.0,600.0);
 		Ogre::Vector3 initialPosition = pos + Ogre::Vector3(cos(theta) * sin(phi),sin(theta) * sin(phi), -cos(phi)) * dist;
 		recruit->translate(initialPosition);
 		recruit->setTarget(&player);
 		fleet.push_back(recruit);
+		numEnemies++;
 	}
 }
+
 void World::checkDistance(Entity* entity){
 	Ogre::Vector3 distance = entity->getPosition() - player.getPosition(); 
-	if(distance.squaredLength() > Ogre::Math::Sqr(4000)){
+	if(distance.squaredLength() > Ogre::Math::Sqr(3000)){
+		entity->kill(); 
+
+	}
+
+}
+
+void World::checkEnemyDistance(Entity* entity){
+	Ogre::Vector3 distance = entity->getPosition() - player.getPosition(); 
+	if(distance.squaredLength() > Ogre::Math::Sqr(2000)){
 		entity->kill(); 
 
 	}
@@ -153,7 +164,7 @@ void World::createWorld()
 
 void World::updateWorld(const Ogre::FrameEvent& fe)
 {
-	//std::cout << numObjects << std::endl;
+	std::cout << numEnemies << std::endl;
 	Entity* deadEntity = NULL;
 
 	UI.updateUI();
@@ -193,7 +204,7 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 				particleEngine.createParticleEffect(ParticleEngine::EFFECT_EXPLOSION, worldSceneNode, (*it)->getPosition(), Ogre::Vector3(1,1,1));
 				itemList.push_back(new Item(sceneManager, worldSceneNode, physicsEngine, deadEntity->getPosition(), Resource::PARTS));
 			}
-			checkDistance(*it);
+			checkEnemyDistance(*it);
 		}
 
 		//asteroid list

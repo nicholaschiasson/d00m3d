@@ -92,7 +92,7 @@ private:
 	float spawnTime;
 
     #define MAX_NUM_OBJECTS 100 
-    #define MAX_NUM_ENEMIES 5
+    #define MAX_NUM_ENEMIES 15
 
 	
 	int numObjects;
@@ -107,6 +107,8 @@ private:
 
 	void SpawnAsteroid(Ogre::Vector3);
 	void checkDistance(Entity* entity);
+	void checkEnemyDistance(Entity* entity);
+
 	//setup the control schemes
 	void initControls(InputManager *inputManager);
 	void cleanupLists(bool cleanupNeeded = true);
