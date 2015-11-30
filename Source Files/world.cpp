@@ -154,7 +154,6 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 
 		//enemy spacecraft list
 		for(std::vector<EnemySpacecraft*>::iterator it = fleet.begin(); it != fleet.end(); ++it){
-			//checkDistance(*it); todo determine if enemies should be deleted
 			(*it)->Update(fe);
 
 			if(!(*it)->isAlive()){
@@ -162,6 +161,7 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 				particleEngine.createParticleEffect(ParticleEngine::EFFECT_EXPLOSION, worldSceneNode, (*it)->getPosition(), Ogre::Vector3(1,1,1));
 				itemList.push_back(new Item(sceneManager, worldSceneNode, physicsEngine, deadEntity->getPosition(), Resource::PARTS));
 			}
+			checkDistance(*it);
 		}
 
 		//asteroid list
