@@ -9,9 +9,9 @@ LaserCannon::~LaserCannon()
 {
 }
 
-void LaserCannon::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, unsigned int parentID)
+void LaserCannon::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, Ogre::SceneNode *world, PhysicsEngine &physicsEngine, ParticleEngine *particleEngine, unsigned int parentID)
 {
-	Weapon::Initialize(sceneManager, parentNode, physicsEngine, parentID);
+	Weapon::Initialize(sceneManager, parentNode, world, physicsEngine, particleEngine, parentID);
 
 	unsigned int pid = (parentID == -1 ? objectID : parentID);
 
@@ -20,9 +20,9 @@ void LaserCannon::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* 
 	laser.translate(0.0f, 0.0f, 0.0f);
 }
 
-void LaserCannon::Update(const Ogre::FrameEvent &fe)
+void LaserCannon::Update(const Ogre::FrameEvent &fe, Ogre::Vector3 v)
 {
-	PhysicsEntity::Update(fe);
+	Weapon::Update(fe, v);
 	if(alive){
 		if(timer == 0){
 			switch(myState){
@@ -54,13 +54,14 @@ void LaserCannon::detachFrom(PhysicsEngine &physicsEngine)
 	Weapon::detachFrom(physicsEngine);
 }
 
-void LaserCannon::fire()
+PhysicsEntity *LaserCannon::fire()
 {
 	if(myState == WEAPON_READY){
 		myState = WEAPON_FIRING;
 		timer = duration;
 		laser.fire();
 	}
+	return 0;
 }
 
 void LaserCannon::upgrade(int maxCooldown, int dmg)

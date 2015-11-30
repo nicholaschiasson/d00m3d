@@ -39,6 +39,8 @@ public:
 	float GetMass();
 	float GetRestitution();
 
+	virtual void SetVelocity(Ogre::Vector3 v);
+
 	Ogre::Vector3 GetAppliedForce();
 	ENTITY_BODY_TYPE GetBodyType();
 	bool IsAbsoluteGravitationalPull();

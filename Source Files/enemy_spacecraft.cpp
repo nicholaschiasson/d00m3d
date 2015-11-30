@@ -1,53 +1,64 @@
 #include "enemy_spacecraft.h"
 
-EnemySpacecraft::EnemySpacecraft(): physicsEngine(NULL), currState(STATE_IDLE), target(NULL), lastShot(0.0), reload(2.0)
+EnemySpacecraft::EnemySpacecraft(): physicsEngine(NULL), currState(STATE_IDLE), target(NULL), lastProjectile(NULL), lastShot(0.0), reload(2.0)
 {
+	materialPrefix = "Enemy";
 }
 
-EnemySpacecraft::EnemySpacecraft(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, Ogre::Vector3 lightPos, unsigned int parentID):
-	physicsEngine(NULL), currState(STATE_IDLE), target(NULL), lastShot(0.0), reload(6.0)
+EnemySpacecraft::EnemySpacecraft(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, Ogre::Vector3 lightPos, ParticleEngine *particleEngine, unsigned int parentID):
+	physicsEngine(NULL), currState(STATE_IDLE), target(NULL), lastProjectile(NULL), lastShot(0.0), reload(6.0)
 {
-	Initialize(sceneManager, parentNode, physicsEngine, lightPos, parentID);
+	materialPrefix = "Enemy";
+	Initialize(sceneManager, parentNode, physicsEngine, lightPos, particleEngine, parentID);
 }
 
 EnemySpacecraft::~EnemySpacecraft()
 {
 }
 
-void EnemySpacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngineRef, Ogre::Vector3 lightPos, unsigned int parentID){
-	materialPrefix = "Enemy";
-	Spacecraft::Initialize(sceneManager, parentNode, physicsEngineRef, lightPos, parentID);
+void EnemySpacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngineRef, Ogre::Vector3 lightPos, ParticleEngine *particleEngine, unsigned int parentID){
+	Spacecraft::Initialize(sceneManager, parentNode, physicsEngineRef, lightPos, particleEngine, parentID);
 	physicsEngine = &physicsEngineRef;
 }
 
 void EnemySpacecraft::Update(const Ogre::FrameEvent &fe)
 {
 	Spacecraft::Update(fe);
-	if(target != NULL){ //if we have a target do stuff
-		switch(currState){
-		case STATE_IDLE:
-			handleIdle(fe);
-			break;
-		case STATE_PURSUE:
-			handlePursue(fe);
-			break;
-		case STATE_TURN:
-			handleTurn(fe);
-			break;
-		case STATE_FIRE:
-			handlePursue(fe);
-			handleFire(fe, false);
-			break;
-		case STATE_WARN:
-			handlePursue(fe);
-			handleFire(fe, true);
-			break;
-		default:
-			currState = STATE_IDLE;
-			break;
+	if (alive)
+	{
+		if(target != NULL){ //if we have a target do stuff
+			switch(currState){
+			case STATE_IDLE:
+				handleIdle(fe);
+				break;
+			case STATE_PURSUE:
+				handlePursue(fe);
+				break;
+			case STATE_TURN:
+				handleTurn(fe);
+				break;
+			case STATE_FIRE:
+				handlePursue(fe);
+				handleFire(fe, false);
+				break;
+			case STATE_WARN:
+				handlePursue(fe);
+				handleFire(fe, true);
+				break;
+			default:
+				currState = STATE_IDLE;
+				break;
 
+			}
 		}
 	}
+}
+
+PhysicsEntity *EnemySpacecraft::takeLastProjectile()
+{
+	PhysicsEntity *projectile = lastProjectile;
+	lastProjectile = 0;
+	return projectile;
 }
 
 void EnemySpacecraft::setTarget(Spacecraft* newTarget)
@@ -111,7 +122,7 @@ void EnemySpacecraft::handleFire(const Ogre::FrameEvent &fe, bool warningShot){
 			currState = STATE_PURSUE;
 			}
 		std::cout << "Warning Shot: " << warningShot <<std::endl;
-		fireLaser();	
+		lastProjectile = fireWeapon();	
 	}else{
 		lastShot += fe.timeSinceLastFrame;
 	}

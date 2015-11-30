@@ -10,13 +10,13 @@ public:
 	LaserCannon();
 	~LaserCannon();
 
-	virtual void Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, unsigned int parentID = -1);
-	virtual void Update(const Ogre::FrameEvent &fe);
+	virtual void Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, Ogre::SceneNode *world, PhysicsEngine &physicsEngine, ParticleEngine *particleEngine, unsigned int parentID = -1);
+	virtual void Update(const Ogre::FrameEvent &fe, Ogre::Vector3 velocity);
 	
 	virtual void cleanup(PhysicsEngine &physicsEngine);
 	virtual void detachFrom(PhysicsEngine &physicsEngine);
 
-	void fire();
+	virtual PhysicsEntity *fire();
 	virtual void upgrade(int maxCooldown, int dmg);
 
 private:

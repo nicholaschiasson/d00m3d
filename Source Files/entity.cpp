@@ -187,6 +187,46 @@ void Entity::yaw(const Ogre::Radian &angle, Ogre::Node::TransformSpace relativeT
 	}
 }
 
+void Entity::setDerivedOrientation(const Ogre::Quaternion &q)
+{
+	if (sceneNode)
+	{
+		sceneNode->_setDerivedOrientation(q);
+	}
+}
+
+void Entity::setOrientation(Ogre::Real w, Ogre::Real x, Ogre::Real y, Ogre::Real z)
+{
+	if (sceneNode)
+	{
+		sceneNode->setOrientation(w, x, y, z);
+	}
+}
+
+void Entity::setOrientation(const Ogre::Quaternion &q)
+{
+	if (sceneNode)
+	{
+		sceneNode->setOrientation(q);
+	}
+}
+
+void Entity::setScale(Ogre::Real x, Ogre::Real y, Ogre::Real z)
+{
+	if (sceneNode)
+	{
+		sceneNode->setScale(x, y, z);
+	}
+}
+
+void Entity::setScale(const Ogre::Vector3 &scale)
+{
+	if (sceneNode)
+	{
+		sceneNode->setScale(scale);
+	}
+}
+
 const Ogre::String & Entity::getName() const
 {
 	return sceneNode->getName();

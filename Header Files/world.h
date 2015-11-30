@@ -97,7 +97,8 @@ private:
 
 	Star star;
 	PlayerSpacecraft player;
-
+	
+	std::vector<PhysicsEntity *> projectileList;
 	std::vector<Item *> itemList;
 	std::vector<Asteroid *> asteroidList;
 	std::vector<EnemySpacecraft*> fleet;

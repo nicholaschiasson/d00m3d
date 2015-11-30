@@ -4,7 +4,7 @@
 
 Spacecraft::Spacecraft() :
 	materialPrefix("Player"), light(Ogre::Vector3(0.0f, 0.0f, 0.0f)), leftPanelPivot(0), rightPanelPivot(0),
-	thrusterForce(500.0f), weapon(new BlackHoleCannon())
+	thrusterForce(500.0f), weapon(new LaserCannon())
 {
 	artillerySystems.push_back(SystemComponent(SystemComponent::SYSTEM_ARTILLERY, 100.0f, 100.0f));
 	defenseSystems.push_back(SystemComponent(SystemComponent::SYSTEM_DEFENSE, 100.0f, 0.0f));
@@ -23,11 +23,11 @@ void Spacecraft::cleanup(PhysicsEngine &physicsEngine)
 	PhysicsEntity::cleanup(physicsEngine);
 }
 
-void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, Ogre::Vector3 lightPos, unsigned int parentID)
+void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, Ogre::Vector3 lightPos, ParticleEngine *particleEngine, unsigned int parentID)
 {
 	PhysicsEntity::Initialize(sceneManager, parentNode, physicsEngine, parentID);
 	mass = 5000.0f;
-	dynamic = false;
+	//dynamic = false;
 
 	light = lightPos;
 
@@ -37,8 +37,8 @@ void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* p
 	float invSpacecraftScaleX = 1.0f / spacecraftScaleX, invSpacecraftScaleY = 1.0f / spacecraftScaleY, invSpacecraftScaleZ = 1.0f / spacecraftScaleZ;
 	Ogre::Entity *spacecraftBodyEntity = sceneManager->createEntity("Cylinder");
 	spacecraftBodyEntity->setMaterialName(materialPrefix + "SpacecraftLongMaterial");
-	//Ogre::SceneNode *spacecraftBodyNode = sceneNode->createChildSceneNode("SpacecraftBody" + Ogre::StringConverter::toString(entityCount));
-	Ogre::SceneNode *spacecraftBodyNode = parentNode->createChildSceneNode("SpacecraftBody" + Ogre::StringConverter::toString(entityCount));
+	Ogre::SceneNode *spacecraftBodyNode = sceneNode->createChildSceneNode("SpacecraftBody" + Ogre::StringConverter::toString(entityCount));
+	//Ogre::SceneNode *spacecraftBodyNode = parentNode->createChildSceneNode("SpacecraftBody" + Ogre::StringConverter::toString(entityCount));
 	spacecraftBodyNode->attachObject(spacecraftBodyEntity);
 	spacecraftBodyNode->scale(0.75f, 0.75f, 0.75f);
 	spacecraftBodyNode->scale(spacecraftScaleX, spacecraftScaleY, spacecraftScaleZ);
@@ -160,7 +160,7 @@ void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* p
 	weaponArmNode->scale(0.1f, 0.2f, 0.1f);
 	weaponArmNode->translate(0.0f, 0.0f, -((0.2f * 0.5f) + ((0.75f * spacecraftScaleY) * 0.5f)));
 
-	weapon->Initialize(sceneManager, weaponArmNode, physicsEngine, pid);
+	weapon->Initialize(sceneManager, weaponArmNode, parentNode, physicsEngine, particleEngine, pid);
 	weapon->scale(1.0f / 0.1f, 1.0f / 0.2f, 1.0f / 0.1f);
 	weapon->translate(0.0f, -0.9f, 0.0f);
 	
@@ -194,9 +194,14 @@ float Spacecraft::getFuel()
 
 void Spacecraft::Update(const Ogre::FrameEvent &fe)
 {
+	PhysicsEntity::Update(fe);
+
 	if(alive)
 	{
-		PhysicsEntity::Update(fe);
+		if (velocity.squaredLength() > 10000.0f)
+		{
+			velocity = velocity.normalisedCopy() * 100.0f;
+		}
         
 		Ogre::Quaternion orientation = leftPanelPivot->getOrientation();
 		leftPanelPivot->resetOrientation();
@@ -244,7 +249,7 @@ void Spacecraft::Update(const Ogre::FrameEvent &fe)
 			navigationalSystems.pop_front();
 		}
 
-		weapon->Update(fe);
+		weapon->Update(fe, velocity);
 	}
 }
 
@@ -306,11 +311,12 @@ void Spacecraft::spaghettify()
 
 }
 
-void Spacecraft::fireLaser()
+PhysicsEntity *Spacecraft::fireWeapon()
 {
 	if(weapon->getState() == Weapon::WEAPON_READY){
-		weapon->fire();
+		return weapon->fire();
 	}
+	return 0;
 }
 
 void Spacecraft::ThrustersForward()

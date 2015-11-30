@@ -22,9 +22,9 @@ void Laser::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parent
 	laserEntity->setMaterialName("LaserMaterial");
 	Ogre::SceneNode *laserSceneNode = sceneNode->createChildSceneNode("Laser" + Ogre::StringConverter::toString(entityCount));
 	laserSceneNode->attachObject(laserEntity);
-	laserSceneNode->scale(0.3f, 100.0f, 0.3f);
+	laserSceneNode->scale(0.3f, 1000.0f, 0.3f);
 	laserSceneNode->pitch(Ogre::Radian(-Ogre::Math::HALF_PI));
-	laserSceneNode->translate(0,0,-50.0f);
+	laserSceneNode->translate(0,0,-500.0f);
 
 	sceneNode->setVisible(false);
 }

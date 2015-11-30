@@ -37,6 +37,12 @@ public:
 	virtual void translate(const Ogre::Matrix3 &axes, const Ogre::Vector3 &move, Ogre::Node::TransformSpace relativeTo = Ogre::Node::TS_PARENT);
 	virtual void yaw(const Ogre::Radian &angle, Ogre::Node::TransformSpace relativeTo = Ogre::Node::TS_LOCAL);
 	
+	virtual void setDerivedOrientation(const Ogre::Quaternion &q);
+	virtual void setOrientation(Ogre::Real w, Ogre::Real x, Ogre::Real y, Ogre::Real z);
+	virtual void setOrientation(const Ogre::Quaternion &q);
+	virtual void setScale(Ogre::Real x, Ogre::Real y, Ogre::Real z);
+	virtual void setScale(const Ogre::Vector3 &scale);
+
 	virtual const Ogre::String & getName() const;
 	virtual Ogre::Vector3 getPosition() const;
 	virtual Ogre::Vector3 Entity::getDerivedPosition() const;

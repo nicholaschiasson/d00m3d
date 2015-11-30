@@ -20,6 +20,7 @@ set(HDRS
 	"${HDR_DIR}/particle_engine.h"
 	"${HDR_DIR}/physics_engine.h"
 	"${HDR_DIR}/physics_entity.h"
+	"${HDR_DIR}/plasma_ball.h"
 	"${HDR_DIR}/plasma_cannon.h"
 	"${HDR_DIR}/player_spacecraft.h"
 	"${HDR_DIR}/resource.h"
@@ -61,6 +62,7 @@ set(SRCS
 	particle_engine.cpp
 	physics_engine.cpp
 	physics_entity.cpp
+    plasma_ball.cpp
 	plasma_cannon.cpp
     player_spacecraft.cpp
 	player_spacecraft.material
@@ -71,6 +73,10 @@ set(SRCS
     Skybox.material
     SkyboxFp.glsl
     SkyboxVp.glsl
+    Spline.material
+    SplineMaterialFp.glsl
+    SplineMaterialGp.glsl
+    SplineMaterialVp.glsl
 	star.cpp
 	star.material
     system_component.cpp

@@ -11,10 +11,10 @@
 
 class ParticleEffect: public PhysicsEntity{
 public:
-	ParticleEffect(Ogre::SceneManager* sceneManager, Ogre::SceneNode* parentNode, Ogre::String object_name, Ogre::String material_name, PhysicsEngine &physicsEngine);
+	ParticleEffect(Ogre::SceneManager* sceneManager, Ogre::SceneNode* parentNode, Ogre::String object_name, Ogre::String material_name, PhysicsEngine &physicsEngine, float dur = 4.0f, unsigned int parentID = -1);
 
-	virtual void Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, Ogre::String object_name, Ogre::String material_name,PhysicsEngine &physicsEngine, unsigned int parentID = -1);
-	void Update(const Ogre::FrameEvent& fe);
+	virtual void Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, Ogre::String object_name, Ogre::String material_name, PhysicsEngine &physicsEngine, unsigned int parentID = -1);
+	virtual void Update(const Ogre::FrameEvent& fe);
 	virtual void Collide(const Ogre::FrameEvent &fe, PhysicsEntity *physicsEntity);
 private:
 	void CreateParticleEntity(Ogre::SceneManager* sceneManager, Ogre::SceneNode* parentNode, Ogre::String entity_name, Ogre::String object_name, Ogre::String material_name); // Create an entity of an object

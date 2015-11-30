@@ -46,9 +46,7 @@ void PhysicsEntity::Update(const Ogre::FrameEvent &fe)
 			if (mass != 0.0f)
 			{
 				previousVelocity = velocity;
-				if((velocity+appliedForce / mass).length() < 100){
-					velocity += appliedForce / mass;
-				}
+				velocity += appliedForce / mass;
 			}
 			translate(velocity * fe.timeSinceLastFrame);
 			appliedForce = 0;
@@ -102,6 +100,11 @@ float PhysicsEntity::GetRestitution()
 	return restitution;
 }
 
+void PhysicsEntity::SetVelocity(Ogre::Vector3 v)
+{
+	velocity = v;
+}
+
 ENTITY_BODY_TYPE PhysicsEntity::GetBodyType()
 {
 	return bodyType;
@@ -124,6 +127,10 @@ bool PhysicsEntity::IsGravitational()
 
 float PhysicsEntity::GetRadius()
 {
-	Ogre::Vector3 scale = sceneNode->getScale();
-	return max(scale.x, max(scale.y, scale.z)) / 2.0f;
+	if (sceneNode != 0)
+	{
+		Ogre::Vector3 scale = sceneNode->getScale();
+		return max(scale.x, max(scale.y, scale.z)) / 2.0f;
+	}
+	return 0.0f;
 }

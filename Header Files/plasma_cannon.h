@@ -2,6 +2,7 @@
 #define PLASMA_CANNON_H
 
 #include "weapon.h"
+#include "plasma_ball.h"
 #include <OgreEntity.h>
 
 class PlasmaCannon: public Weapon
@@ -10,16 +11,18 @@ public:
 	PlasmaCannon();
 	~PlasmaCannon();
 
-	virtual void Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, unsigned int parentID = -1);
-	virtual void Update(const Ogre::FrameEvent &fe);
+	virtual void Update(const Ogre::FrameEvent &fe, Ogre::Vector3 velocity);
 	
 	virtual void cleanup(PhysicsEngine &physicsEngine);
 	virtual void detachFrom(PhysicsEngine &physicsEngine);
 
-	void fire();
+	virtual PhysicsEntity *fire();
 	virtual void upgrade(int maxCooldown, int dmg);
 
+	virtual float getDamage();
+
 private:
+	float damage;
 
 };
 

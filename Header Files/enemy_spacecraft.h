@@ -10,7 +10,7 @@ class EnemySpacecraft : public Spacecraft
 {
 public:
 	EnemySpacecraft();
-	EnemySpacecraft(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, Ogre::Vector3 lightPos, unsigned int parentID = -1);
+	EnemySpacecraft(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, Ogre::Vector3 lightPos, ParticleEngine *particleEngine, unsigned int parentID = -1);
 
 	enum mindState{
 		STATE_IDLE,
@@ -22,12 +22,16 @@ public:
 
 	virtual ~EnemySpacecraft();
 	virtual void setTarget(Spacecraft* newTarget);
-	virtual void Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, Ogre::Vector3 lightPos, unsigned int parentID = -1);
+	virtual void Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, Ogre::Vector3 lightPos, ParticleEngine *particleEngine, unsigned int parentID = -1);
 	virtual void Update(const Ogre::FrameEvent &fe);
+
+	virtual PhysicsEntity *takeLastProjectile();
+
 private:
 	PhysicsEngine *physicsEngine;
 	mindState currState;
 	Spacecraft* target;
+	PhysicsEntity *lastProjectile;
 	float lastShot;
 	float reload;
 

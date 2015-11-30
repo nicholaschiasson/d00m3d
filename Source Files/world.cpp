@@ -48,7 +48,7 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 	star.translate(5000,5000,5000);
 
 	//creating the player entity
-	player.Initialize(sceneManager, worldSceneNode, physicsEngine, star.getPosition());
+	player.Initialize(sceneManager, worldSceneNode, physicsEngine, star.getPosition(), &particleEngine);
 	camera->attachTo(&player);
 
 	UI.InitOverlay(&player,sceneMan);
@@ -83,7 +83,6 @@ void World::initControls(InputManager *inputManager)
 
 void World::SpawnAsteroid(Ogre::Vector3 pos)
 {
-	
 	Asteroid *asteroid = new Asteroid(sceneManager, worldSceneNode, physicsEngine);
 	float theta = Ogre::Math::RangeRandom(0.0f, Ogre::Math::TWO_PI);
 	float phi = Ogre::Math::RangeRandom(0.0f, Ogre::Math::TWO_PI);
@@ -92,6 +91,7 @@ void World::SpawnAsteroid(Ogre::Vector3 pos)
 	asteroidList.push_back(asteroid);
 	numObjects++; 
 }
+
 void World::checkDistance(Entity* entity){
 	Ogre::Vector3 distance = entity->getPosition() - player.getPosition(); 
 	if(distance.squaredLength() > Ogre::Math::Sqr(4000)){
@@ -144,17 +144,31 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 
 		//first we update all of our entities in our list.
 
-		//star.roll(Ogre::Radian(-Ogre::Degree(2.0f * fe.timeSinceLastFrame)));
-
 		//enemy spacecraft list
 		for(std::vector<EnemySpacecraft*>::iterator it = fleet.begin(); it != fleet.end(); ++it){
 			//checkDistance(*it); todo determine if enemies should be deleted
 			(*it)->Update(fe);
+			PhysicsEntity *projectile = (*it)->takeLastProjectile();
+			if (projectile != 0)
+			{
+				projectileList.push_back(projectile);
+			}
 
 			if(!(*it)->isAlive()){
 				deadEntity = (*it);
 				particleEngine.createParticleEffect(ParticleEngine::EFFECT_EXPLOSION, worldSceneNode, (*it)->getPosition(), Ogre::Vector3(1,1,1));
 				itemList.push_back(new Item(sceneManager, worldSceneNode, physicsEngine, deadEntity->getPosition(), Resource::PARTS));
+			}
+		}
+
+		//projectile list
+		for (std::vector<PhysicsEntity *>::iterator it = projectileList.begin(); it != projectileList.end(); ++it)
+		{
+			(*it)->Update(fe);
+
+			if(!(*it)->isAlive()){
+				deadEntity = (*it);
+				//particleEngine.createParticleEffect(ParticleEngine::EFFECT_EXPLOSION, worldSceneNode, (*it)->getPosition(), Ogre::Vector3(1,1,1));
 			}
 		}
 
@@ -171,6 +185,8 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 			checkDistance(*it);
 		}
 
+		particleEngine.update(fe);
+
 		//itemlist
 		for(std::vector<Item*>::iterator it = itemList.begin(); it != itemList.end(); ++it){
 			(*it)->Update(fe);
@@ -182,6 +198,7 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 			}
 			checkDistance(*it);
 		}
+
 		//cleanup any dead entities from those lists
 		cleanupLists(true);
 	
@@ -193,7 +210,6 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 
 		//Now that everything is updated we apply physics
 		physicsEngine.Update(fe);
-		particleEngine.update(fe);
 	}
 }
 
@@ -202,16 +218,16 @@ void World::cleanupLists(bool cleanupNeeded)
 	PhysicsEntity* deadEntity;
 
 	//enemyspacecraft cleanup
-	std::vector<EnemySpacecraft*>::iterator i = fleet.begin();
-	while(i != fleet.end()){
-		if((*i)->isAlive()){
-			++i;
+	std::vector<EnemySpacecraft*>::iterator fleetIt = fleet.begin();
+	while(fleetIt != fleet.end()){
+		if((*fleetIt)->isAlive()){
+			++fleetIt;
 			continue;
 		}
 
 		//we need to delete if they are not alive.
-		deadEntity = (*i);
-		i = fleet.erase(i);
+		deadEntity = (*fleetIt);
+		fleetIt = fleet.erase(fleetIt);
 		if(cleanupNeeded)
 			deadEntity->cleanup(physicsEngine);
 		delete deadEntity;
@@ -219,17 +235,35 @@ void World::cleanupLists(bool cleanupNeeded)
 	}
 
 	//asteroid cleanup
-	std::vector<Asteroid*>::iterator it = asteroidList.begin();
-	while(it != asteroidList.end()){
-		if((*it)->isAlive()){
-			++it;
+	std::vector<PhysicsEntity *>::iterator projectileIt = projectileList.begin();
+	while(projectileIt != projectileList.end()){
+		if((*projectileIt)->isAlive()){
+			++projectileIt;
+			continue;
+		}
+
+		//we need to delete if they are not alive.
+		deadEntity = (*projectileIt);
+		projectileIt = projectileList.erase(projectileIt);
+		if(cleanupNeeded)
+			deadEntity->cleanup(physicsEngine);
+
+		delete deadEntity;
+		deadEntity = NULL;
+	}
+
+	//asteroid cleanup
+	std::vector<Asteroid*>::iterator asteroidIt = asteroidList.begin();
+	while(asteroidIt != asteroidList.end()){
+		if((*asteroidIt)->isAlive()){
+			++asteroidIt;
 			continue;
 		}
 		numObjects--;
 
 		//we need to delete if they are not alive.
-		deadEntity = (*it);
-		it = asteroidList.erase(it);
+		deadEntity = (*asteroidIt);
+		asteroidIt = asteroidList.erase(asteroidIt);
 		if(cleanupNeeded)
 			deadEntity->cleanup(physicsEngine);
 
@@ -238,15 +272,15 @@ void World::cleanupLists(bool cleanupNeeded)
 	}
 
 	//item cleanup
-	std::vector<Item*>::iterator iter = itemList.begin();
-	while(iter != itemList.end()){
-		if((*iter)->isAlive()){
-			++iter;
+	std::vector<Item*>::iterator itemIt = itemList.begin();
+	while(itemIt != itemList.end()){
+		if((*itemIt)->isAlive()){
+			++itemIt;
 			continue;
 		}
 		//we need to delete if they are not alive.
-		deadEntity = (*iter);
-		iter = itemList.erase(iter);
+		deadEntity = (*itemIt);
+		itemIt = itemList.erase(itemIt);
 		if(cleanupNeeded)
 			deadEntity->cleanup(physicsEngine);
 		delete (Item *) deadEntity;
@@ -369,7 +403,11 @@ void World::playerFireLaser(void* context, const Ogre::FrameEvent& fe, int x1, i
 		World *world = static_cast<World*>(context);
 		PlayerSpacecraft *player = &world->player;
 
-		player->fireLaser();
+		PhysicsEntity *projectile = player->fireWeapon();
+		if (projectile != 0)
+		{
+			world->projectileList.push_back(projectile);
+		}
 	}
 }
 
@@ -388,11 +426,16 @@ void World::JudgementDay()
 	for(std::vector<EnemySpacecraft*>::iterator it = fleet.begin(); it != fleet.end(); ++it){
 		(*it)->kill();
 	}
+
+	for(std::vector<PhysicsEntity*>::iterator it = projectileList.begin(); it != projectileList.end(); ++it){
+		(*it)->kill();
+	}
 	cleanupLists(false);
 
 	itemList.clear();
 	asteroidList.clear();
 	fleet.clear();
+	projectileList.clear();
 }
 
 
@@ -421,7 +464,7 @@ void World::PlayerRotate(void *context, const Ogre::FrameEvent& fe, int x1, int 
 
 void World::setupEnemies()
 {
-	EnemySpacecraft* recruit = new EnemySpacecraft(sceneManager, worldSceneNode, physicsEngine, star.getPosition());
+	EnemySpacecraft* recruit = new EnemySpacecraft(sceneManager, worldSceneNode, physicsEngine, star.getPosition(), &particleEngine);
 	recruit->translate(player.getPosition() + Ogre::Vector3(0,0,-75));
 	recruit->setTarget(&player);
 	fleet.push_back(recruit);

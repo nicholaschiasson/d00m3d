@@ -13,12 +13,13 @@ void ParticleEngine::initialize(Ogre::SceneManager* scene_manager, PhysicsEngine
 	sceneManager = scene_manager;
 	physicsEngine = &physics_engine;
 
-	createExplosionGeometry();
+	createSphereParticleGeometry();
+	createPlasmaSplineControlPoints();
 }
 
-void ParticleEngine::createExplosionGeometry(int numParticles)
+void ParticleEngine::createSphereParticleGeometry(int numParticles)
 {
-	Ogre::String object_name = "explosion";
+	Ogre::String object_name = "sphereParticle";
 	/* Retrieve scene manager and root scene node */
     Ogre::SceneNode* root_scene_node = sceneManager->getRootSceneNode();
 
@@ -65,25 +66,114 @@ void ParticleEngine::createExplosionGeometry(int numParticles)
     object->convertToMesh(object_name);
 }
 
-void ParticleEngine::createParticleEffect(EFFECT_TYPE effect, Ogre::SceneNode* parentNode, Ogre::Vector3 position, Ogre::Vector3 scale)
+void ParticleEngine::createPlasmaSplineControlPoints(int numControlPoints)
+{
+	// Control points for the spline
+	Ogre::Vector3 *control_point;
+
+	/* Allocate memory for control points */
+	control_point = new Ogre::Vector3[numControlPoints];
+
+	/* Create control points of a piecewise spline */
+	/* We store the control points in groups of 4 */
+	/* Each group represents the control points (p0, p1, p2, p3) of a cubic Bezier curve */
+	/* To ensure C1 continuity, we constrain the first and second point of each curve according to the previous curve */
+        
+	float length = 3.0f;
+
+	// Initialize the first two control points to fixed values */
+	control_point[0] = Ogre::Vector3(0.0f, 0.0f, 0.0f);
+	control_point[1] = Ogre::Vector3(0.0f, 0.0f, 0.0f);
+		
+	int j = 0;
+	// Create remaining points
+	for (int i = 2; i < numControlPoints - 2; i++){
+		// Check if we have the first or second point of a curve
+		// Then we need to constrain the points
+		if (i % 4 == 0){
+			// Constrain the first point of the curve
+			// p3 = q0, where the previous curve is (p0, p1, p2, p3) and the current curve is (q0, q1, q2, q3)
+			// p3 is at position -1 from the current point q0
+			control_point[i] = control_point[i - 1];
+		} else if (i % 4 == 1){
+			// Constrain the second point of the curve
+			// q1 = 2*p3 – p2
+			// p3 is at position -1 and we add another -1 since we are at i%4 == 1 (not i%4 == 0)
+			// p2 is at position -2 and we add another -1 since we are at i%4 == 1 (not i%4 == 0)
+			control_point[i] = 2.0f*control_point[i - 2] - control_point[i - 3];
+		} else {
+			// Other points: we can freely assign random values to them
+			// Get 3 random numbers
+			float px = cos((Ogre::Math::TWO_PI / ((float)numControlPoints / 2.0f)) * j * 4) * 0.5f;
+			float py = sin((Ogre::Math::TWO_PI / ((float)numControlPoints / 2.0f)) * j * 4) * 0.5f;
+			float pz = (length * ((float)i / (float)numControlPoints)) - (length / 2.0f);
+			// Define control points based on u, v, and w and scale by the control point index
+			control_point[i] = Ogre::Vector3(px, py, pz);
+			++j;
+			//control_point[i] = Ogre::Vector3(u*3.0*(i/4 + 1), v*3.0*(i/4+1), 0.0); // Easier to visualize with the control points on the screen
+		}
+	}
+		
+	control_point[numControlPoints - 2] = Ogre::Vector3(0.0f, 0.0f, length / 2.0f);
+	control_point[numControlPoints - 1] = Ogre::Vector3(0.0f, 0.0f, 0.0f);
+
+	/* Add control points to the material's shader */
+	/* Translate the array of Ogre::Vector3 to an accepted format */
+	float *shader_data;
+	shader_data = new float[numControlPoints*4];
+	for (int i = 0; i < numControlPoints; i++){
+		shader_data[i*4] = control_point[i].x;
+		shader_data[i*4 + 1] = control_point[i].y;
+		shader_data[i*4 + 2] = control_point[i].z;
+		shader_data[i*4 + 3] = 0.0;
+	}
+
+	/* Add array as a parameter to the shader of the specified material */
+	Ogre::MaterialPtr mat = static_cast<Ogre::MaterialPtr>(Ogre::MaterialManager::getSingleton().getByName("SplineParticleMaterial"));
+	mat->getBestTechnique()->getPass(0)->getVertexProgramParameters()->setNamedConstant("control_point", shader_data, numControlPoints, 4);
+
+	/* Also create a mesh out of the control points, so that we can render them, if needed */
+    Ogre::ManualObject* object = sceneManager->createManualObject("plasmaSplineControlPoints");
+    object->setDynamic(false);
+	object->begin("", Ogre::RenderOperation::OT_POINT_LIST);
+	for (int i = 0; i < numControlPoints; i++){
+		object->position(control_point[i]);
+		// Color allows us to keep track of control point ordering
+		object->colour(1.0f - ((float) i)/((float)numControlPoints), 0.0f, ((float) i)/((float)numControlPoints));
+	}
+	object->end();
+    object->convertToMesh("plasmaSplineControlPoints");
+
+	/* Free memory we used to store control points temporarily */
+	delete [] control_point;
+}
+
+ParticleEffect *ParticleEngine::createParticleEffect(EFFECT_TYPE effect, Ogre::SceneNode* parentNode, Ogre::Vector3 position, Ogre::Vector3 scale)
 {
 	std::string material_name;
 	std::string object_name;
+	float duration;
 	ParticleEffect* particleEffect = NULL;
 	switch(effect){
 	case EFFECT_EXPLOSION:
 		material_name = "ExplosionMaterial";
-		object_name = "explosion";
+		object_name = "sphereParticle";
+		duration = 4.0f;
 		break;
+	case EFFECT_PLASMA:
+		material_name = "SplineParticleMaterial";
+		object_name = "plasmaSplineControlPoints";
+		duration = 6.0f;
 	default:
 		std::cerr << "Particle Effect Not Found... Creation unsuccessful" << std::endl;
 		break;
 	}
 
-	particleEffect = new ParticleEffect(sceneManager, parentNode, object_name,material_name, *physicsEngine);
+	particleEffect = new ParticleEffect(sceneManager, parentNode, object_name, material_name, *physicsEngine, duration);
 	particleEffect->scale(scale);
 	particleEffect->translate(position);
 	particles.push_back(particleEffect);
+	return particleEffect;
 }
 
 void ParticleEngine::update(const Ogre::FrameEvent& fe)
@@ -99,6 +189,11 @@ void ParticleEngine::update(const Ogre::FrameEvent& fe)
 	if(cleanup){
 		cleanupParticles();
 	}
+}
+
+void ParticleEngine::addParticleEffect(ParticleEffect *particleEffect)
+{
+	particles.push_back(particleEffect);
 }
 
 void ParticleEngine::cleanupParticles()
