@@ -24,6 +24,7 @@ void PlayerSpacecraft::Update(const Ogre::FrameEvent &fe)
 void PlayerSpacecraft::ThrustersForward()
 {
 	if(thrustersAvailable()){
+		fuelSystems.front().addValue(-0.01);
 		Spacecraft::ThrustersForward();
 	}
 	
@@ -31,46 +32,63 @@ void PlayerSpacecraft::ThrustersForward()
 void PlayerSpacecraft::ThrustersLeft()
 {
 	if(thrustersAvailable()){
+		fuelSystems.front().addValue(-0.01);
 		Spacecraft::ThrustersLeft();
 	}	
 }
 void PlayerSpacecraft::ThrustersBackward()
 {
 	if(thrustersAvailable()){
+		fuelSystems.front().addValue(-0.01);
 		Spacecraft::ThrustersBackward();
 	}
 }
 void PlayerSpacecraft::ThrustersRight()
 {
 	if(thrustersAvailable()){
+		fuelSystems.front().addValue(-0.01);
 		Spacecraft::ThrustersRight();
 	}
 }
 void PlayerSpacecraft::ThrustersUpward()
 {
 	if(thrustersAvailable()){
+		fuelSystems.front().addValue(-0.01);
 		Spacecraft::ThrustersUpward();
 	}
 }
 void PlayerSpacecraft::ThrustersDownward()
 {
 	if(thrustersAvailable()){
+		fuelSystems.front().addValue(-0.01);
 		Spacecraft::ThrustersDownward();
 	}
 }
 
 bool PlayerSpacecraft::thrustersAvailable(){
 	if(fuelSystems.size() <= 0){
-		std::cout << "No Thrusters alive"<< std::endl;
 		return false;
 	}
 	if(fuelSystems.front().getValue() <= 0){
-		std::cout << "Thrusters empty"<< std::endl;
 		return false;
 	}
 	return true;
 }
 
 void PlayerSpacecraft::test(){
-	fuelSystems.front().setHealth(0);
+	if(navigationalSystems.size() > 0)
+		navigationalSystems.front().setHealth(0);
+}
+
+void PlayerSpacecraft::fireLaser()
+{
+	if(artillerySystems.size() > 0 && artillerySystems.front().getValue() > 0){
+		Spacecraft::fireLaser();
+		artillerySystems.front().addValue(-0.01f);
+	}
+}
+
+bool PlayerSpacecraft::canNavigate()
+{
+	return navigationalSystems.size() > 0;
 }

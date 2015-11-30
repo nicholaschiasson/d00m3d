@@ -187,7 +187,7 @@ void TextRenderer::updateUI(){
 	}
 	fuel_bkp->setCaption("BACKUPS: " + std::to_string(std::max(0,(int)player->getNumSystemBackups(SystemComponent::SYSTEM_FUEL))));
 
-	if (player->getActiveSystem(SystemComponent::SYSTEM_FUEL) !=NULL){
+	if (player->getActiveSystem(SystemComponent::SYSTEM_ARTILLERY) !=NULL){
 		energy->setCaption("ENERGY: " + std::to_string((int)player->getActiveSystem(SystemComponent::SYSTEM_ARTILLERY)->getValue())+ "%");
 		artillery_health->setCaption("ARTILLERY HEALTH: " + std::to_string((int)player->getActiveSystem(SystemComponent::SYSTEM_ARTILLERY)->getHealth())+ "%");
 	} else {
