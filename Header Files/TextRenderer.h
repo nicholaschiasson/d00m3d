@@ -28,17 +28,24 @@ private:
 	PlayerSpacecraft* player;
 
 	Ogre::TextAreaOverlayElement* health;
+
 	Ogre::TextAreaOverlayElement* speed;
+
 	Ogre::TextAreaOverlayElement* energy;
+	Ogre::TextAreaOverlayElement* artillery_health;
 	Ogre::TextAreaOverlayElement* energy_bkp;
+
 	Ogre::TextAreaOverlayElement* fuel;
 	Ogre::TextAreaOverlayElement* fuel_bkp;
-	Ogre::TextAreaOverlayElement* artillery_health;
 	Ogre::TextAreaOverlayElement* fuel_health;
+
 	Ogre::TextAreaOverlayElement* defense;
 	Ogre::TextAreaOverlayElement* defense_bkp;
+
 	Ogre::TextAreaOverlayElement* navigation;
 	Ogre::TextAreaOverlayElement* navigation_bkp;
+
+	Ogre::TextAreaOverlayElement* death;
 
 	Ogre::TextAreaOverlayElement* FPS;
 };

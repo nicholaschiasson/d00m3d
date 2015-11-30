@@ -44,6 +44,11 @@ void TextRenderer::initPanel(){
 
 }
 
+void showDeath(){
+
+
+}
+
 void TextRenderer::initTextAreas(){
 
 	health = static_cast<Ogre::TextAreaOverlayElement*>(overlayManager->createOverlayElement("TextArea","Health"));
@@ -163,25 +168,52 @@ void TextRenderer::initTextAreas(){
 	FPS->setColour(Ogre::ColourValue(1.0,1.0,1.0));
     panel->addChild(FPS);
 
+
+	death = static_cast<Ogre::TextAreaOverlayElement*>(overlayManager->createOverlayElement("TextArea","death"));
+    death->setMetricsMode(Ogre::GMM_PIXELS);
+	death->setPosition(1500,30);
+    death->setDimensions(200, 100);
+    death->setFontName("MyFont");
+	death->setCharHeight(30);
+	death->setColour(Ogre::ColourValue(1.0,1.0,1.0));
+    panel->addChild(death);
+
 }
 
 void TextRenderer::updateUI(){
 	health->setCaption("HEALTH: " + std::to_string((int)player->getHealth())+ "%");
 
-	fuel->setCaption("FUEL: " + std::to_string((int)player->getActiveSystem(SystemComponent::SYSTEM_FUEL)->getValue())+ "%");
-	fuel_health->setCaption("FUEL HEALTH: " + std::to_string((int)player->getActiveSystem(SystemComponent::SYSTEM_FUEL)->getHealth())+ "%");
+	if(player->getActiveSystem(SystemComponent::SYSTEM_FUEL)!= NULL){
+		fuel->setCaption("FUEL: " + std::to_string((int)player->getActiveSystem(SystemComponent::SYSTEM_FUEL)->getValue())+ "%");
+		fuel_health->setCaption("FUEL HEALTH: " + std::to_string((int)player->getActiveSystem(SystemComponent::SYSTEM_FUEL)->getHealth())+ "%");
+	} else {
+		fuel->setCaption("FUEL: 0%");
+		fuel_health->setCaption("FUEL HEALTH: 0%");
+	}
 	fuel_bkp->setCaption("BACKUPS: " + std::to_string((int)player->getNumSystemBackups(SystemComponent::SYSTEM_FUEL)));
 
-
-	energy->setCaption("ENERGY: " + std::to_string((int)player->getActiveSystem(SystemComponent::SYSTEM_ARTILLERY)->getValue())+ "%");
-	artillery_health->setCaption("ARTILLERY HEALTH: " + std::to_string((int)player->getActiveSystem(SystemComponent::SYSTEM_ARTILLERY)->getHealth())+ "%");
+	if (player->getActiveSystem(SystemComponent::SYSTEM_FUEL) !=NULL){
+		energy->setCaption("ENERGY: " + std::to_string((int)player->getActiveSystem(SystemComponent::SYSTEM_ARTILLERY)->getValue())+ "%");
+		artillery_health->setCaption("ARTILLERY HEALTH: " + std::to_string((int)player->getActiveSystem(SystemComponent::SYSTEM_ARTILLERY)->getHealth())+ "%");
+	} else {
+		energy->setCaption("ENERGY: 0%");
+		artillery_health->setCaption("ARTILLERY HEALTH: 0%");
+	}
 	energy_bkp->setCaption("BACKUPS: " + std::to_string((int)player->getNumSystemBackups(SystemComponent::SYSTEM_ARTILLERY)));
 
+	if (player->getActiveSystem(SystemComponent::SYSTEM_DEFENSE) != NULL){
+		defense->setCaption("DEFENSE: " +std::to_string((int)player->getActiveSystem(SystemComponent::SYSTEM_DEFENSE)->getHealth()) + "%");
+	} else {
+		defense->setCaption("DEFENSE: 0%");
+	}
 
-	defense->setCaption("DEFENSE: " +std::to_string((int)player->getActiveSystem(SystemComponent::SYSTEM_DEFENSE)->getHealth()) + "%");
 	defense_bkp->setCaption("BACKUPS: " +std::to_string((int)player->getNumSystemBackups(SystemComponent::SYSTEM_DEFENSE)));
 	
-	navigation->setCaption("NAVIGATION: " +std::to_string((int)player->getActiveSystem(SystemComponent::SYSTEM_NAVIGATIONAL)->getHealth()) + "%");
+	if(player->getActiveSystem(SystemComponent::SYSTEM_NAVIGATIONAL) != NULL){
+	    navigation->setCaption("NAVIGATION: " +std::to_string((int)player->getActiveSystem(SystemComponent::SYSTEM_NAVIGATIONAL)->getHealth()) + "%");
+	} else {
+		navigation->setCaption("NAVIGATION: 0%");
+	}
 	navigation_bkp->setCaption("BACKUPS: " +std::to_string((int)player->getNumSystemBackups(SystemComponent::SYSTEM_NAVIGATIONAL)));
 
 	speed->setCaption("SPEED: " + std::to_string((int)player->getSpeed())+ "AU/h");
