@@ -23,7 +23,7 @@ public:
 
 	virtual void spaghettify();
 
-	void fireLaser();
+	virtual void fireLaser();
 	
 	float getDefense();
 	float getEnergy();

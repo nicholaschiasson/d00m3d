@@ -19,8 +19,11 @@ public:
 	virtual void ThrustersUpward();
 	virtual void ThrustersDownward();
 
+	virtual void fireLaser();
+	virtual bool canNavigate();
 	//testing
 	void test();
+	
 
 private:
 	bool thrustersAvailable();

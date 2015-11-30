@@ -61,16 +61,27 @@ void PlayerSpacecraft::ThrustersDownward()
 
 bool PlayerSpacecraft::thrustersAvailable(){
 	if(fuelSystems.size() <= 0){
-		std::cout << "No Thrusters alive"<< std::endl;
 		return false;
 	}
 	if(fuelSystems.front().getValue() <= 0){
-		std::cout << "Thrusters empty"<< std::endl;
 		return false;
 	}
 	return true;
 }
 
 void PlayerSpacecraft::test(){
-	fuelSystems.front().setHealth(0);
+	if(navigationalSystems.size() > 0)
+		navigationalSystems.front().setHealth(0);
+}
+
+void PlayerSpacecraft::fireLaser()
+{
+	if(artillerySystems.size() > 0 && artillerySystems.front().getValue() > 0){
+		Spacecraft::fireLaser();
+	}
+}
+
+bool PlayerSpacecraft::canNavigate()
+{
+	return navigationalSystems.size() > 0;
 }

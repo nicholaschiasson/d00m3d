@@ -78,6 +78,7 @@ void World::initControls(InputManager *inputManager)
 	inputManager->RegisterCallback(this, PlayerYawRight, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, MOUSE_MOTION_STATE_EITHER, (int)OIS::KC_RIGHT);
 	inputManager->RegisterCallback(this, playerFireLaser, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, MOUSE_MOTION_STATE_EITHER, (int)OIS::KC_SPACE);
 	inputManager->RegisterCallback(this, boom, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, MOUSE_MOTION_STATE_EITHER, (int)OIS::KC_B);
+	inputManager->RegisterCallback(this, test, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, MOUSE_MOTION_STATE_EITHER, (int)OIS::KC_K);
 	inputManager->RegisterCallback(this, PlayerRotate, INPUT_SOURCE_NONE, INPUT_EVENT_NONE, MOUSE_MOTION_STATE_MOVING, 0);
 	
 }
@@ -329,8 +330,9 @@ void World::PlayerPitchUp(void *context, const Ogre::FrameEvent& fe, int x1, int
 	{
 		World *world = static_cast<World*>(context);
 		PlayerSpacecraft *player = &world->player;
-
-		player->pitch(Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
+		if(player->canNavigate()){
+			player->pitch(Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
+		}
 	}
 }
 
@@ -340,8 +342,9 @@ void World::PlayerYawLeft(void *context, const Ogre::FrameEvent& fe, int x1, int
 	{
 		World *world = static_cast<World*>(context);
 		PlayerSpacecraft *player = &world->player;
-
-		player->yaw(Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
+		if(player->canNavigate()){
+			player->yaw(Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
+		}
 	}
 }
 
@@ -351,8 +354,9 @@ void World::PlayerPitchDown(void *context, const Ogre::FrameEvent& fe, int x1, i
 	{
 		World *world = static_cast<World*>(context);
 		PlayerSpacecraft *player = &world->player;
-
-		player->pitch(-Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
+		if(player->canNavigate()){
+			player->pitch(-Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
+		}
 	}
 }
 
@@ -362,8 +366,9 @@ void World::PlayerYawRight(void *context, const Ogre::FrameEvent& fe, int x1, in
 	{
 		World *world = static_cast<World*>(context);
 		PlayerSpacecraft *player = &world->player;
-
-		player->yaw(-Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
+		if(player->canNavigate()){
+			player->yaw(-Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
+		}
 	}
 }
 
@@ -418,9 +423,10 @@ void World::PlayerRotate(void *context, const Ogre::FrameEvent& fe, int x1, int 
 	{
 		World *world = static_cast<World*>(context);
 		PlayerSpacecraft *player = &world->player;
-
-		player->pitch(Ogre::Radian(Ogre::Degree(-(float)(y2 - y1))) * fe.timeSinceLastFrame);
-		player->yaw(Ogre::Radian(Ogre::Degree(-(float)(x2 - x1))) * fe.timeSinceLastFrame);
+		if(player->canNavigate()){
+			player->pitch(Ogre::Radian(Ogre::Degree(-(float)(y2 - y1))) * fe.timeSinceLastFrame);
+			player->yaw(Ogre::Radian(Ogre::Degree(-(float)(x2 - x1))) * fe.timeSinceLastFrame);
+		}
 	}
 }
 
@@ -432,4 +438,15 @@ void World::setupEnemies()
 	fleet.push_back(recruit);
 
 	//TODO: Add more enemies.
+}
+
+void World::test(void* context, const Ogre::FrameEvent& fe, int x1, int y1, int z1, int x2, int y2, int z2)
+{
+	if(context)
+	{
+		World *world = static_cast<World*>(context);
+		PlayerSpacecraft *player = &world->player;
+
+		player->test();
+	}
 }
