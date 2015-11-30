@@ -54,7 +54,7 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 
 	UI.InitOverlay(&player,sceneMan);
 	
-	//initObjects();
+	initObjects();
 	//Setting up the basic control scheme
 	initControls(inMan);
 	createWorld();
@@ -138,7 +138,7 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 
 			for(int i = 0; i<20; i++){
 				if(numObjects < MAX_NUM_OBJECTS){
-				    //SpawnAsteroid(player.getPosition());
+				    SpawnAsteroid(player.getPosition());
 				}
 			}
 			timer = spawnTime;
