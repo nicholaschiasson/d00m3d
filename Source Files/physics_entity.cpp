@@ -100,6 +100,11 @@ float PhysicsEntity::GetRestitution()
 	return restitution;
 }
 
+float PhysicsEntity::getSpeed()
+{
+	return velocity.squaredLength();
+}
+
 void PhysicsEntity::SetVelocity(Ogre::Vector3 v)
 {
 	velocity = v;

@@ -300,11 +300,6 @@ void Spacecraft::Damage(float damage)
 	}
 }
 
-float Spacecraft::getSpeed()
-{
-	return velocity.squaredLength();
-}
-
 void Spacecraft::Collide(const Ogre::FrameEvent &fe, PhysicsEntity *physicsEntity)
 {
 	Resource resource = physicsEntity->collect(this);

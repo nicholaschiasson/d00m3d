@@ -36,6 +36,7 @@ public:
 	Ogre::Vector3 GetDeltaVelocity();
 	Ogre::Vector3 GetPreviousVelocity();
 	Ogre::Vector3 GetVelocity();
+	float getSpeed(); //returns the velocitySquared (to save on computation)
 	float GetMass();
 	float GetRestitution();
 

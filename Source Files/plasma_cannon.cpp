@@ -47,7 +47,7 @@ PhysicsEntity *PlasmaCannon::fire()
 			unsigned int pid = (parentObjectID == -1 ? objectID : parentObjectID);
 			PlasmaBall *plasma = new PlasmaBall(sceneManager, worldNode, *physicsEngine, damage, pid);
 			plasma->setScale(1.0f, 1.0f, 1.0f);
-			plasma->scale(1.0f / 2.0f, 1.0f / 2.0, 1.0f / 4.0f);
+			plasma->scale(1.0f / 3.0f, 1.0f / 3.0f, 1.0f / 3.0f);
 			plasma->translate(barrel->_getDerivedPosition() + barrel->_getDerivedOrientation() * Ogre::Vector3::NEGATIVE_UNIT_Z);
 			plasma->setOrientation(barrel->_getDerivedOrientation());
 			plasma->SetVelocity(relativeVelocity);

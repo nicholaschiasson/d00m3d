@@ -32,7 +32,7 @@ private:
 	Ogre::SceneManager* sceneManager;
 	
 	void createSphereParticleGeometry(int numParticles = 6000);
-	void createPlasmaSplineControlPoints(int numControlPoints = 36);
+	void createPlasmaSplineControlPoints(int numControlPoints = 32);
 	void cleanupParticles();
 };
 
