@@ -24,6 +24,7 @@ void PlayerSpacecraft::Update(const Ogre::FrameEvent &fe)
 void PlayerSpacecraft::ThrustersForward()
 {
 	if(thrustersAvailable()){
+		fuelSystems.front().addValue(-0.03);
 		Spacecraft::ThrustersForward();
 	}
 	
@@ -31,30 +32,35 @@ void PlayerSpacecraft::ThrustersForward()
 void PlayerSpacecraft::ThrustersLeft()
 {
 	if(thrustersAvailable()){
+		fuelSystems.front().addValue(-0.03);
 		Spacecraft::ThrustersLeft();
 	}	
 }
 void PlayerSpacecraft::ThrustersBackward()
 {
 	if(thrustersAvailable()){
+		fuelSystems.front().addValue(-0.03);
 		Spacecraft::ThrustersBackward();
 	}
 }
 void PlayerSpacecraft::ThrustersRight()
 {
 	if(thrustersAvailable()){
+		fuelSystems.front().addValue(-0.03);
 		Spacecraft::ThrustersRight();
 	}
 }
 void PlayerSpacecraft::ThrustersUpward()
 {
 	if(thrustersAvailable()){
+		fuelSystems.front().addValue(-0.03);
 		Spacecraft::ThrustersUpward();
 	}
 }
 void PlayerSpacecraft::ThrustersDownward()
 {
 	if(thrustersAvailable()){
+		fuelSystems.front().addValue(-0.03);
 		Spacecraft::ThrustersDownward();
 	}
 }
@@ -78,6 +84,7 @@ void PlayerSpacecraft::fireLaser()
 {
 	if(artillerySystems.size() > 0 && artillerySystems.front().getValue() > 0){
 		Spacecraft::fireLaser();
+		artillerySystems.front().addValue(-0.01f);
 	}
 }
 
