@@ -60,5 +60,17 @@ void PlayerSpacecraft::ThrustersDownward()
 }
 
 bool PlayerSpacecraft::thrustersAvailable(){
-	return true;//(fuelSystems.size > 0 && fuelSystems.front().getValue() > 0.0f);
+	if(fuelSystems.size() <= 0){
+		std::cout << "No Thrusters alive"<< std::endl;
+		return false;
+	}
+	if(fuelSystems.front().getValue() <= 0){
+		std::cout << "Thrusters empty"<< std::endl;
+		return false;
+	}
+	return true;
+}
+
+void PlayerSpacecraft::test(){
+	fuelSystems.front().setHealth(0);
 }

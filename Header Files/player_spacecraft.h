@@ -18,6 +18,10 @@ public:
 	virtual void ThrustersRight();
 	virtual void ThrustersUpward();
 	virtual void ThrustersDownward();
+
+	//testing
+	void test();
+
 private:
 	bool thrustersAvailable();
 };
