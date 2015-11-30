@@ -1,6 +1,8 @@
 #ifndef WEAPON_H
 #define WEAPON_H
 
+#include <OgreEntity.h>
+#include <OgreSceneNode.h>
 #include "physics_entity.h"
 
 class Weapon : public PhysicsEntity
@@ -19,17 +21,17 @@ public:
 	
 	virtual void Collide(const Ogre::FrameEvent &fe, PhysicsEntity *physicsEntity);
 	virtual void fire() = 0;
-	void upgrade(int maxCooldown, int dmg);
+	virtual void upgrade(int maxCooldown, int dmg) = 0;
 	
 	int getCooldown() const;
-	int getDamage() const;
 	WEAPON_STATE getState();
 
 protected:
+	Ogre::String materialPrefix;
+	Ogre::SceneNode *barrel;
 	int timer;
 	int cooldown;
 	WEAPON_STATE myState;
-	int damage;
 	
 };
 

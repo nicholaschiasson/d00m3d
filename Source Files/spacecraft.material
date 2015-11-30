@@ -21,29 +21,6 @@ material SpacecraftThrusterMaterial
 }
 
 
-material SpacecraftCannonMaterial
-{
-    technique
-    {
-        pass
-        {
-            vertex_program_ref textureshader/vs
-            {
-            }
-
-            fragment_program_ref textureshader/fs
-            {
-            }
-
-			texture_unit
-			{
-				texture Resources/textures/Spacecraft/Thruster/thruster_01_medium.jpg 2d
-			}
-        } 
-    }
-}
-
-
 material SpacecraftPodMaterial
 {
     technique

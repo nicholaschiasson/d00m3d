@@ -78,6 +78,7 @@ set(SRCS
 	TextureMaterialFp.glsl
 	TextureMaterialVp.glsl
 	weapon.cpp
+	weapon.material
 	world.cpp
 )
 

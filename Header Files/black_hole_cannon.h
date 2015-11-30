@@ -18,6 +18,7 @@ public:
 	virtual void detachFrom(PhysicsEngine &physicsEngine);
 
 	void fire();
+	virtual void upgrade(int maxCooldown, int dmg);
 
 private:
 

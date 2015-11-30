@@ -4,7 +4,7 @@
 
 Spacecraft::Spacecraft() :
 	materialPrefix("Player"), light(Ogre::Vector3(0.0f, 0.0f, 0.0f)), leftPanelPivot(0), rightPanelPivot(0),
-	thrusterForce(500.0f), weapon(new LaserCannon())
+	thrusterForce(500.0f), weapon(new BlackHoleCannon())
 {
 	artillerySystems.push_back(SystemComponent(SystemComponent::SYSTEM_ARTILLERY, 100.0f, 100.0f));
 	defenseSystems.push_back(SystemComponent(SystemComponent::SYSTEM_DEFENSE, 100.0f, 0.0f));
@@ -27,6 +27,7 @@ void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* p
 {
 	PhysicsEntity::Initialize(sceneManager, parentNode, physicsEngine, parentID);
 	mass = 5000.0f;
+	dynamic = false;
 
 	light = lightPos;
 
@@ -36,7 +37,8 @@ void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* p
 	float invSpacecraftScaleX = 1.0f / spacecraftScaleX, invSpacecraftScaleY = 1.0f / spacecraftScaleY, invSpacecraftScaleZ = 1.0f / spacecraftScaleZ;
 	Ogre::Entity *spacecraftBodyEntity = sceneManager->createEntity("Cylinder");
 	spacecraftBodyEntity->setMaterialName(materialPrefix + "SpacecraftLongMaterial");
-	Ogre::SceneNode *spacecraftBodyNode = sceneNode->createChildSceneNode("SpacecraftBody" + Ogre::StringConverter::toString(entityCount));
+	//Ogre::SceneNode *spacecraftBodyNode = sceneNode->createChildSceneNode("SpacecraftBody" + Ogre::StringConverter::toString(entityCount));
+	Ogre::SceneNode *spacecraftBodyNode = parentNode->createChildSceneNode("SpacecraftBody" + Ogre::StringConverter::toString(entityCount));
 	spacecraftBodyNode->attachObject(spacecraftBodyEntity);
 	spacecraftBodyNode->scale(0.75f, 0.75f, 0.75f);
 	spacecraftBodyNode->scale(spacecraftScaleX, spacecraftScaleY, spacecraftScaleZ);

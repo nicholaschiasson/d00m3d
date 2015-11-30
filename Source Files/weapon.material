@@ -1,0 +1,67 @@
+material BlackHoleCannonMaterial
+{
+    technique
+    {
+        pass
+        {
+            vertex_program_ref textureshader/vs
+            {
+            }
+
+            fragment_program_ref textureshader/fs
+            {
+            }
+
+			texture_unit
+			{
+				texture Resources/textures/Weapon/BlackHole/black_hole_cannon_01_short.jpg 2d
+			}
+        } 
+    }
+}
+
+
+material LaserCannonMaterial
+{
+    technique
+    {
+        pass
+        {
+            vertex_program_ref textureshader/vs
+            {
+            }
+
+            fragment_program_ref textureshader/fs
+            {
+            }
+
+			texture_unit
+			{
+				texture Resources/textures/Weapon/Laser/laser_cannon_01_medium.jpg 2d
+			}
+        } 
+    }
+}
+
+
+material PlasmaCannonMaterial
+{
+    technique
+    {
+        pass
+        {
+            vertex_program_ref textureshader/vs
+            {
+            }
+
+            fragment_program_ref textureshader/fs
+            {
+            }
+
+			texture_unit
+			{
+				texture Resources/textures/Weapon/Plasma/plasma_cannon_01_short.jpg 2d
+			}
+        } 
+    }
+}

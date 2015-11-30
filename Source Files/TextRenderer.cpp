@@ -114,7 +114,7 @@ void TextRenderer::CreateTextArea(Ogre::TextAreaOverlayElement* text_area,std::s
     text_area->setDimensions(200, 100);
     text_area->setFontName("MyFont");
 	text_area->setCaption(caption);
-	text_area->setCharHeight(textSize);
+	text_area->setCharHeight((float)textSize);
 	text_area->setColour(textColour);
 
     panel->addChild(text_area);
