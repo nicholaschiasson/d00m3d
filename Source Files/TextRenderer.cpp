@@ -18,7 +18,7 @@ void TextRenderer::InitOverlay(PlayerSpacecraft* p, Ogre::SceneManager* scene_ma
 	Ogre::FontManager& font_manager = Ogre::FontManager::getSingleton();
 	Ogre::ResourcePtr font = font_manager.create("MyFont", "General");
 	font->setParameter("type", "truetype");
-	font->setParameter("source", "arial.ttf");
+	font->setParameter("source", "impact.ttf");
 	font->setParameter("size", "26");
 	font->setParameter("resolution", "96");
 	font->load();
@@ -41,11 +41,6 @@ void TextRenderer::initPanel(){
     panel->setMetricsMode(Ogre::GMM_PIXELS);
     panel->setPosition(0, 0);
     panel->setDimensions(200, 100);
-
-}
-
-void showDeath(){
-
 
 }
 
@@ -171,10 +166,10 @@ void TextRenderer::initTextAreas(){
 
 	death = static_cast<Ogre::TextAreaOverlayElement*>(overlayManager->createOverlayElement("TextArea","death"));
     death->setMetricsMode(Ogre::GMM_PIXELS);
-	death->setPosition(1500,30);
+	death->setPosition(770,100);
     death->setDimensions(200, 100);
     death->setFontName("MyFont");
-	death->setCharHeight(30);
+	death->setCharHeight(50);
 	death->setColour(Ogre::ColourValue(1.0,1.0,1.0));
     panel->addChild(death);
 
@@ -217,6 +212,9 @@ void TextRenderer::updateUI(){
 	navigation_bkp->setCaption("BACKUPS: " +std::to_string(std::max(0,(int)player->getNumSystemBackups(SystemComponent::SYSTEM_NAVIGATIONAL))));
 
 	speed->setCaption("SPEED: " + std::to_string((int)player->getSpeed())+ "AU/h");
+	if(!player->isAlive()){
+		death->setCaption("YOU ARE DEAD!");
+	}
 }
 
 void TextRenderer::updateFPS(int ff){
