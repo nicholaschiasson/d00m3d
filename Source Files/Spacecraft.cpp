@@ -168,6 +168,7 @@ void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* p
 
 float Spacecraft::getDefense()
 {
+	std::cout << "WARNING: getDefense() deprecated" <<std::endl; 
 	if (defenseSystems.size() > 0)
 	{
 		return defenseSystems.front().getValue();
@@ -177,6 +178,7 @@ float Spacecraft::getDefense()
 
 float Spacecraft::getEnergy()
 {
+	std::cout << "WARNING: getEnergy() deprecated" <<std::endl;
 	if (artillerySystems.size() > 0)
 	{
 		return artillerySystems.front().getValue();
@@ -185,6 +187,7 @@ float Spacecraft::getEnergy()
 }
 float Spacecraft::getFuel()
 {
+	std::cout << "WARNING: getFuel() deprecated" <<std::endl;
 	if (fuelSystems.size() > 0)
 	{
 		return fuelSystems.front().getValue();
@@ -253,6 +256,50 @@ void Spacecraft::Update(const Ogre::FrameEvent &fe)
 	}
 }
 
+void Spacecraft::Damage(float damage)
+{
+	if(alive){
+		int randomval = rand() % 2;
+		if(randomval == 0){ //Hit the defenses
+			if(defenseSystems.size() == 0){
+				PhysicsEntity::Damage(damage);
+			}
+			else{
+				defenseSystems.front().damage(damage);
+			}
+		}
+		else{ //Damage System
+			randomval = rand() % 3;
+			switch(randomval){
+			case 0:
+				if(artillerySystems.size() == 0){
+					PhysicsEntity::Damage(damage);
+				}
+				else{
+					artillerySystems.front().damage(damage);
+				}
+				break;
+			case 1:
+				if(navigationalSystems.size() == 0){
+					PhysicsEntity::Damage(damage);
+				}
+				else{
+					navigationalSystems.front().damage(damage);
+				}
+				break;
+			case 2:
+				if(fuelSystems.size() == 0){
+					PhysicsEntity::Damage(damage);
+				}
+				else{
+					fuelSystems.front().damage(damage);
+				}
+				break;
+			}
+		}
+	}
+}
+
 float Spacecraft::getSpeed()
 {
 	return velocity.squaredLength();
@@ -265,22 +312,31 @@ void Spacecraft::Collide(const Ogre::FrameEvent &fe, PhysicsEntity *physicsEntit
 	//todo implement tracking
 	switch(resource.getType()){
 	case Resource::FUEL:
-		if (fuelSystems.size() > 0)
-		{
-			fuelSystems.front().addValue(resource.getValue());
-			fuelSystems.front().setValue(std::min(fuelSystems.front().getValue(), 100.0f));
+		for(std::list<SystemComponent>::iterator it = fuelSystems.begin(); it != fuelSystems.end(); ++it){
+			if (it->getValue() != 100)
+			{
+				it->addValue(resource.getValue());
+				it->setValue(std::min(it->getValue(), 100.0f));
+			}
 		}
 		break;
 	case Resource::ENERGY:
-		if (artillerySystems.size() > 0)
-		{
-			artillerySystems.front().addValue(resource.getValue());
-			artillerySystems.front().setValue(std::min(artillerySystems.front().getValue(), 100.0f));
+		for(std::list<SystemComponent>::iterator it = artillerySystems.begin(); it != artillerySystems.end(); ++it){
+			if (it->getValue() != 100)
+			{
+				it->addValue(resource.getValue());
+				it->setValue(std::min(it->getValue(), 100.0f));
+			}
 		}
 		break;
 	case Resource::PARTS:
-		health += resource.getValue();
-		health = std::min(health, 100.0f);
+		for(std::list<SystemComponent>::iterator it = defenseSystems.begin(); it != defenseSystems.end(); ++it){
+			if (it->getValue() != 100)
+			{
+				it->addHealth(resource.getValue());
+				it->setHealth(std::min(it->getHealth(), 100.0f));
+			}
+		}
 		break;
 	case Resource::BACKUP:
 		switch ((SystemComponent::SYSTEM_TYPE)((int)resource.getValue()))
@@ -365,4 +421,48 @@ void Spacecraft::ThrustersDownward()
 	Ogre::Vector3 playerUp = playerOrientation * Ogre::Vector3::UNIT_Y;
 		
 	ApplyForce(-playerUp.normalisedCopy() * thrusterForce);
+}
+
+SystemComponent* Spacecraft::getActiveSystem(SystemComponent::SYSTEM_TYPE system)
+{
+	SystemComponent* activeComponent = NULL;
+	switch(system){
+	case SystemComponent::SYSTEM_ARTILLERY:
+		if(artillerySystems.size() > 0){
+			activeComponent =  &(artillerySystems.front());
+		}
+		break;
+	case SystemComponent::SYSTEM_DEFENSE:
+		if(defenseSystems.size() > 0){
+			activeComponent = &(defenseSystems.front());
+		}
+		break;
+	case SystemComponent::SYSTEM_FUEL:
+		if(fuelSystems.size() > 0){
+			activeComponent =  &(fuelSystems.front());
+		}
+		break;
+	case SystemComponent::SYSTEM_NAVIGATIONAL:
+		if(navigationalSystems.size() > 0){
+			activeComponent = &(navigationalSystems.front());
+		}
+		break;
+	}
+
+	return activeComponent;
+}
+int Spacecraft::getNumSystemBackups(SystemComponent::SYSTEM_TYPE system)
+{
+	switch(system){
+	case SystemComponent::SYSTEM_ARTILLERY:
+		return artillerySystems.size() -1; //removing the one we currently using
+	case SystemComponent::SYSTEM_DEFENSE:
+		return defenseSystems.size() - 1;
+	case SystemComponent::SYSTEM_FUEL:
+		return fuelSystems.size() -1;
+	case SystemComponent::SYSTEM_NAVIGATIONAL:
+		return navigationalSystems.size() -1;
+	default:
+		return 0;
+	}
 }

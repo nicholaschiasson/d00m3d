@@ -71,8 +71,7 @@ void EnemySpacecraft::handleIdle(const Ogre::FrameEvent &fe)
 	//need to orientate to the target.
 	findTarget(fe);
 	Ogre::Vector3 distance = target->getPosition() - sceneNode->getPosition();
-	if(distance.length() < 50){
-		std::cout << "TARGET AQUIRED, PURSUIT ENGAGED" << std::endl;
+	if(distance.squaredLength() < Ogre::Math::Sqr(1000)){
 		currState = STATE_PURSUE;
 	}
 }
@@ -84,16 +83,16 @@ void EnemySpacecraft::handlePursue(const Ogre::FrameEvent &fe)
 	if(weapon->getState() != Weapon::WEAPON_FIRING){ //ensure we dont turn as the laser is firing
 		findTarget(fe);
 	}
-	if(distance.length() < 10){
+	if(distance.squaredLength() < Ogre::Math::Sqr(50)){
 		if(currState == STATE_PURSUE){
 			currState = STATE_WARN;
 		}
-		if(velocity.length() > target->GetVelocity().length()){
+		if(velocity.squaredLength() > target->GetVelocity().squaredLength()){
 			ThrustersBackward();
 		}
 
 	}else{
-		ThrustersForward();
+			ThrustersForward();
 	}
 	
 }
@@ -121,7 +120,6 @@ void EnemySpacecraft::handleFire(const Ogre::FrameEvent &fe, bool warningShot){
 			findTarget(fe);
 			currState = STATE_PURSUE;
 			}
-		std::cout << "Warning Shot: " << warningShot <<std::endl;
 		lastProjectile = fireWeapon();	
 	}else{
 		lastShot += fe.timeSinceLastFrame;

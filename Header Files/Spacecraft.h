@@ -23,19 +23,24 @@ public:
 
 	virtual void spaghettify();
 
-	PhysicsEntity *fireWeapon();
+	virtual PhysicsEntity *fireWeapon();
 	
 	float getDefense();
 	float getEnergy();
 	float getFuel();
 	float getSpeed(); //returns the velocitySquared (to save on computation)
 
-	void ThrustersForward();
-	void ThrustersLeft();
-	void ThrustersBackward();
-	void ThrustersRight();
-	void ThrustersUpward();
-	void ThrustersDownward();
+	SystemComponent* getActiveSystem(SystemComponent::SYSTEM_TYPE);
+	int getNumSystemBackups(SystemComponent::SYSTEM_TYPE);
+
+	virtual void ThrustersForward();
+	virtual void ThrustersLeft();
+	virtual void ThrustersBackward();
+	virtual void ThrustersRight();
+	virtual void ThrustersUpward();
+	virtual void ThrustersDownward();
+
+	virtual void Damage(float damage);
 
 protected:
 	Ogre::String materialPrefix;

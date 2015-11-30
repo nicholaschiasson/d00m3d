@@ -34,7 +34,7 @@ void Star::Collide(const Ogre::FrameEvent &fe, PhysicsEntity *physicsEntity)
 	else{
 		//damage should be half of what the collect will return
 		std::cout << "Damage Done: " << calcRadiation(physicsEntity)/2.0f << std::endl;
-		physicsEntity->Damage(calcRadiation(physicsEntity)/2.0f);
+		physicsEntity->absoluteDamage(calcRadiation(physicsEntity)/2.0f);
 	}
 }
 

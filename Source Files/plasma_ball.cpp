@@ -1,7 +1,7 @@
 #include "plasma_ball.h"
 
 PlasmaBall::PlasmaBall(Ogre::SceneManager* sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, float dmg, unsigned int parentID) :
-	ParticleEffect(sceneManager, parentNode, "plasmaSplineControlPoints", "SplineParticleMaterial", physicsEngine, 6.0f), damage(dmg)
+	ParticleEffect(sceneManager, parentNode, "plasmaSplineControlPoints", "SplineParticleMaterial", physicsEngine, 16.0f), damage(dmg)
 {
 	mass = 10.0f;
 	dynamic = true;

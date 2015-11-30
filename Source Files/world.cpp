@@ -21,7 +21,6 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 		throw std::runtime_error("Camera or InputManager not initialized!");
 	}
 
-
 	sceneManager = sceneMan;
 	sceneManager->setSkyBox(true, "SkyboxMaterial");
 
@@ -35,6 +34,7 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 	spawnTime = 2.0f;
 	timer = spawnTime;
 
+	numEnemies = 0;
 	numObjects = 0;
 	//tr = new TextRenderer;
 
@@ -53,7 +53,7 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 
 	UI.InitOverlay(&player,sceneMan);
 	
-	//initObjects();
+	initObjects();
 	//Setting up the basic control scheme
 	initControls(inMan);
 	createWorld();
@@ -77,6 +77,7 @@ void World::initControls(InputManager *inputManager)
 	inputManager->RegisterCallback(this, PlayerYawRight, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, MOUSE_MOTION_STATE_EITHER, (int)OIS::KC_RIGHT);
 	inputManager->RegisterCallback(this, playerFireLaser, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, MOUSE_MOTION_STATE_EITHER, (int)OIS::KC_SPACE);
 	inputManager->RegisterCallback(this, boom, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, MOUSE_MOTION_STATE_EITHER, (int)OIS::KC_B);
+	inputManager->RegisterCallback(this, test, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, MOUSE_MOTION_STATE_EITHER, (int)OIS::KC_K);
 	inputManager->RegisterCallback(this, PlayerRotate, INPUT_SOURCE_NONE, INPUT_EVENT_NONE, MOUSE_MOTION_STATE_MOVING, 0);
 	
 }
@@ -92,9 +93,45 @@ void World::SpawnAsteroid(Ogre::Vector3 pos)
 	numObjects++; 
 }
 
+void World::SpawnEnemies(){
+	Ogre::Vector3 pos = player.getPosition();
+	EnemySpacecraft* recruit = new EnemySpacecraft(sceneManager, worldSceneNode, physicsEngine, star.getPosition(), &particleEngine);
+	float theta = Ogre::Math::RangeRandom(0.0f, Ogre::Math::TWO_PI);
+	float phi = Ogre::Math::RangeRandom(0.0f, Ogre::Math::TWO_PI);
+	Ogre::Vector3 initialPosition = pos + Ogre::Vector3(cos(theta) * sin(phi),sin(theta) * sin(phi), -cos(phi)) * 200.0f;
+	recruit->translate(initialPosition);
+	recruit->setTarget(&player);
+	fleet.push_back(recruit);
+	numEnemies++; 
+
+}
+
+void World::setupEnemies()
+{
+	Ogre::Vector3 pos = player.getPosition();
+	for(int i = 0; i<5; i++){
+		EnemySpacecraft* recruit = new EnemySpacecraft(sceneManager, worldSceneNode, physicsEngine, star.getPosition(), &particleEngine);
+		float theta = Ogre::Math::RangeRandom(0.0f, Ogre::Math::TWO_PI);
+		float phi = Ogre::Math::RangeRandom(0.0f, Ogre::Math::TWO_PI);
+		float dist = Ogre::Math::RangeRandom(70.0f, 600.0 );
+		Ogre::Vector3 initialPosition = pos + Ogre::Vector3(cos(theta) * sin(phi),sin(theta) * sin(phi), -cos(phi)) * dist;
+		recruit->translate(initialPosition);
+		recruit->setTarget(&player);
+		fleet.push_back(recruit);
+		numEnemies++;
+	}
+}
+
 void World::checkDistance(Entity* entity){
 	Ogre::Vector3 distance = entity->getPosition() - player.getPosition(); 
-	if(distance.squaredLength() > Ogre::Math::Sqr(4000)){
+	if(distance.squaredLength() > Ogre::Math::Sqr(3000)){
+		entity->kill();
+	}
+}
+
+void World::checkEnemyDistance(Entity* entity){
+	Ogre::Vector3 distance = entity->getPosition() - player.getPosition(); 
+	if(distance.squaredLength() > Ogre::Math::Sqr(2000)){
 		entity->kill(); 
 
 	}
@@ -122,17 +159,24 @@ void World::createWorld()
 
 void World::updateWorld(const Ogre::FrameEvent& fe)
 {
-	//std::cout << numObjects << std::endl;
+	std::cout << numEnemies << std::endl;
 	Entity* deadEntity = NULL;
+
 	UI.updateUI();
+
 	if (exists)
 	{
 		//TODO update stuff
 		if (timer <= 0.0f)
 		{
+			UI.updateFPS((int)(1.0f/fe.timeSinceLastFrame));
+
 			for(int i = 0; i<20; i++){
 				if(numObjects < MAX_NUM_OBJECTS){
-				    //SpawnAsteroid(player.getPosition());
+				    SpawnAsteroid(player.getPosition());
+				}
+				if(numEnemies < MAX_NUM_ENEMIES){
+					SpawnEnemies();
 				}
 			}
 			timer = spawnTime;
@@ -146,7 +190,6 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 
 		//enemy spacecraft list
 		for(std::vector<EnemySpacecraft*>::iterator it = fleet.begin(); it != fleet.end(); ++it){
-			//checkDistance(*it); todo determine if enemies should be deleted
 			(*it)->Update(fe);
 			PhysicsEntity *projectile = (*it)->takeLastProjectile();
 			if (projectile != 0)
@@ -159,6 +202,7 @@ void World::updateWorld(const Ogre::FrameEvent& fe)
 				particleEngine.createParticleEffect(ParticleEngine::EFFECT_EXPLOSION, worldSceneNode, (*it)->getPosition(), Ogre::Vector3(1,1,1));
 				itemList.push_back(new Item(sceneManager, worldSceneNode, physicsEngine, deadEntity->getPosition(), Resource::PARTS));
 			}
+			checkEnemyDistance(*it);
 		}
 
 		//projectile list
@@ -224,7 +268,7 @@ void World::cleanupLists(bool cleanupNeeded)
 			++fleetIt;
 			continue;
 		}
-
+		numEnemies--;
 		//we need to delete if they are not alive.
 		deadEntity = (*fleetIt);
 		fleetIt = fleet.erase(fleetIt);
@@ -358,8 +402,9 @@ void World::PlayerPitchUp(void *context, const Ogre::FrameEvent& fe, int x1, int
 	{
 		World *world = static_cast<World*>(context);
 		PlayerSpacecraft *player = &world->player;
-
-		player->pitch(Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
+		if(player->canNavigate()){
+			player->pitch(Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
+		}
 	}
 }
 
@@ -369,8 +414,9 @@ void World::PlayerYawLeft(void *context, const Ogre::FrameEvent& fe, int x1, int
 	{
 		World *world = static_cast<World*>(context);
 		PlayerSpacecraft *player = &world->player;
-
-		player->yaw(Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
+		if(player->canNavigate()){
+			player->yaw(Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
+		}
 	}
 }
 
@@ -380,8 +426,9 @@ void World::PlayerPitchDown(void *context, const Ogre::FrameEvent& fe, int x1, i
 	{
 		World *world = static_cast<World*>(context);
 		PlayerSpacecraft *player = &world->player;
-
-		player->pitch(-Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
+		if(player->canNavigate()){
+			player->pitch(-Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
+		}
 	}
 }
 
@@ -391,8 +438,9 @@ void World::PlayerYawRight(void *context, const Ogre::FrameEvent& fe, int x1, in
 	{
 		World *world = static_cast<World*>(context);
 		PlayerSpacecraft *player = &world->player;
-
-		player->yaw(-Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
+		if(player->canNavigate()){
+			player->yaw(-Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
+		}
 	}
 }
 
@@ -456,18 +504,20 @@ void World::PlayerRotate(void *context, const Ogre::FrameEvent& fe, int x1, int 
 	{
 		World *world = static_cast<World*>(context);
 		PlayerSpacecraft *player = &world->player;
-
-		player->pitch(Ogre::Radian(Ogre::Degree(-(float)(y2 - y1))) * fe.timeSinceLastFrame);
-		player->yaw(Ogre::Radian(Ogre::Degree(-(float)(x2 - x1))) * fe.timeSinceLastFrame);
+		if(player->canNavigate()){
+			player->pitch(Ogre::Radian(Ogre::Degree(-(float)(y2 - y1))) * fe.timeSinceLastFrame);
+			player->yaw(Ogre::Radian(Ogre::Degree(-(float)(x2 - x1))) * fe.timeSinceLastFrame);
+		}
 	}
 }
 
-void World::setupEnemies()
+void World::test(void* context, const Ogre::FrameEvent& fe, int x1, int y1, int z1, int x2, int y2, int z2)
 {
-	EnemySpacecraft* recruit = new EnemySpacecraft(sceneManager, worldSceneNode, physicsEngine, star.getPosition(), &particleEngine);
-	recruit->translate(player.getPosition() + Ogre::Vector3(0,0,-75));
-	recruit->setTarget(&player);
-	fleet.push_back(recruit);
+	if(context)
+	{
+		World *world = static_cast<World*>(context);
+		PlayerSpacecraft *player = &world->player;
 
-	//TODO: Add more enemies.
+		player->test();
+	}
 }

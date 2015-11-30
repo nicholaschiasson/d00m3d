@@ -58,6 +58,11 @@ void Entity::Update(const Ogre::FrameEvent &fe)
 	}
 }
 
+
+void Entity::absoluteDamage(float damage)
+{
+	Entity::Damage(damage);
+}
 void Entity::Damage(float damage)
 {
 	if (alive)

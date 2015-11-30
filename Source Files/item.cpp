@@ -36,7 +36,7 @@ void Item::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentN
 	myType = type;
 
 	//TODO randomize?
-	value = 5;
+	value = 50;
 }
 
 void Item::Collide(const Ogre::FrameEvent &fe, PhysicsEntity *physicsEntity)

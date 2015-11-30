@@ -91,9 +91,12 @@ private:
 	float timer;
 	float spawnTime;
 
-    #define MAX_NUM_OBJECTS 100 // right now only keeps track of asteroids
+    #define MAX_NUM_OBJECTS 100 
+    #define MAX_NUM_ENEMIES 15
+
 	
 	int numObjects;
+	int numEnemies;
 
 	Star star;
 	PlayerSpacecraft player;
@@ -105,12 +108,14 @@ private:
 
 	void SpawnAsteroid(Ogre::Vector3);
 	void checkDistance(Entity* entity);
+	void checkEnemyDistance(Entity* entity);
+
 	//setup the control schemes
 	void initControls(InputManager *inputManager);
 	void cleanupLists(bool cleanupNeeded = true);
 	void setupEnemies();
 	void initObjects();
-
+	void SpawnEnemies();
 	TextRenderer UI;
 
 	// InputManager Callbacks
@@ -126,6 +131,7 @@ private:
 	static void PlayerYawRight(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int z1, int x2, int y2, int z2);
 	static void playerFireLaser(void* context, const Ogre::FrameEvent& fe, int x1, int y1, int z1, int x2, int y2, int z2);
 	static void boom(void* context, const Ogre::FrameEvent& fe, int x1, int y1, int z1, int x2, int y2, int z2);
+	static void test(void* context, const Ogre::FrameEvent& fe, int x1, int y1, int z1, int x2, int y2, int z2);
 	
 	static void PlayerRotate(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int z1, int x2, int y2, int z2);
 
