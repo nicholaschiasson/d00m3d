@@ -91,9 +91,12 @@ private:
 	float timer;
 	float spawnTime;
 
-    #define MAX_NUM_OBJECTS 100 // right now only keeps track of asteroids
+    #define MAX_NUM_OBJECTS 100 
+    #define MAX_NUM_ENEMIES 5
+
 	
 	int numObjects;
+	int numEnemies;
 
 	Star star;
 	PlayerSpacecraft player;
@@ -109,7 +112,7 @@ private:
 	void cleanupLists(bool cleanupNeeded = true);
 	void setupEnemies();
 	void initObjects();
-
+	void SpawnEnemies();
 	TextRenderer UI;
 
 	// InputManager Callbacks
