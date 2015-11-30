@@ -2,7 +2,7 @@
 #define TEXT_RENDERER_H
 #include "player_spacecraft.h"
 #include "Ogre.h"
-
+#include "system_component.h"
 #include "OGRE/Overlay/OgreFontManager.h"
 #include "OGRE/Overlay/OgreTextAreaOverlayElement.h"
 #include "OGRE/Overlay/OgreOverlayManager.h"
@@ -26,11 +26,20 @@ private:
 	Ogre::OverlayContainer* panel;
 	Ogre::OverlayManager* overlayManager;
 	PlayerSpacecraft* player;
-	Ogre::TextAreaOverlayElement* text_area;
+
 	Ogre::TextAreaOverlayElement* health;
 	Ogre::TextAreaOverlayElement* speed;
 	Ogre::TextAreaOverlayElement* energy;
+	Ogre::TextAreaOverlayElement* energy_bkp;
 	Ogre::TextAreaOverlayElement* fuel;
+	Ogre::TextAreaOverlayElement* fuel_bkp;
+	Ogre::TextAreaOverlayElement* artillery_health;
+	Ogre::TextAreaOverlayElement* fuel_health;
+	Ogre::TextAreaOverlayElement* defense;
+	Ogre::TextAreaOverlayElement* defense_bkp;
+	Ogre::TextAreaOverlayElement* navigation;
+	Ogre::TextAreaOverlayElement* navigation_bkp;
+
 	Ogre::TextAreaOverlayElement* FPS;
 };
 #endif
