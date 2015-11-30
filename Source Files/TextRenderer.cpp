@@ -190,7 +190,7 @@ void TextRenderer::updateUI(){
 		fuel->setCaption("FUEL: 0%");
 		fuel_health->setCaption("FUEL HEALTH: 0%");
 	}
-	fuel_bkp->setCaption("BACKUPS: " + std::to_string((int)player->getNumSystemBackups(SystemComponent::SYSTEM_FUEL)));
+	fuel_bkp->setCaption("BACKUPS: " + std::to_string(std::max(0,(int)player->getNumSystemBackups(SystemComponent::SYSTEM_FUEL))));
 
 	if (player->getActiveSystem(SystemComponent::SYSTEM_FUEL) !=NULL){
 		energy->setCaption("ENERGY: " + std::to_string((int)player->getActiveSystem(SystemComponent::SYSTEM_ARTILLERY)->getValue())+ "%");
@@ -199,7 +199,7 @@ void TextRenderer::updateUI(){
 		energy->setCaption("ENERGY: 0%");
 		artillery_health->setCaption("ARTILLERY HEALTH: 0%");
 	}
-	energy_bkp->setCaption("BACKUPS: " + std::to_string((int)player->getNumSystemBackups(SystemComponent::SYSTEM_ARTILLERY)));
+	energy_bkp->setCaption("BACKUPS: " + std::to_string(std::max(0,(int)player->getNumSystemBackups(SystemComponent::SYSTEM_ARTILLERY))));
 
 	if (player->getActiveSystem(SystemComponent::SYSTEM_DEFENSE) != NULL){
 		defense->setCaption("DEFENSE: " +std::to_string((int)player->getActiveSystem(SystemComponent::SYSTEM_DEFENSE)->getHealth()) + "%");
@@ -207,14 +207,14 @@ void TextRenderer::updateUI(){
 		defense->setCaption("DEFENSE: 0%");
 	}
 
-	defense_bkp->setCaption("BACKUPS: " +std::to_string((int)player->getNumSystemBackups(SystemComponent::SYSTEM_DEFENSE)));
+	defense_bkp->setCaption("BACKUPS: " +std::to_string(std::max(0,(int)player->getNumSystemBackups(SystemComponent::SYSTEM_DEFENSE))));
 	
 	if(player->getActiveSystem(SystemComponent::SYSTEM_NAVIGATIONAL) != NULL){
 	    navigation->setCaption("NAVIGATION: " +std::to_string((int)player->getActiveSystem(SystemComponent::SYSTEM_NAVIGATIONAL)->getHealth()) + "%");
 	} else {
 		navigation->setCaption("NAVIGATION: 0%");
 	}
-	navigation_bkp->setCaption("BACKUPS: " +std::to_string((int)player->getNumSystemBackups(SystemComponent::SYSTEM_NAVIGATIONAL)));
+	navigation_bkp->setCaption("BACKUPS: " +std::to_string(std::max(0,(int)player->getNumSystemBackups(SystemComponent::SYSTEM_NAVIGATIONAL))));
 
 	speed->setCaption("SPEED: " + std::to_string((int)player->getSpeed())+ "AU/h");
 }
