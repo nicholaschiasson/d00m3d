@@ -271,6 +271,7 @@ void Spacecraft::Damage(float damage)
 				else{
 					artillerySystems.front().damage(damage);
 				}
+				break;
 			case 1:
 				if(navigationalSystems.size() == 0){
 					PhysicsEntity::Damage(damage);
@@ -278,6 +279,7 @@ void Spacecraft::Damage(float damage)
 				else{
 					navigationalSystems.front().damage(damage);
 				}
+				break;
 			case 2:
 				if(fuelSystems.size() == 0){
 					PhysicsEntity::Damage(damage);
@@ -285,6 +287,7 @@ void Spacecraft::Damage(float damage)
 				else{
 					fuelSystems.front().damage(damage);
 				}
+				break;
 			}
 		}
 	}
@@ -414,18 +417,31 @@ void Spacecraft::ThrustersDownward()
 
 SystemComponent* Spacecraft::getActiveSystem(SystemComponent::SYSTEM_TYPE system)
 {
+	SystemComponent* activeComponent = NULL;
 	switch(system){
 	case SystemComponent::SYSTEM_ARTILLERY:
-		return &(artillerySystems.front());
+		if(artillerySystems.size() > 0){
+			activeComponent =  &(artillerySystems.front());
+		}
+		break;
 	case SystemComponent::SYSTEM_DEFENSE:
-		return &(defenseSystems.front());
+		if(defenseSystems.size() > 0){
+			activeComponent = &(defenseSystems.front());
+		}
+		break;
 	case SystemComponent::SYSTEM_FUEL:
-		return &(fuelSystems.front());
+		if(fuelSystems.size() > 0){
+			activeComponent =  &(fuelSystems.front());
+		}
+		break;
 	case SystemComponent::SYSTEM_NAVIGATIONAL:
-		return &(navigationalSystems.front());
-	default:
-		return NULL;
+		if(navigationalSystems.size() > 0){
+			activeComponent = &(navigationalSystems.front());
+		}
+		break;
 	}
+
+	return activeComponent;
 }
 int Spacecraft::getNumSystemBackups(SystemComponent::SYSTEM_TYPE system)
 {
