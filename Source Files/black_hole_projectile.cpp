@@ -1,16 +1,16 @@
-#include "black_hole.h"
+#include "black_hole_projectile.h"
 
 #include "OgreEntity.h"
 
-BlackHole::BlackHole()
+BlackHoleProjectile::BlackHoleProjectile()
 {
 }
 
-BlackHole::~BlackHole()
+BlackHoleProjectile::~BlackHoleProjectile()
 {
 }
 
-void BlackHole::Initialize(Ogre::SceneManager* sceneManager, Ogre::SceneNode *parentNode, PhysicsEngine &physicsEngine, unsigned int parentID)
+void BlackHoleProjectile::Initialize(Ogre::SceneManager* sceneManager, Ogre::SceneNode *parentNode, PhysicsEngine &physicsEngine, unsigned int parentID)
 {
 	PhysicsEntity::Initialize(sceneManager, parentNode, physicsEngine, parentID);
 	bodyType = ENTITY_BODY_METAPHYSICAL_SPHERE;
@@ -25,12 +25,12 @@ void BlackHole::Initialize(Ogre::SceneManager* sceneManager, Ogre::SceneNode *pa
 	sceneNode->setScale(100.0f,100.0f,100.0f);
 }
 
-void BlackHole::Collide(const Ogre::FrameEvent &fe, PhysicsEntity *physicsEntity)
+void BlackHoleProjectile::Collide(const Ogre::FrameEvent &fe, PhysicsEntity *physicsEntity)
 {
 	physicsEntity->spaghettify();
 }
 
-void BlackHole::Damage(float damage)
+void BlackHoleProjectile::Damage(float damage)
 {
 	// nope
 }

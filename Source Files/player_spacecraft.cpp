@@ -86,6 +86,7 @@ PhysicsEntity *PlayerSpacecraft::fireWeapon()
 		artillerySystems.front().addValue(-0.01f);
 		return Spacecraft::fireWeapon();
 	}
+	return 0;
 }
 
 bool PlayerSpacecraft::canNavigate()

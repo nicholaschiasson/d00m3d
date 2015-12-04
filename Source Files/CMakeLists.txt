@@ -4,6 +4,7 @@ set(HDR_DIR "${PROJECT_SOURCE_DIR}/Header Files")
 set(HDRS
     "${HDR_DIR}/asteroid.h"
     "${HDR_DIR}/black_hole.h"
+    "${HDR_DIR}/black_hole_projectile.h"
 	"${HDR_DIR}/black_hole_cannon.h"
 	"${HDR_DIR}/camera.h"
 	"${HDR_DIR}/defines.h"
@@ -39,6 +40,7 @@ set(SRCS
     black_hole.cpp
     black_hole.material
     black_hole_cannon.cpp
+    black_hole_projectile.cpp
 	camera.cpp
     enemy_spacecraft.cpp
 	enemy_spacecraft.material

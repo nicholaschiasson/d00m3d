@@ -1,14 +1,14 @@
-#ifndef BLACK_HOLE_H
-#define BLACK_HOLE_H
+#ifndef BLACK_HOLE_PROJECTILE_H
+#define BLACK_HOLE_PROJECTILE_H
 
 #include "physics_entity.h"
 #include "input_manager.h"
 
-class BlackHole : public PhysicsEntity
+class BlackHoleProjectile : public PhysicsEntity
 {
 public:
-	BlackHole();
-	virtual ~BlackHole();
+	BlackHoleProjectile();
+	virtual ~BlackHoleProjectile();
     virtual void Initialize(Ogre::SceneManager *sceneManager,Ogre::SceneNode *parentNode, PhysicsEngine &physicsEngine, unsigned int parentID = -1);
 	
 	virtual void Collide(const Ogre::FrameEvent &fe, PhysicsEntity *physicsEntity);
@@ -18,4 +18,4 @@ private:
 	float gravitationalPull;
 };
 
-#endif // BLACK_HOLE_H
+#endif // BLACK_HOLE_PROJECTILE_H

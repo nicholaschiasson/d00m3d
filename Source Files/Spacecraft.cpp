@@ -4,7 +4,7 @@
 
 Spacecraft::Spacecraft() :
 	materialPrefix("Player"), light(Ogre::Vector3(0.0f, 0.0f, 0.0f)), leftPanelPivot(0), rightPanelPivot(0),
-	thrusterForce(500.0f), weapon(new LaserCannon())
+	thrusterForce(500.0f), weapon(0)
 {
 	artillerySystems.push_back(SystemComponent(SystemComponent::SYSTEM_ARTILLERY, 100.0f, 100.0f));
 	defenseSystems.push_back(SystemComponent(SystemComponent::SYSTEM_DEFENSE, 100.0f, 0.0f));
@@ -160,10 +160,12 @@ void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* p
 	weaponArmNode->scale(0.1f, 0.2f, 0.1f);
 	weaponArmNode->translate(0.0f, 0.0f, -((0.2f * 0.5f) + ((0.75f * spacecraftScaleY) * 0.5f)));
 
-	weapon->Initialize(sceneManager, weaponArmNode, parentNode, physicsEngine, particleEngine, pid);
-	weapon->scale(1.0f / 0.1f, 1.0f / 0.2f, 1.0f / 0.1f);
-	weapon->translate(0.0f, -0.9f, 0.0f);
-	
+	if (weapon != 0)
+	{
+		weapon->Initialize(sceneManager, weaponArmNode, parentNode, physicsEngine, particleEngine, pid);
+		weapon->scale(1.0f / 0.1f, 1.0f / 0.2f, 1.0f / 0.1f);
+		weapon->translate(0.0f, -0.9f, 0.0f);
+	}
 }
 
 float Spacecraft::getDefense()
