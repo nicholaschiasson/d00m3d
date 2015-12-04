@@ -254,7 +254,10 @@ void Spacecraft::Update(const Ogre::FrameEvent &fe)
 			navigationalSystems.pop_front();
 		}
 
-		weapon->Update(fe, velocity);
+		if (weapon != 0)
+		{
+			weapon->Update(fe, velocity);
+		}
 	}
 }
 
@@ -366,7 +369,7 @@ void Spacecraft::spaghettify()
 
 PhysicsEntity *Spacecraft::fireWeapon()
 {
-	if(weapon->getState() == Weapon::WEAPON_READY){
+	if(weapon != 0 && weapon->getState() == Weapon::WEAPON_READY){
 		return weapon->fire();
 	}
 	return 0;

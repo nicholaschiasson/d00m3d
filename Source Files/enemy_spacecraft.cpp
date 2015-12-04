@@ -3,12 +3,22 @@
 EnemySpacecraft::EnemySpacecraft(): physicsEngine(NULL), currState(STATE_IDLE), target(NULL), lastProjectile(NULL), lastShot(0.0), reload(2.0)
 {
 	materialPrefix = "Enemy";
+	float randomWeapon = Ogre::Math::RangeRandom(0.0f, 2.0f);
+	if (randomWeapon < 1.0f)
+		weapon = new LaserCannon();
+	else if (randomWeapon >= 1.0f)
+		weapon = new PlasmaCannon();
 }
 
 EnemySpacecraft::EnemySpacecraft(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, Ogre::Vector3 lightPos, ParticleEngine *particleEngine, unsigned int parentID):
 	physicsEngine(NULL), currState(STATE_IDLE), target(NULL), lastProjectile(NULL), lastShot(0.0), reload(6.0)
 {
 	materialPrefix = "Enemy";
+	float randomWeapon = Ogre::Math::RangeRandom(0.0f, 2.0f);
+	if (randomWeapon < 1.0f)
+		weapon = new LaserCannon();
+	else if (randomWeapon >= 1.0f)
+		weapon = new PlasmaCannon();
 	Initialize(sceneManager, parentNode, physicsEngine, lightPos, particleEngine, parentID);
 }
 
