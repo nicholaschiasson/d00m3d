@@ -57,6 +57,8 @@ protected:
 	Ogre::SceneNode *rightPanelPivot;
 	Ogre::SceneNode *antennaPivot;
 	Ogre::SceneNode *hoverShield;
+	ParticleEffect *leftIdleFlames;
+	ParticleEffect *rightIdleFlames;
 	ParticleEffect *leftTailFlames;
 	ParticleEffect *rightTailFlames;
 	float thrusterForce;

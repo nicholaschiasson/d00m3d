@@ -4,7 +4,8 @@
 
 Spacecraft::Spacecraft() :
 	materialPrefix("Player"), type(REACTOR_CRAFT), light(Ogre::Vector3(0.0f, 0.0f, 0.0f)), leftPanelPivot(0),
-	rightPanelPivot(0), antennaPivot(0), hoverShield(0), leftTailFlames(0), rightTailFlames(0), thrusterForce(500.0f), weaponArm(0), weapon(0)
+	rightPanelPivot(0), antennaPivot(0), hoverShield(0), leftIdleFlames(0), leftTailFlames(0), rightIdleFlames(0),
+	rightTailFlames(0), thrusterForce(500.0f), weaponArm(0), weapon(0)
 {
 	artillerySystems.push_back(SystemComponent(SystemComponent::SYSTEM_ARTILLERY, 100.0f, 100.0f));
 	defenseSystems.push_back(SystemComponent(SystemComponent::SYSTEM_DEFENSE, 100.0f, 0.0f));
@@ -56,7 +57,7 @@ void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* p
 	spacecraftLeftThrusterNode->pitch(Ogre::Radian(Ogre::Math::HALF_PI));
 	spacecraftLeftThrusterNode->translate(-0.1f, -0.3f, 0.0f);
 
-	ParticleEffect *leftIdleFlames = particleEngine->createParticleEffect(ParticleEngine::EFFECT_IDLE_THRUSTER, spacecraftLeftThrusterNode,
+	leftIdleFlames = particleEngine->createParticleEffect(ParticleEngine::EFFECT_IDLE_THRUSTER, spacecraftLeftThrusterNode,
 		Ogre::Vector3(0.0f, 0.0f, 0.0f), Ogre::Vector3(1.0f, 1.0f, 1.0f));
 	leftIdleFlames->setScale(0.4f, 1.0f, 0.1f);
 	leftIdleFlames->pitch(Ogre::Radian(Ogre::Math::HALF_PI));
@@ -78,7 +79,7 @@ void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* p
 	spacecraftRightThrusterNode->pitch(Ogre::Radian(Ogre::Math::HALF_PI));
 	spacecraftRightThrusterNode->translate(0.1f, -0.3f, 0.0f);
 
-	ParticleEffect *rightIdleFlames = particleEngine->createParticleEffect(ParticleEngine::EFFECT_IDLE_THRUSTER, spacecraftRightThrusterNode,
+	rightIdleFlames = particleEngine->createParticleEffect(ParticleEngine::EFFECT_IDLE_THRUSTER, spacecraftRightThrusterNode,
 		Ogre::Vector3(0.0f, 0.0f, 0.0f), Ogre::Vector3(1.0f, 1.0f, 1.0f));
 	rightIdleFlames->setScale(0.4f, 1.0f, 0.1f);
 	rightIdleFlames->pitch(Ogre::Radian(Ogre::Math::HALF_PI));
@@ -354,6 +355,13 @@ void Spacecraft::Update(const Ogre::FrameEvent &fe)
 		{
 			weapon->Update(fe, velocity);
 		}
+	}
+	else
+	{
+		leftIdleFlames->kill();
+		rightIdleFlames->kill();
+		leftTailFlames->kill();
+		rightTailFlames->kill();
 	}
 }
 
