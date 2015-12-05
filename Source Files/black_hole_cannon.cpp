@@ -3,6 +3,7 @@
 BlackHoleCannon::BlackHoleCannon()
 {
 	materialPrefix = "BlackHole";
+	energyRequirement = 90.0f;
 }
 
 BlackHoleCannon::~BlackHoleCannon()

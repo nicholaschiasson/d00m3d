@@ -367,10 +367,15 @@ void Spacecraft::spaghettify()
 
 }
 
-PhysicsEntity *Spacecraft::fireWeapon()
+PhysicsEntity *Spacecraft::fireWeapon(float &energy)
 {
 	if(weapon != 0 && weapon->getState() == Weapon::WEAPON_READY){
-		return weapon->fire();
+		float energyRequirement = weapon->getEnergyRequirement();
+		if (energy >= energyRequirement)
+		{
+			energy -= energyRequirement;
+			return weapon->fire();
+		}
 	}
 	return 0;
 }

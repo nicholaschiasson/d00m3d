@@ -130,7 +130,8 @@ void EnemySpacecraft::handleFire(const Ogre::FrameEvent &fe, bool warningShot){
 			findTarget(fe);
 			currState = STATE_PURSUE;
 			}
-		lastProjectile = fireWeapon();	
+		float myEnergyLevelWillAlwaysBeHighEnoughToFireMyWeaponBecauseIAmACheatingBastard = 1000000000.0f;
+		lastProjectile = fireWeapon(myEnergyLevelWillAlwaysBeHighEnoughToFireMyWeaponBecauseIAmACheatingBastard);
 	}else{
 		lastShot += fe.timeSinceLastFrame;
 	}

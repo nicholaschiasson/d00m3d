@@ -1,6 +1,6 @@
 #include "weapon.h"
 
-Weapon::Weapon() : materialPrefix("Laser"), timer(0), cooldown(5), myState(WEAPON_READY), sceneManager(0), worldNode(0), physicsEngine(0), particleEngine(0)
+Weapon::Weapon() : materialPrefix("Laser"), timer(0), cooldown(5), myState(WEAPON_READY), sceneManager(0), worldNode(0), physicsEngine(0), particleEngine(0), energyRequirement(0.0f)
 {
 }
 
@@ -56,4 +56,9 @@ int Weapon::getCooldown() const
 Weapon::WEAPON_STATE Weapon::getState()
 {
 	return myState;
+}
+
+float Weapon::getEnergyRequirement() const
+{
+	return energyRequirement;
 }

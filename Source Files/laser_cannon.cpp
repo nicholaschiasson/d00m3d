@@ -3,6 +3,7 @@
 LaserCannon::LaserCannon(): duration(5)
 {
 	materialPrefix = "Laser";
+	energyRequirement = 0.01f;
 }
 
 LaserCannon::~LaserCannon()

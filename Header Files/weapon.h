@@ -27,6 +27,7 @@ public:
 	
 	int getCooldown() const;
 	WEAPON_STATE getState();
+	float getEnergyRequirement() const;
 
 protected:
 	Ogre::String materialPrefix;
@@ -35,6 +36,7 @@ protected:
 	int cooldown;
 	Ogre::Vector3 relativeVelocity;
 	WEAPON_STATE myState;
+	float energyRequirement;
 
 	Ogre::SceneManager *sceneManager;
 	Ogre::SceneNode *worldNode;

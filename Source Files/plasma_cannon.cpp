@@ -4,6 +4,7 @@ PlasmaCannon::PlasmaCannon() : damage(50.0f)
 {
 	materialPrefix = "Plasma";
 	cooldown = 5;
+	energyRequirement = 0.1f;
 }
 
 PlasmaCannon::~PlasmaCannon()

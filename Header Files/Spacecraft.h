@@ -23,7 +23,7 @@ public:
 
 	virtual void spaghettify();
 
-	virtual PhysicsEntity *fireWeapon();
+	virtual PhysicsEntity *fireWeapon(float &energy);
 	
 	float getDefense();
 	float getEnergy();

@@ -120,8 +120,10 @@ void PlayerSpacecraft::test(){
 PhysicsEntity *PlayerSpacecraft::fireWeapon()
 {
 	if(artillerySystems.size() > 0 && artillerySystems.front().getValue() > 0){
-		artillerySystems.front().addValue(-0.01f);
-		return Spacecraft::fireWeapon();
+		float energy = artillerySystems.front().getValue(), newEnergy = energy;
+		PhysicsEntity *projectile = Spacecraft::fireWeapon(newEnergy);
+		artillerySystems.front().addValue(newEnergy - energy);
+		return projectile;
 	}
 	return 0;
 }
