@@ -117,9 +117,13 @@ void EnemySpacecraft::handlePursue(const Ogre::FrameEvent &fe)
 		if(velocity.squaredLength() > target->GetVelocity().squaredLength()){
 			ThrustersBackward();
 		}
+		SetLeftFlamesVisible(false);
+		SetRightFlamesVisible(false);
 
 	}else{
 			ThrustersForward();
+			SetLeftFlamesVisible(true);
+			SetRightFlamesVisible(true);
 	}
 	
 }
