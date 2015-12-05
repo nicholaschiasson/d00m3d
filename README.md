@@ -29,20 +29,21 @@ The RegisterCallback and UnregisterCallback functions have the same parameters. 
 After callbacks have been registered with the input manager, be sure to call its Update method in an appropriate place. The Update method takes an Ogre::FrameEvent as a parameter so the input manager may pass the elapsed time since the last update to its callback functions.
 
 #### Game Controls
-- W     - Forward thrusters
-- A     - Left thrusters
-- S     - Backward thrusters
-- D     - Right thrusters
-- Q     - Upward thrusters
-- C     - Downward thrusters
-- UP    - Pitch up (also mouse up)
-- LEFT  - Yaw left (also mouse left)
-- DOWN  - Pitch down (also mouse down)
-- RIGHT - Yaw right (also mouse right)
-- V     - Roll counter clockwise
-- B     - Roll clockwise
-- SPACE - Fire weapon
-- 1     - Switch to laser cannon
-- 2     - Switch to plasma cannon
-- 3     - Switch to black hole cannon
-- Esc   - Exit game
+- W            - Forward thrusters
+- A            - Left thrusters
+- S            - Backward thrusters
+- D            - Right thrusters
+- Q            - Upward thrusters
+- C            - Downward thrusters
+- UP           - Pitch up (also mouse up)
+- LEFT         - Yaw left (also mouse left)
+- DOWN         - Pitch down (also mouse down)
+- RIGHT        - Yaw right (also mouse right)
+- V            - Roll counter clockwise
+- B            - Roll clockwise
+- Scroll Wheel - Change camera perspective (scroll in toward first person perspective; scroll out toward third person perspective)
+- SPACE        - Fire weapon
+- 1            - Switch to laser cannon
+- 2            - Switch to plasma cannon
+- 3            - Switch to black hole cannon
+- Esc          - Exit game
