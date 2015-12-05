@@ -18,6 +18,7 @@ namespace ogre_application
 	const unsigned int window_height_g = (int)((float)window_width_g / (16.0f / 9.0f));
 	const bool window_full_screen_g = false;
 
+	Ogre::Viewport *viewport;
 	/* Viewport and camera settings */
 	float viewport_width_g = 1.0f;
 	float viewport_height_g = 1.0f;
@@ -75,9 +76,8 @@ namespace ogre_application
 		////setting up the world
 		//
 		//ovrly_ptr = &overlay_manager;
-
 	//	world.initWorld(scene_manager, &camera, &inputManager, ovrly_ptr); 
-		world.initWorld(scene_manager, &camera, &inputManager); 
+		world.initWorld(scene_manager, &camera, &inputManager,viewport); 
 
 	}
 
@@ -198,13 +198,15 @@ namespace ogre_application
 
 			ogreCamera->setPosition(camera_position_g);
 			ogreCamera->lookAt(camera_look_at_g);
-			ogreCamera->setFixedYawAxis(true, camera_up_g);			
+			ogreCamera->setFixedYawAxis(true, camera_up_g);		
+
 
 			/* Create viewport */
-			Ogre::Viewport *viewport = ogre_window_->addViewport(ogreCamera, viewport_z_order_g, viewport_left_g, viewport_top_g, viewport_width_g, viewport_height_g);
+			viewport = ogre_window_->addViewport(ogreCamera, viewport_z_order_g, viewport_left_g, viewport_top_g, viewport_width_g, viewport_height_g);
 
 			viewport->setAutoUpdated(true);
 			viewport->setBackgroundColour(viewport_background_color_g);
+			
 
 			/* Set aspect ratio */
 			float ratio = float(viewport->getActualWidth()) / float(viewport->getActualHeight());

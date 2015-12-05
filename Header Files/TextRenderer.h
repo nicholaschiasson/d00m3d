@@ -14,7 +14,7 @@ class TextRenderer
 public:
 	 TextRenderer();
     ~TextRenderer();
-	void InitOverlay(PlayerSpacecraft* player, Ogre::SceneManager* scene_manager);
+	void InitOverlay(PlayerSpacecraft* player, Ogre::SceneManager* scene_manager, Ogre::Viewport* v);
 	void initPanel();
 	void initTextAreas();
 	void updateUI();
@@ -26,6 +26,8 @@ private:
 	Ogre::OverlayContainer* panel;
 	Ogre::OverlayManager* overlayManager;
 	PlayerSpacecraft* player;
+
+	Ogre::Viewport* viewport;
 
 	Ogre::TextAreaOverlayElement* health;
 

@@ -13,8 +13,7 @@ World::~World()
 	JudgementDay();
 }
 
-//void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* inMan, Ogre::OverlayManager* overlay_manager)
-void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* inMan)
+void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* inMan, Ogre::Viewport* viewport)
 {
 	if(cam == NULL || inMan == NULL)
 	{
@@ -51,7 +50,7 @@ void World::initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* i
 	player.Initialize(sceneManager, worldSceneNode, physicsEngine, star.getPosition(), &particleEngine);
 	camera->attachTo(&player);
 
-	UI.InitOverlay(&player,sceneMan);
+	UI.InitOverlay(&player,sceneMan,viewport);
 	
 	initObjects();
 	//Setting up the basic control scheme

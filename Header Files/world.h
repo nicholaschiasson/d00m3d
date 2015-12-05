@@ -33,7 +33,7 @@ public:
 	*	Purpose:	To give the world all the correct data
 	*/
 	//void initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* inMan, Ogre::OverlayManager* overlay_manager);
-	void initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* inMan);
+	void initWorld(Ogre::SceneManager* sceneMan, Camera* cam, InputManager* inMan, Ogre::Viewport* v);
 	
 	/*	createWorld()
 	*	
