@@ -102,7 +102,7 @@ void World::SpawnEnemies(){
 	EnemySpacecraft* recruit = new EnemySpacecraft(sceneManager, worldSceneNode, physicsEngine, star.getPosition(), &particleEngine);
 	float theta = Ogre::Math::RangeRandom(0.0f, Ogre::Math::TWO_PI);
 	float phi = Ogre::Math::RangeRandom(0.0f, Ogre::Math::TWO_PI);
-	Ogre::Vector3 initialPosition = pos + Ogre::Vector3(cos(theta) * sin(phi),sin(theta) * sin(phi), -cos(phi)) * 200.0f;
+	Ogre::Vector3 initialPosition = pos + Ogre::Vector3(cos(theta) * sin(phi),sin(theta) * sin(phi), -cos(phi)) * 100.0f;
 	recruit->translate(initialPosition);
 	recruit->setTarget(&player);
 	fleet.push_back(recruit);
@@ -135,7 +135,7 @@ void World::checkDistance(Entity* entity){
 
 void World::checkEnemyDistance(Entity* entity){
 	Ogre::Vector3 distance = entity->getPosition() - player.getPosition(); 
-	if(distance.squaredLength() > Ogre::Math::Sqr(2000)){
+	if(distance.squaredLength() > Ogre::Math::Sqr(1000)){
 		entity->kill(); 
 
 	}

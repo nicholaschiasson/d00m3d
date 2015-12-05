@@ -92,7 +92,7 @@ private:
 	float spawnTime;
 
     #define MAX_NUM_OBJECTS 100 
-    #define MAX_NUM_ENEMIES 15
+    #define MAX_NUM_ENEMIES 7
 
 	
 	int numObjects;
