@@ -21,6 +21,7 @@ public:
 		int num_loop_samples = 128, int num_circle_samples = 64);
 	static void CreateSphereGeometry(Ogre::String object_name = "Sphere", int num_samples_theta = 64, int num_samples_phi = 32);
 	static void CreateSemisphereGeometry(Ogre::String object_name = "Semisphere", float portion = 0.5f, int num_samples_theta = 64, int num_samples_phi = 16);
+	static void CreateUnculledSemisphereGeometry(Ogre::String object_name = "UnculledSemisphere", float portion = 0.5f, int num_samples_theta = 64, int num_samples_phi = 16);
 	static void CreateIcosahedron(Ogre::String object_name = "Icosahedron");
 
 private:

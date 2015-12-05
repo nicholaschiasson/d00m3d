@@ -34,7 +34,7 @@ void BlackHoleProjectile::Update(const Ogre::FrameEvent &fe)
 	switch (state)
 	{
 	case STATE_AIRBORN:
-		if (timer >= 3.0f)
+		if (timer >= 5.0f)
 		{
 			state = STATE_EXPANDING;
 			dynamic = false;
@@ -43,14 +43,14 @@ void BlackHoleProjectile::Update(const Ogre::FrameEvent &fe)
 	case STATE_EXPANDING:
 		if (GetRadius() < 100.0f)
 			scale(1.0f + 10.0f * fe.timeSinceLastFrame, 1.0f + 10.0f * fe.timeSinceLastFrame, 1.0f + 10.0f * fe.timeSinceLastFrame);
-		if (timer >= 4.0f)
+		if (timer >= 6.0f)
 		{
 			mass = 1000000000000000.0f;
 			state = STATE_OBLITERATING;
 		}
 		break;
 	case STATE_OBLITERATING:
-		if (timer >= 8.0f)
+		if (timer >= 11.0f)
 		{
 			mass = 10.0f;
 			state = STATE_DYING;
@@ -58,7 +58,7 @@ void BlackHoleProjectile::Update(const Ogre::FrameEvent &fe)
 		break;
 	case STATE_DYING:
 		scale(1.0f - 10.0f * fe.timeSinceLastFrame, 1.0f - 10.0f * fe.timeSinceLastFrame, 1.0f - 10.0f * fe.timeSinceLastFrame);
-		if (timer >= 9.0f)
+		if (timer >= 12.0f)
 		{
 			alive = false;
 		}

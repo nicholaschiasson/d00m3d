@@ -3,22 +3,39 @@
 EnemySpacecraft::EnemySpacecraft(): physicsEngine(NULL), currState(STATE_IDLE), target(NULL), lastProjectile(NULL), lastShot(0.0), reload(2.0)
 {
 	materialPrefix = "Enemy";
-	float randomWeapon = Ogre::Math::RangeRandom(0.0f, 2.0f);
-	if (randomWeapon < 1.0f)
+	float random = Ogre::Math::RangeRandom(0.0f, 2.0f);
+	if (random < 1.0f)
 		weapon = new LaserCannon();
-	else if (randomWeapon >= 1.0f)
+	else if (random >= 1.0f)
 		weapon = new PlasmaCannon();
+
+	random = Ogre::Math::RangeRandom(0.0f, 3.0f);
+	if (random < 1.0f)
+		type = REACTOR_CRAFT;
+	else if (random >= 1.0f && random < 2.0f)
+		type = SPEED_CRAFT;
+	else if (random >= 2.0f && random < 3.0f)
+		type = TANK_CRAFT;
 }
 
 EnemySpacecraft::EnemySpacecraft(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, Ogre::Vector3 lightPos, ParticleEngine *particleEngine, unsigned int parentID):
 	physicsEngine(NULL), currState(STATE_IDLE), target(NULL), lastProjectile(NULL), lastShot(0.0), reload(6.0)
 {
 	materialPrefix = "Enemy";
-	float randomWeapon = Ogre::Math::RangeRandom(0.0f, 2.0f);
-	if (randomWeapon < 1.0f)
+	float random = Ogre::Math::RangeRandom(0.0f, 2.0f);
+	if (random < 1.0f)
 		weapon = new LaserCannon();
-	else if (randomWeapon >= 1.0f)
+	else if (random >= 1.0f)
 		weapon = new PlasmaCannon();
+	
+	random = Ogre::Math::RangeRandom(0.0f, 3.0f);
+	if (random < 1.0f)
+		type = REACTOR_CRAFT;
+	else if (random >= 1.0f && random < 2.0f)
+		type = SPEED_CRAFT;
+	else if (random >= 2.0f && random < 3.0f)
+		type = TANK_CRAFT;
+
 	Initialize(sceneManager, parentNode, physicsEngine, lightPos, particleEngine, parentID);
 }
 

@@ -14,6 +14,8 @@ void MeshFactory::Initialize(std::auto_ptr<Ogre::Root> *root)
 	CreateSphereGeometry();
 	CreateSemisphereGeometry();
 	CreateSemisphereGeometry("SphereScreen", 0.4f);
+	CreateUnculledSemisphereGeometry();
+	CreateUnculledSemisphereGeometry("HoverShield", 0.1f);
 	CreateIcosahedron();
 }
 
@@ -606,6 +608,87 @@ void MeshFactory::CreateSemisphereGeometry(Ogre::String object_name, float porti
 		}
 
 		/* Add triangles to the object */
+		for (int i = 0; i < (num_samples_theta); i++){
+			for (int j = 0; j < (num_samples_phi-1); j++){
+				// Two triangles per quad
+				object->triangle(((i + 1) % num_samples_theta)*num_samples_phi + j, 
+									i*num_samples_phi + (j + 1),
+									i*num_samples_phi + j);
+				object->triangle(((i + 1) % num_samples_theta)*num_samples_phi + j, 
+									((i + 1) % num_samples_theta)*num_samples_phi + (j + 1), 
+									i*num_samples_phi + (j + 1));
+			}
+		}
+		
+		/* We finished the object */
+        object->end();
+		
+        /* Convert triangle list to a mesh */
+        object->convertToMesh(object_name);
+    }
+    catch (Ogre::Exception &e){
+        throw(OgreAppException(std::string("Ogre::Exception: ") + std::string(e.what())));
+    }
+    catch(std::exception &e){
+        throw(OgreAppException(std::string("std::Exception: ") + std::string(e.what())));
+    }
+}
+
+void MeshFactory::CreateUnculledSemisphereGeometry(Ogre::String object_name, float portion, int num_samples_theta, int num_samples_phi)
+{
+    try {
+		/* Create a sphere */
+
+        /* Retrieve scene manager and root scene node */
+        Ogre::SceneManager* scene_manager = (*ogre_root_)->getSceneManager("MySceneManager");
+        Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
+
+        /* Create the 3D object */
+        Ogre::ManualObject* object = NULL;
+        object = scene_manager->createManualObject(object_name);
+        object->setDynamic(false);
+
+        /* Create triangle list for the object */
+		object->begin("", Ogre::RenderOperation::OT_TRIANGLE_LIST);
+
+		/* Add vertices to the object */
+		float theta, phi; // Angles for parametric equation
+		Ogre::Vector3 vertex_position;
+		Ogre::Vector3 vertex_normal;
+		Ogre::ColourValue vertex_color;
+		Ogre::Vector2 texture_coord;
+		
+				
+		for (int i = 0; i < num_samples_theta; i++){
+			
+			theta = Ogre::Math::TWO_PI*i/(num_samples_theta-1); // angle theta
+			
+			for (int j = 0; j < num_samples_phi; j++){
+				
+				phi = (Ogre::Math::PI*portion)*j/(num_samples_phi-1) + (Ogre::Math::PI * (1 - portion)); // angle phi
+				
+				/* Define position, normal and color of vertex */
+				vertex_normal = Ogre::Vector3(cos(theta)*sin(phi), sin(theta)*sin(phi), -cos(phi));
+				// We need z = -cos(phi) to make sure that the z coordinate runs from -1 to 1 as phi runs from 0 to pi
+				// Otherwise, the normal will be inverted
+				vertex_position = Ogre::Vector3(vertex_normal.x*0.5f, 
+					                            vertex_normal.y*0.5f, 
+												vertex_normal.z*0.5f),
+				/*vertex_color = Ogre::ColourValue(1.0 - ((float) i / (float) num_samples_theta), 
+				                                 (float) i / (float) num_samples_theta, 
+				                                 (float) j / (float) num_samples_phi);*/
+				vertex_color = Ogre::ColourValue(0.0f, 0.0f, 0.0);
+				texture_coord = Ogre::Vector2(((float)i)/((float)num_samples_theta), 1.0f-((float)j)/((float)num_samples_phi));
+								
+				/* Add them to the object */
+				object->position(vertex_position);
+				object->normal(vertex_normal);
+				object->colour(vertex_color); 
+				object->textureCoord(texture_coord);
+			}
+		}
+
+		/* Add triangles to the object */
 		for (int i = 0; i < num_samples_theta; i++){
 			for (int j = 0; j < (num_samples_phi-1); j++){
 				// Two triangles per quad
@@ -614,6 +697,17 @@ void MeshFactory::CreateSemisphereGeometry(Ogre::String object_name, float porti
 									i*num_samples_phi + j);
 				object->triangle(((i + 1) % num_samples_theta)*num_samples_phi + j, 
 									((i + 1) % num_samples_theta)*num_samples_phi + (j + 1), 
+									i*num_samples_phi + (j + 1));
+			}
+		}
+		for (int i = 0; i < num_samples_theta; i++){
+			for (int j = 0; j < (num_samples_phi-1); j++){
+				// Two triangles per quad
+				object->triangle(i*num_samples_phi + (j + 1),
+									((i + 1) % num_samples_theta)*num_samples_phi + j,
+									i*num_samples_phi + j);
+				object->triangle(((i + 1) % num_samples_theta)*num_samples_phi + (j + 1),
+									((i + 1) % num_samples_theta)*num_samples_phi + j,
 									i*num_samples_phi + (j + 1));
 			}
 		}

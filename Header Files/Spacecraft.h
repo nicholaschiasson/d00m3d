@@ -13,6 +13,13 @@
 class Spacecraft : public PhysicsEntity
 {
 public:
+	enum SPACECRAFT_TYPE
+	{
+		REACTOR_CRAFT,
+		SPEED_CRAFT,
+		TANK_CRAFT,
+	};
+
 	Spacecraft();
 	virtual ~Spacecraft() = 0;
 	virtual void cleanup(PhysicsEngine &physicsEngine);
@@ -41,9 +48,12 @@ public:
 
 protected:
 	Ogre::String materialPrefix;
+	SPACECRAFT_TYPE type;
 	Ogre::Vector3 light;
 	Ogre::SceneNode *leftPanelPivot;
 	Ogre::SceneNode *rightPanelPivot;
+	Ogre::SceneNode *antennaPivot;
+	Ogre::SceneNode *hoverShield;
 	float thrusterForce;
 	std::list<SystemComponent> artillerySystems;
 	std::list<SystemComponent> defenseSystems;
