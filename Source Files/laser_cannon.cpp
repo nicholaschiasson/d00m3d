@@ -69,3 +69,9 @@ void LaserCannon::upgrade(int maxCooldown, int dmg)
 	cooldown = maxCooldown;
 	laser.upgrade(dmg);
 }
+
+void LaserCannon::setVisible(bool visible, bool cascade)
+{
+	Weapon::setVisible(visible, cascade);
+	laser.setVisible(false);
+}

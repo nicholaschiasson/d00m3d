@@ -232,6 +232,14 @@ void Entity::setScale(const Ogre::Vector3 &scale)
 	}
 }
 
+void Entity::setVisible(bool visible, bool cascade)
+{
+	if (sceneNode)
+	{
+		sceneNode->setVisible(visible, cascade);
+	}
+}
+
 const Ogre::String & Entity::getName() const
 {
 	return sceneNode->getName();

@@ -50,7 +50,7 @@ void BlackHoleCannon::detachFrom(PhysicsEngine &physicsEngine)
 PhysicsEntity *BlackHoleCannon::fire()
 {
 	if(myState == WEAPON_READY){
-		myState = WEAPON_FIRING;
+		myState = WEAPON_COOLDOWN;
 	}
 	return 0; // return a black hole
 }

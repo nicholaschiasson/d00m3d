@@ -19,6 +19,8 @@ public:
 	virtual PhysicsEntity *fire();
 	virtual void upgrade(int maxCooldown, int dmg);
 
+	virtual void setVisible(bool visible, bool cascade = true);
+
 private:
 	int duration;
 	Laser laser;

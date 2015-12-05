@@ -51,6 +51,7 @@ protected:
 	std::list<SystemComponent> defenseSystems;
 	std::list<SystemComponent> fuelSystems;
 	std::list<SystemComponent> navigationalSystems;
+	Ogre::SceneNode *weaponArm;
 	Weapon *weapon;
 };
 

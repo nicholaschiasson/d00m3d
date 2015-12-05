@@ -130,6 +130,11 @@ bool PhysicsEntity::IsGravitational()
 	return gravitational;
 }
 
+void PhysicsEntity::SetBodyType(ENTITY_BODY_TYPE type)
+{
+	bodyType = type;
+}
+
 float PhysicsEntity::GetRadius()
 {
 	if (sceneNode != 0)

@@ -44,6 +44,8 @@ public:
 	virtual void setScale(Ogre::Real x, Ogre::Real y, Ogre::Real z);
 	virtual void setScale(const Ogre::Vector3 &scale);
 
+	virtual void setVisible(bool visible, bool cascade = true);
+
 	virtual const Ogre::String & getName() const;
 	virtual Ogre::Vector3 getPosition() const;
 	virtual Ogre::Vector3 Entity::getDerivedPosition() const;

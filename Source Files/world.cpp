@@ -78,6 +78,9 @@ void World::initControls(InputManager *inputManager)
 	inputManager->RegisterCallback(this, PlayerRollCounterClockwise, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, MOUSE_MOTION_STATE_EITHER, (int)OIS::KC_V);
 	inputManager->RegisterCallback(this, PlayerRollClockwise, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, MOUSE_MOTION_STATE_EITHER, (int)OIS::KC_B);
 	inputManager->RegisterCallback(this, playerFireLaser, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, MOUSE_MOTION_STATE_EITHER, (int)OIS::KC_SPACE);
+	inputManager->RegisterCallback(this, PlayerUseLaserCannon, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, MOUSE_MOTION_STATE_EITHER, (int)OIS::KC_1);
+	inputManager->RegisterCallback(this, PlayerUsePlasmaCannon, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, MOUSE_MOTION_STATE_EITHER, (int)OIS::KC_2);
+	inputManager->RegisterCallback(this, PlayerUseBlackHoleCannon, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, MOUSE_MOTION_STATE_EITHER, (int)OIS::KC_3);
 	inputManager->RegisterCallback(this, test, INPUT_SOURCE_KEYBOARD, INPUT_EVENT_HOLD, MOUSE_MOTION_STATE_EITHER, (int)OIS::KC_K);
 	inputManager->RegisterCallback(this, PlayerRotate, INPUT_SOURCE_NONE, INPUT_EVENT_NONE, MOUSE_MOTION_STATE_MOVING, 0);
 	
@@ -480,6 +483,45 @@ void World::playerFireLaser(void* context, const Ogre::FrameEvent& fe, int x1, i
 		if (projectile != 0)
 		{
 			world->projectileList.push_back(projectile);
+		}
+	}
+}
+
+void World::PlayerUseLaserCannon(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int z1, int x2, int y2, int z2)
+{
+	if (context)
+	{
+		World *world = static_cast<World*>(context);
+		PlayerSpacecraft *player = &world->player;
+		if (player->isAlive())
+		{
+			player->SetCurrentWeapon(0);
+		}
+	}
+}
+
+void World::PlayerUsePlasmaCannon(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int z1, int x2, int y2, int z2)
+{
+	if (context)
+	{
+		World *world = static_cast<World*>(context);
+		PlayerSpacecraft *player = &world->player;
+		if (player->isAlive())
+		{
+			player->SetCurrentWeapon(1);
+		}
+	}
+}
+
+void World::PlayerUseBlackHoleCannon(void *context, const Ogre::FrameEvent& fe, int x1, int y1, int z1, int x2, int y2, int z2)
+{
+	if (context)
+	{
+		World *world = static_cast<World*>(context);
+		PlayerSpacecraft *player = &world->player;
+		if (player->isAlive())
+		{
+			player->SetCurrentWeapon(2);
 		}
 	}
 }

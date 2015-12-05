@@ -48,6 +48,8 @@ public:
 	bool IsDynamic();
 	bool IsGravitational();
 
+	virtual void SetBodyType(ENTITY_BODY_TYPE type);
+
 	virtual float GetRadius();
 
 protected:
