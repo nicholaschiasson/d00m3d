@@ -3,6 +3,7 @@
 BlackHoleCannon::BlackHoleCannon()
 {
 	materialPrefix = "BlackHole";
+	cooldown = 30;
 	energyRequirement = 90.0f;
 }
 
@@ -52,6 +53,14 @@ PhysicsEntity *BlackHoleCannon::fire()
 {
 	if(myState == WEAPON_READY){
 		myState = WEAPON_COOLDOWN;
+		timer = cooldown;
+		unsigned int pid = (parentObjectID == -1 ? objectID : parentObjectID);
+		BlackHoleProjectile *blackHole = new BlackHoleProjectile(sceneManager, worldNode, *physicsEngine, pid);
+		blackHole->translate(barrel->_getDerivedPosition() + barrel->_getDerivedOrientation() * Ogre::Vector3::NEGATIVE_UNIT_Z);
+		blackHole->setOrientation(barrel->_getDerivedOrientation());
+		blackHole->SetVelocity(relativeVelocity);
+		blackHole->ApplyForce(blackHole->getDerivedOrientation() * Ogre::Vector3::NEGATIVE_UNIT_Z * 1000.0f);
+		return blackHole;
 	}
 	return 0; // return a black hole
 }

@@ -34,6 +34,8 @@ public:
 	
 	virtual void SetCurrentWeapon(int weaponIndex);
 
+	virtual void spaghettify();
+
 private:
 	std::vector<Weapon *> weapons;
 	int currentWeaponIndex;

@@ -14,7 +14,8 @@ void Star::Initialize(Ogre::SceneManager* sceneManager, Ogre::SceneNode *parentN
 {
 	PhysicsEntity::Initialize(sceneManager, parentNode, physicsEngine, parentID);
 	bodyType = ENTITY_BODY_METAPHYSICAL_SPHERE;
-	mass = 100000000000000.0f; // 2 zeros
+	mass = 100000000000000.0f;
+	dynamic = false;
 	gravitational = true;
 
 	Ogre::Entity *StarEntity = sceneManager->createEntity("Sphere");
@@ -55,4 +56,9 @@ float Star::calcRadiation(Entity* entity)
 	value = value/ 1000.0f; //making the max be 1 per instance.
 	value = value; //if we are the edge we only get 1, every 10 closer it increases by 1.
 	return value;
+}
+
+void Star::spaghettify()
+{
+
 }

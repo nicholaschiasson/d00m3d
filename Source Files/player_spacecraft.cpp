@@ -148,3 +148,8 @@ void PlayerSpacecraft::SetCurrentWeapon(int weaponIndex)
 		currentWeaponIndex = weaponIndex;
 	}
 }
+
+void PlayerSpacecraft::spaghettify()
+{
+
+}

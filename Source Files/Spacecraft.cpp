@@ -362,11 +362,6 @@ void Spacecraft::Collide(const Ogre::FrameEvent &fe, PhysicsEntity *physicsEntit
 	}
 }
 
-void Spacecraft::spaghettify()
-{
-
-}
-
 PhysicsEntity *Spacecraft::fireWeapon(float &energy)
 {
 	if(weapon != 0 && weapon->getState() == Weapon::WEAPON_READY){

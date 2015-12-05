@@ -40,7 +40,7 @@ void PhysicsEngine::Update(const Ogre::FrameEvent &fe)
 			if (*it != *gr)
 			{
 				Ogre::Vector3 distance = (*gr)->getPosition() - (*it)->getPosition();
-				if (distance.length() != 0.0f)
+				if (distance.squaredLength() != 0.0f)
 				{
 					Ogre::Vector3 force = distance.normalisedCopy() *
 						gravitationalConstant * (((*it)->GetMass() * (*gr)->GetMass()) /

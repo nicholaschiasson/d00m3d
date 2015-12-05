@@ -3,7 +3,7 @@
 
 #include "weapon.h"
 #include <OgreEntity.h>
-#include "black_hole.h"
+#include "black_hole_projectile.h"
 
 class BlackHoleCannon: public Weapon
 {

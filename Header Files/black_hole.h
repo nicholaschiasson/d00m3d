@@ -2,7 +2,6 @@
 #define BLACK_HOLE_H
 
 #include "physics_entity.h"
-#include "input_manager.h"
 
 class BlackHole : public PhysicsEntity
 {
@@ -14,8 +13,8 @@ public:
 	virtual void Collide(const Ogre::FrameEvent &fe, PhysicsEntity *physicsEntity);
 	virtual void Damage(float damage);
 
-private:
-	float gravitationalPull;
+protected:
+
 };
 
 #endif // BLACK_HOLE_H

@@ -11,6 +11,7 @@ material BlackHoleMaterial
             fragment_program_ref shader/fs
             {
 				param_named diffuse_colour float4 0.0 0.0 0.0 1.0
+				param_named specular_colour float4 0.0 0.0 0.0 1.0
             }
         } 
     }

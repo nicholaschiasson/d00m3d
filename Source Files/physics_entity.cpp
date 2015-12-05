@@ -45,6 +45,7 @@ void PhysicsEntity::Update(const Ogre::FrameEvent &fe)
 		{
 			if (mass != 0.0f)
 			{
+				mass = min(mass, 1000000000000000.0f);
 				previousVelocity = velocity;
 				velocity += appliedForce / mass;
 			}

@@ -21,8 +21,6 @@ public:
 
 	virtual void Collide(const Ogre::FrameEvent &fe, PhysicsEntity *physicsEntity);
 
-	virtual void spaghettify();
-
 	virtual PhysicsEntity *fireWeapon(float &energy);
 	
 	float getDefense();

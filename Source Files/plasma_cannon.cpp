@@ -56,7 +56,7 @@ PhysicsEntity *PlasmaCannon::fire()
 			particleEngine->addParticleEffect(plasma);
 		}
 	}
-	return 0; // we don't actually return this one since luke's fucking particle engine has its own update loop for particle effects
+	return 0; // we don't actually return this one since luke's particle engine has its own update loop for particle effects
 }
 
 void PlasmaCannon::upgrade(int maxCooldown, int dmg)

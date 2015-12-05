@@ -13,6 +13,8 @@ public:
 	virtual void Collide(const Ogre::FrameEvent &fe, PhysicsEntity *physicsEntity);
 	virtual float GetRadius();
 	virtual Resource collect(Entity* entity);
+
+	virtual void spaghettify();
 private:
 	float calcRadiation(Entity* entity);
 };
