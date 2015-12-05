@@ -4,7 +4,7 @@
 
 Spacecraft::Spacecraft() :
 	materialPrefix("Player"), type(REACTOR_CRAFT), light(Ogre::Vector3(0.0f, 0.0f, 0.0f)), leftPanelPivot(0),
-	rightPanelPivot(0), antennaPivot(0), hoverShield(0), thrusterForce(500.0f), weaponArm(0), weapon(0)
+	rightPanelPivot(0), antennaPivot(0), hoverShield(0), leftTailFlames(0), rightTailFlames(0), thrusterForce(500.0f), weaponArm(0), weapon(0)
 {
 	artillerySystems.push_back(SystemComponent(SystemComponent::SYSTEM_ARTILLERY, 100.0f, 100.0f));
 	defenseSystems.push_back(SystemComponent(SystemComponent::SYSTEM_DEFENSE, 100.0f, 0.0f));
@@ -55,6 +55,19 @@ void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* p
 	spacecraftLeftThrusterNode->scale(0.4f, 0.4f, 2.0f);
 	spacecraftLeftThrusterNode->pitch(Ogre::Radian(Ogre::Math::HALF_PI));
 	spacecraftLeftThrusterNode->translate(-0.1f, -0.3f, 0.0f);
+
+	ParticleEffect *leftIdleFlames = particleEngine->createParticleEffect(ParticleEngine::EFFECT_IDLE_THRUSTER, spacecraftLeftThrusterNode,
+		Ogre::Vector3(0.0f, 0.0f, 0.0f), Ogre::Vector3(1.0f, 1.0f, 1.0f));
+	leftIdleFlames->setScale(0.4f, 1.0f, 0.1f);
+	leftIdleFlames->pitch(Ogre::Radian(Ogre::Math::HALF_PI));
+	leftIdleFlames->SetMass(0.0f);
+
+	leftTailFlames = particleEngine->createParticleEffect(ParticleEngine::EFFECT_THRUSTER, spacecraftLeftThrusterNode,
+		Ogre::Vector3(0.0f, 0.0f, 0.0f), Ogre::Vector3(1.0f, 1.0f, 1.0f));
+	leftTailFlames->setScale(0.5f, 1.0f, 0.125f);
+	leftTailFlames->pitch(Ogre::Radian(Ogre::Math::HALF_PI));
+	leftTailFlames->SetMass(0.0f);
+	leftTailFlames->setVisible(false);
 	
 	Ogre::Entity *spacecraftRightThrusterEntity = sceneManager->createEntity("Torus");
 	spacecraftRightThrusterEntity->setMaterialName("SpacecraftThrusterMaterial");
@@ -64,6 +77,19 @@ void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* p
 	spacecraftRightThrusterNode->scale(0.4f, 0.4f, 2.0f);
 	spacecraftRightThrusterNode->pitch(Ogre::Radian(Ogre::Math::HALF_PI));
 	spacecraftRightThrusterNode->translate(0.1f, -0.3f, 0.0f);
+
+	ParticleEffect *rightIdleFlames = particleEngine->createParticleEffect(ParticleEngine::EFFECT_IDLE_THRUSTER, spacecraftRightThrusterNode,
+		Ogre::Vector3(0.0f, 0.0f, 0.0f), Ogre::Vector3(1.0f, 1.0f, 1.0f));
+	rightIdleFlames->setScale(0.4f, 1.0f, 0.1f);
+	rightIdleFlames->pitch(Ogre::Radian(Ogre::Math::HALF_PI));
+	rightIdleFlames->SetMass(0.0f);
+
+	rightTailFlames = particleEngine->createParticleEffect(ParticleEngine::EFFECT_THRUSTER, spacecraftRightThrusterNode,
+		Ogre::Vector3(0.0f, 0.0f, 0.0f), Ogre::Vector3(1.0f, 1.0f, 1.0f));
+	rightTailFlames->setScale(0.5f, 1.0f, 0.125f);
+	rightTailFlames->pitch(Ogre::Radian(Ogre::Math::HALF_PI));
+	rightTailFlames->SetMass(0.0f);
+	rightTailFlames->setVisible(false);
 	
 	Ogre::Entity *spacecraftLeftWingEntity = sceneManager->createEntity("Pyramid");
 	spacecraftLeftWingEntity->setMaterialName(materialPrefix + "SpacecraftMediumMaterial");
@@ -529,6 +555,7 @@ SystemComponent* Spacecraft::getActiveSystem(SystemComponent::SYSTEM_TYPE system
 
 	return activeComponent;
 }
+
 int Spacecraft::getNumSystemBackups(SystemComponent::SYSTEM_TYPE system)
 {
 	switch(system){
@@ -543,4 +570,14 @@ int Spacecraft::getNumSystemBackups(SystemComponent::SYSTEM_TYPE system)
 	default:
 		return 0;
 	}
+}
+	
+void Spacecraft::SetLeftFlamesVisible(bool visible)
+{
+	leftTailFlames->setVisible(visible);
+}
+
+void Spacecraft::SetRightFlamesVisible(bool visible)
+{
+	rightTailFlames->setVisible(visible);
 }

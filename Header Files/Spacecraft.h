@@ -45,6 +45,9 @@ public:
 	virtual void ThrustersDownward();
 
 	virtual void Damage(float damage);
+	
+	virtual void SetLeftFlamesVisible(bool visible);
+	virtual void SetRightFlamesVisible(bool visible);
 
 protected:
 	Ogre::String materialPrefix;
@@ -54,6 +57,8 @@ protected:
 	Ogre::SceneNode *rightPanelPivot;
 	Ogre::SceneNode *antennaPivot;
 	Ogre::SceneNode *hoverShield;
+	ParticleEffect *leftTailFlames;
+	ParticleEffect *rightTailFlames;
 	float thrusterForce;
 	std::list<SystemComponent> artillerySystems;
 	std::list<SystemComponent> defenseSystems;

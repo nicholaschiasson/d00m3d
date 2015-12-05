@@ -17,6 +17,7 @@ public:
 	enum EFFECT_TYPE{
 		EFFECT_EXPLOSION,
 		EFFECT_PLASMA,
+		EFFECT_IDLE_THRUSTER,
 		EFFECT_THRUSTER,
 	};
 	void initialize(Ogre::SceneManager* scene_manager, PhysicsEngine& physics_engine);
@@ -33,6 +34,7 @@ private:
 	
 	void createSphereParticleGeometry(int numParticles = 6000);
 	void createPlasmaSplineControlPoints(int numControlPoints = 32);
+	void createConeParticleGeometry(int num_particles = 10000);
 	void cleanupParticles();
 };
 

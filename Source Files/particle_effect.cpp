@@ -33,7 +33,7 @@ void ParticleEffect::Update(const Ogre::FrameEvent& fe)
 		Ogre::MaterialPtr mat = static_cast<Ogre::MaterialPtr>(Ogre::MaterialManager::getSingleton().getByName(materialName));
 		mat->getBestTechnique()->getPass(0)->getVertexProgramParameters()->setNamedConstant("timer", timer);
 
-		if(timer > duration){
+		if(duration > 0.0f && timer > duration){
 			alive = false;
 		}
 	}

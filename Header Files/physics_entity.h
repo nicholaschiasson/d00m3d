@@ -40,6 +40,7 @@ public:
 	float GetMass();
 	float GetRestitution();
 
+	virtual void SetMass(float m);
 	virtual void SetVelocity(Ogre::Vector3 v);
 
 	Ogre::Vector3 GetAppliedForce();

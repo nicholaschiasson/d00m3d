@@ -106,6 +106,11 @@ float PhysicsEntity::getSpeed()
 	return velocity.squaredLength();
 }
 
+void PhysicsEntity::SetMass(float m)
+{
+	mass = m;
+}
+
 void PhysicsEntity::SetVelocity(Ogre::Vector3 v)
 {
 	velocity = v;

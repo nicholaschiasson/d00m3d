@@ -49,6 +49,10 @@ set(SRCS
 	explosionMaterialFp.glsl
 	explosionMaterialGp.glsl
 	explosionMaterialVp.glsl
+	FlameParticle.material
+	FlameParticleMaterialFp.glsl
+	FlameParticleMaterialGp.glsl
+	FlameParticleMaterialVp.glsl
 	input_manager.cpp
 	item.cpp
 	item.material

@@ -15,6 +15,7 @@ void ParticleEngine::initialize(Ogre::SceneManager* scene_manager, PhysicsEngine
 
 	createSphereParticleGeometry();
 	createPlasmaSplineControlPoints();
+	createConeParticleGeometry();
 }
 
 void ParticleEngine::createSphereParticleGeometry(int numParticles)
@@ -148,6 +149,50 @@ void ParticleEngine::createPlasmaSplineControlPoints(int numControlPoints)
 	delete [] control_point;
 }
 
+void ParticleEngine::createConeParticleGeometry(int num_particles){
+	
+	Ogre::String object_name = "coneParticle";
+	/* Retrieve scene manager and root scene node */
+    Ogre::SceneNode* root_scene_node = sceneManager->getRootSceneNode();
+
+    /* Create the 3D object */
+    Ogre::ManualObject* object = NULL;
+    object = sceneManager->createManualObject(object_name);
+    object->setDynamic(false);
+
+    /* Create point list for the object */
+	object->begin("", Ogre::RenderOperation::OT_POINT_LIST);
+
+	/* Create a set of points which will be the particles */
+	float theta, spread, length;
+	Ogre::Vector3 vertex_position;
+	Ogre::Vector3 vertex_normal;
+	Ogre::ColourValue vertex_color = Ogre::ColourValue(0.0f, 0.0f, 0.0f, 1.0f);
+
+	for (int i = 0; i < num_particles; i++)
+	{
+		theta = Ogre::Math::RangeRandom(0.0f, Ogre::Math::TWO_PI);
+		spread = Ogre::Math::RangeRandom(0.0f, 0.5f);
+		length = Ogre::Math::RangeRandom(0.0f, 1.0f);
+
+		vertex_position = 0.5f * Ogre::Vector3(cos(theta), 0.0f, sin(theta));
+		vertex_position *= spread;
+		vertex_position.y = 1.0f;
+		vertex_position *= length;
+		vertex_normal = vertex_position.normalisedCopy();
+
+		object->position(vertex_position);
+		object->normal(vertex_normal);
+		object->colour(Ogre::ColourValue(i/(float) num_particles, 0.0, 1.0f - (i/(float) num_particles))); // We can use the color for debug, if needed
+	}
+		
+	/* We finished the object */
+    object->end();
+		
+    /* Convert triangle list to a mesh */
+    object->convertToMesh(object_name);
+}
+
 ParticleEffect *ParticleEngine::createParticleEffect(EFFECT_TYPE effect, Ogre::SceneNode* parentNode, Ogre::Vector3 position, Ogre::Vector3 scale)
 {
 	std::string material_name;
@@ -164,6 +209,15 @@ ParticleEffect *ParticleEngine::createParticleEffect(EFFECT_TYPE effect, Ogre::S
 		material_name = "SplineParticleMaterial";
 		object_name = "plasmaSplineControlPoints";
 		duration = 6.0f;
+	case EFFECT_IDLE_THRUSTER:
+		material_name = "FlameParticleMaterial";
+		object_name = "sphereParticle";
+		duration = -1.0f;
+		break;
+	case EFFECT_THRUSTER:
+		material_name = "FlameParticleMaterial";
+		object_name = "coneParticle";
+		duration = -1.0f;
 	default:
 		std::cerr << "Particle Effect Not Found... Creation unsuccessful" << std::endl;
 		break;
