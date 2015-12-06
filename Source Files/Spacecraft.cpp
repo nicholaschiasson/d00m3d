@@ -61,14 +61,14 @@ void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* p
 		Ogre::Vector3(0.0f, 0.0f, 0.0f), Ogre::Vector3(1.0f, 1.0f, 1.0f));
 	leftIdleFlames->setScale(0.4f, 1.0f, 0.1f);
 	leftIdleFlames->pitch(Ogre::Radian(Ogre::Math::HALF_PI));
-	leftIdleFlames->translate(0.0f, 0.0f, 0.075f);
+	leftIdleFlames->translate(0.0f, 0.0f, 0.1f);
 	leftIdleFlames->SetMass(0.0f);
 
 	leftTailFlames = particleEngine->createParticleEffect(ParticleEngine::EFFECT_THRUSTER, spacecraftLeftThrusterNode,
 		Ogre::Vector3(0.0f, 0.0f, 0.0f), Ogre::Vector3(1.0f, 1.0f, 1.0f));
 	leftTailFlames->setScale(0.5f, 1.0f, 0.125f);
 	leftTailFlames->pitch(Ogre::Radian(Ogre::Math::HALF_PI));
-	leftTailFlames->translate(0.0f, 0.0f, 0.075f);
+	leftTailFlames->translate(0.0f, 0.0f, 0.1f);
 	leftTailFlames->SetMass(0.0f);
 	leftTailFlames->setVisible(false);
 	
@@ -85,14 +85,14 @@ void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* p
 		Ogre::Vector3(0.0f, 0.0f, 0.0f), Ogre::Vector3(1.0f, 1.0f, 1.0f));
 	rightIdleFlames->setScale(0.4f, 1.0f, 0.1f);
 	rightIdleFlames->pitch(Ogre::Radian(Ogre::Math::HALF_PI));
-	rightIdleFlames->translate(0.0f, 0.0f, 0.075f);
+	rightIdleFlames->translate(0.0f, 0.0f, 0.1f);
 	rightIdleFlames->SetMass(0.0f);
 
 	rightTailFlames = particleEngine->createParticleEffect(ParticleEngine::EFFECT_THRUSTER, spacecraftRightThrusterNode,
 		Ogre::Vector3(0.0f, 0.0f, 0.0f), Ogre::Vector3(1.0f, 1.0f, 1.0f));
 	rightTailFlames->setScale(0.5f, 1.0f, 0.125f);
 	rightTailFlames->pitch(Ogre::Radian(Ogre::Math::HALF_PI));
-	rightTailFlames->translate(0.0f, 0.0f, 0.075f);
+	rightTailFlames->translate(0.0f, 0.0f, 0.1f);
 	rightTailFlames->SetMass(0.0f);
 	rightTailFlames->setVisible(false);
 	
