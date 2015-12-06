@@ -53,7 +53,7 @@ void TextRenderer::initTextAreas(){
 
 	health = static_cast<Ogre::TextAreaOverlayElement*>(overlayManager->createOverlayElement("TextArea","Health"));
     health->setMetricsMode(Ogre::GMM_PIXELS);
-	health->setPosition(10,h - 30);
+	health->setPosition(10, (float)(float)h - 30);
     health->setDimensions(200, 100);
     health->setFontName("MyFont");
 	health->setCharHeight(30);
@@ -62,7 +62,7 @@ void TextRenderer::initTextAreas(){
 
 	fuel = static_cast<Ogre::TextAreaOverlayElement*>(overlayManager->createOverlayElement("TextArea","Fuel"));
     fuel->setMetricsMode(Ogre::GMM_PIXELS);
-	fuel->setPosition(w/7*2, h - 30);
+	fuel->setPosition((float)w/7*2, (float)h - 30);
     fuel->setDimensions(200, 100);
     fuel->setFontName("MyFont");
 	fuel->setCharHeight(30);
@@ -71,7 +71,7 @@ void TextRenderer::initTextAreas(){
 	
 	fuel_bkp = static_cast<Ogre::TextAreaOverlayElement*>(overlayManager->createOverlayElement("TextArea","fuel_bkp"));
     fuel_bkp->setMetricsMode(Ogre::GMM_PIXELS);
-	fuel_bkp->setPosition(w/7*2,h - 90);
+	fuel_bkp->setPosition((float)w/7*2,(float)h - 90);
     fuel_bkp->setDimensions(200, 100);
     fuel_bkp->setFontName("MyFont");
 	fuel_bkp->setCharHeight(30);
@@ -80,7 +80,7 @@ void TextRenderer::initTextAreas(){
 
 	fuel_health = static_cast<Ogre::TextAreaOverlayElement*>(overlayManager->createOverlayElement("TextArea","fuel_health"));
     fuel_health->setMetricsMode(Ogre::GMM_PIXELS);
-	fuel_health->setPosition(w/7*2,h - 60);
+	fuel_health->setPosition((float)w/7*2,(float)h - 60);
     fuel_health->setDimensions(200, 100);
     fuel_health->setFontName("MyFont");
 	fuel_health->setCharHeight(30);
@@ -89,7 +89,7 @@ void TextRenderer::initTextAreas(){
 
 	energy = static_cast<Ogre::TextAreaOverlayElement*>(overlayManager->createOverlayElement("TextArea","Energy"));
     energy->setMetricsMode(Ogre::GMM_PIXELS);
-	energy->setPosition(w/7*4,h - 30);
+	energy->setPosition((float)w/7*4,(float)h - 30);
     energy->setDimensions(200, 100);
     energy->setFontName("MyFont");
 	energy->setCharHeight(30);
@@ -98,7 +98,7 @@ void TextRenderer::initTextAreas(){
 
 	energy_bkp = static_cast<Ogre::TextAreaOverlayElement*>(overlayManager->createOverlayElement("TextArea","energy_bkp"));
     energy_bkp->setMetricsMode(Ogre::GMM_PIXELS);
-	energy_bkp->setPosition(w/7*4,h - 90);
+	energy_bkp->setPosition((float)w/7*4,(float)h - 90);
     energy_bkp->setDimensions(200, 100);
     energy_bkp->setFontName("MyFont");
 	energy_bkp->setCharHeight(30);
@@ -107,7 +107,7 @@ void TextRenderer::initTextAreas(){
 
 	artillery_health = static_cast<Ogre::TextAreaOverlayElement*>(overlayManager->createOverlayElement("TextArea","ARTILLERYHEALTH"));
     artillery_health->setMetricsMode(Ogre::GMM_PIXELS);
-	artillery_health->setPosition(w/7*4,h - 60);
+	artillery_health->setPosition((float)w/7*4,(float)h - 60);
     artillery_health->setDimensions(200, 100);
     artillery_health->setFontName("MyFont");
 	artillery_health->setCharHeight(30);
@@ -116,7 +116,7 @@ void TextRenderer::initTextAreas(){
 
 	speed = static_cast<Ogre::TextAreaOverlayElement*>(overlayManager->createOverlayElement("TextArea","Speed"));
     speed->setMetricsMode(Ogre::GMM_PIXELS);
-	speed->setPosition(w/7*6,h - 30);
+	speed->setPosition((float)w/7*6,(float)h - 30);
     speed->setDimensions(200, 100);
     speed->setFontName("MyFont");
 	speed->setCharHeight(30);
@@ -125,7 +125,7 @@ void TextRenderer::initTextAreas(){
 
 	defense = static_cast<Ogre::TextAreaOverlayElement*>(overlayManager->createOverlayElement("TextArea","defense"));
     defense->setMetricsMode(Ogre::GMM_PIXELS);
-	defense->setPosition(w/7,h - 30);
+	defense->setPosition((float)w/7,(float)h - 30);
     defense->setDimensions(200, 100);
     defense->setFontName("MyFont");
 	defense->setCharHeight(30);
@@ -134,7 +134,7 @@ void TextRenderer::initTextAreas(){
 
 	defense_bkp = static_cast<Ogre::TextAreaOverlayElement*>(overlayManager->createOverlayElement("TextArea","defense_bkp"));
     defense_bkp->setMetricsMode(Ogre::GMM_PIXELS);
-	defense_bkp->setPosition(w/7,h - 60);
+	defense_bkp->setPosition((float)w/7,(float)h - 60);
     defense_bkp->setDimensions(200, 100);
     defense_bkp->setFontName("MyFont");
 	defense_bkp->setCharHeight(30);
@@ -143,7 +143,7 @@ void TextRenderer::initTextAreas(){
 
 	navigation = static_cast<Ogre::TextAreaOverlayElement*>(overlayManager->createOverlayElement("TextArea","navigation"));
     navigation->setMetricsMode(Ogre::GMM_PIXELS);
-	navigation->setPosition(w/7*3,h - 30);
+	navigation->setPosition((float)w/7*3,(float)h - 30);
     navigation->setDimensions(200, 100);
     navigation->setFontName("MyFont");
 	navigation->setCharHeight(30);
@@ -152,7 +152,7 @@ void TextRenderer::initTextAreas(){
 
 	navigation_bkp = static_cast<Ogre::TextAreaOverlayElement*>(overlayManager->createOverlayElement("TextArea","navigation_bkp"));
     navigation_bkp->setMetricsMode(Ogre::GMM_PIXELS);
-	navigation_bkp->setPosition(w/7*3,h - 60);
+	navigation_bkp->setPosition((float)w/7*3,(float)h - 60);
     navigation_bkp->setDimensions(200, 100);
     navigation_bkp->setFontName("MyFont");
 	navigation_bkp->setCharHeight(30);
@@ -161,7 +161,7 @@ void TextRenderer::initTextAreas(){
 
 	FPS = static_cast<Ogre::TextAreaOverlayElement*>(overlayManager->createOverlayElement("TextArea","FPS"));
     FPS->setMetricsMode(Ogre::GMM_PIXELS);
-	FPS->setPosition(w/7*6,30);
+	FPS->setPosition((float)w/7*6,30);
     FPS->setDimensions(200, 100);
     FPS->setFontName("MyFont");
 	FPS->setCharHeight(30);
@@ -171,7 +171,7 @@ void TextRenderer::initTextAreas(){
 
 	death = static_cast<Ogre::TextAreaOverlayElement*>(overlayManager->createOverlayElement("TextArea","death"));
     death->setMetricsMode(Ogre::GMM_PIXELS);
-	death->setPosition(w/2-200,h/10);
+	death->setPosition((float)w/2-200,(float)h/10);
     death->setDimensions(200, 100);
     death->setFontName("MyFont");
 	death->setCharHeight(50);

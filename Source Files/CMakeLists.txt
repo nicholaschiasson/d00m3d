@@ -37,6 +37,7 @@ set(SRCS
 	.ShaderDefs.material
     asteroid.cpp
     asteroid.material
+    berlin_sans32.fontdef
     black_hole.cpp
     black_hole.material
     black_hole_cannon.cpp
