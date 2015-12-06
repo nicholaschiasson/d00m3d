@@ -59,7 +59,7 @@ void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* p
 
 	leftIdleFlames = particleEngine->createParticleEffect(ParticleEngine::EFFECT_IDLE_THRUSTER, spacecraftLeftThrusterNode,
 		Ogre::Vector3(0.0f, 0.0f, 0.0f), Ogre::Vector3(1.0f, 1.0f, 1.0f));
-	leftIdleFlames->setScale(0.4f, 1.0f, 0.1f);
+	leftIdleFlames->setScale(0.4f, 0.5f, 0.1f);
 	leftIdleFlames->pitch(Ogre::Radian(Ogre::Math::HALF_PI));
 	leftIdleFlames->translate(0.0f, 0.0f, 0.1f);
 	leftIdleFlames->SetMass(0.0f);
@@ -83,7 +83,7 @@ void Spacecraft::Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* p
 
 	rightIdleFlames = particleEngine->createParticleEffect(ParticleEngine::EFFECT_IDLE_THRUSTER, spacecraftRightThrusterNode,
 		Ogre::Vector3(0.0f, 0.0f, 0.0f), Ogre::Vector3(1.0f, 1.0f, 1.0f));
-	rightIdleFlames->setScale(0.4f, 1.0f, 0.1f);
+	rightIdleFlames->setScale(0.4f, 0.5f, 0.1f);
 	rightIdleFlames->pitch(Ogre::Radian(Ogre::Math::HALF_PI));
 	rightIdleFlames->translate(0.0f, 0.0f, 0.1f);
 	rightIdleFlames->SetMass(0.0f);
