@@ -362,10 +362,26 @@ void Spacecraft::Update(const Ogre::FrameEvent &fe)
 	}
 	else
 	{
-		leftIdleFlames->kill();
-		rightIdleFlames->kill();
-		leftTailFlames->kill();
-		rightTailFlames->kill();
+		if (leftIdleFlames != 0)
+		{
+			leftIdleFlames->kill();
+			leftIdleFlames = 0;
+		}
+		if (rightIdleFlames != 0)
+		{
+			rightIdleFlames->kill();
+			rightIdleFlames = 0;
+		}
+		if (leftTailFlames != 0)
+		{
+			leftTailFlames->kill();
+			leftTailFlames = 0;
+		}
+		if (rightTailFlames != 0)
+		{
+			rightTailFlames->kill();
+			rightTailFlames = 0;
+		}
 	}
 }
 

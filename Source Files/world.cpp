@@ -349,9 +349,12 @@ void World::PlayerMoveForward(void *context, const Ogre::FrameEvent& fe, int x1,
 	{
 		World *world = static_cast<World *>(context);
 		PlayerSpacecraft *player = &world->player;
-		player->ThrustersForward();
-		player->SetLeftFlamesVisible(true);
-		player->SetRightFlamesVisible(true);
+		if (player->isAlive())
+		{
+			player->ThrustersForward();
+			player->SetLeftFlamesVisible(true);
+			player->SetRightFlamesVisible(true);
+		}
 	}
 }
 
@@ -361,7 +364,10 @@ void World::PlayerMoveLeft(void *context, const Ogre::FrameEvent& fe, int x1, in
 	{
 		World *world = static_cast<World*>(context);
 		PlayerSpacecraft *player = &world->player;
-		player->ThrustersLeft();
+		if (player->isAlive())
+		{
+			player->ThrustersLeft();
+		}
 	}
 }
 
@@ -371,7 +377,10 @@ void World::PlayerMoveBackward(void *context, const Ogre::FrameEvent& fe, int x1
 	{
 		World *world = static_cast<World*>(context);
 		PlayerSpacecraft *player = &world->player;
-		player->ThrustersBackward();
+		if (player->isAlive())
+		{
+			player->ThrustersBackward();
+		}
 	}
 }
 
@@ -381,7 +390,10 @@ void World::PlayerMoveRight(void *context, const Ogre::FrameEvent& fe, int x1, i
 	{
 		World *world = static_cast<World*>(context);
 		PlayerSpacecraft *player = &world->player;
-		player->ThrustersRight();
+		if (player->isAlive())
+		{
+			player->ThrustersRight();
+		}
 	}
 }
 
@@ -391,7 +403,10 @@ void World::PlayerMoveUp(void *context, const Ogre::FrameEvent& fe, int x1, int 
 	{
 		World *world = static_cast<World*>(context);
 		PlayerSpacecraft *player = &world->player;
-		player->ThrustersUpward();
+		if (player->isAlive())
+		{
+			player->ThrustersUpward();
+		}
 	}
 }
 
@@ -401,7 +416,10 @@ void World::PlayerMoveDown(void *context, const Ogre::FrameEvent& fe, int x1, in
 	{
 		World *world = static_cast<World*>(context);
 		PlayerSpacecraft *player = &world->player;
-		player->ThrustersDownward();
+		if (player->isAlive())
+		{
+			player->ThrustersDownward();
+		}
 	}
 }
 
@@ -411,7 +429,7 @@ void World::PlayerPitchUp(void *context, const Ogre::FrameEvent& fe, int x1, int
 	{
 		World *world = static_cast<World*>(context);
 		PlayerSpacecraft *player = &world->player;
-		if(player->canNavigate()){
+		if(player->isAlive() && player->canNavigate()){
 			player->pitch(Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
 		}
 	}
@@ -423,7 +441,7 @@ void World::PlayerYawLeft(void *context, const Ogre::FrameEvent& fe, int x1, int
 	{
 		World *world = static_cast<World*>(context);
 		PlayerSpacecraft *player = &world->player;
-		if(player->canNavigate()){
+		if(player->isAlive() && player->canNavigate()){
 			player->yaw(Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
 			player->SetRightFlamesVisible(true);
 		}
@@ -436,7 +454,7 @@ void World::PlayerPitchDown(void *context, const Ogre::FrameEvent& fe, int x1, i
 	{
 		World *world = static_cast<World*>(context);
 		PlayerSpacecraft *player = &world->player;
-		if(player->canNavigate()){
+		if(player->isAlive() && player->canNavigate()){
 			player->pitch(-Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
 		}
 	}
@@ -448,7 +466,7 @@ void World::PlayerYawRight(void *context, const Ogre::FrameEvent& fe, int x1, in
 	{
 		World *world = static_cast<World*>(context);
 		PlayerSpacecraft *player = &world->player;
-		if(player->canNavigate()){
+		if(player->isAlive() && player->canNavigate()){
 			player->yaw(-Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
 			player->SetLeftFlamesVisible(true);
 		}
@@ -461,7 +479,7 @@ void World::PlayerRollCounterClockwise(void *context, const Ogre::FrameEvent& fe
 	{
 		World *world = static_cast<World*>(context);
 		PlayerSpacecraft *player = &world->player;
-		if(player->canNavigate()){
+		if(player->isAlive() && player->canNavigate()){
 			player->roll(Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
 		}
 	}
@@ -473,7 +491,7 @@ void World::PlayerRollClockwise(void *context, const Ogre::FrameEvent& fe, int x
 	{
 		World *world = static_cast<World*>(context);
 		PlayerSpacecraft *player = &world->player;
-		if(player->canNavigate()){
+		if(player->isAlive() && player->canNavigate()){
 			player->roll(-Ogre::Radian((Ogre::Math::PI / 4) * fe.timeSinceLastFrame));
 		}
 	}
@@ -486,10 +504,13 @@ void World::playerFireLaser(void* context, const Ogre::FrameEvent& fe, int x1, i
 		World *world = static_cast<World*>(context);
 		PlayerSpacecraft *player = &world->player;
 
-		PhysicsEntity *projectile = player->fireWeapon();
-		if (projectile != 0)
+		if (player->isAlive())
 		{
-			world->projectileList.push_back(projectile);
+			PhysicsEntity *projectile = player->fireWeapon();
+			if (projectile != 0)
+			{
+				world->projectileList.push_back(projectile);
+			}
 		}
 	}
 }
@@ -539,7 +560,7 @@ void World::PlayerCutLeftThruster(void *context, const Ogre::FrameEvent& fe, int
 	{
 		World *world = static_cast<World*>(context);
 		PlayerSpacecraft *player = &world->player;
-		if(player->canNavigate()){
+		if(player->isAlive() && player->canNavigate()){
 			player->SetLeftFlamesVisible(false);
 		}
 	}
@@ -551,7 +572,7 @@ void World::PlayerCutRightThruster(void *context, const Ogre::FrameEvent& fe, in
 	{
 		World *world = static_cast<World*>(context);
 		PlayerSpacecraft *player = &world->player;
-		if(player->canNavigate()){
+		if(player->isAlive() && player->canNavigate()){
 			player->SetRightFlamesVisible(false);
 		}
 	}
@@ -590,7 +611,7 @@ void World::PlayerRotate(void *context, const Ogre::FrameEvent& fe, int x1, int 
 	{
 		World *world = static_cast<World*>(context);
 		PlayerSpacecraft *player = &world->player;
-		if(player->canNavigate()){
+		if(player->isAlive() && player->canNavigate()){
 			player->pitch(Ogre::Radian(Ogre::Degree(-(float)(y2 - y1))) * fe.timeSinceLastFrame);
 			player->yaw(Ogre::Radian(Ogre::Degree(-(float)(x2 - x1))) * fe.timeSinceLastFrame);
 		}
@@ -603,7 +624,9 @@ void World::test(void* context, const Ogre::FrameEvent& fe, int x1, int y1, int 
 	{
 		World *world = static_cast<World*>(context);
 		PlayerSpacecraft *player = &world->player;
-
-		player->test();
+		if (player->isAlive())
+		{
+			player->test();
+		}
 	}
 }
