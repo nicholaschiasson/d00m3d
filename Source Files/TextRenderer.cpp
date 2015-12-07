@@ -57,7 +57,7 @@ void TextRenderer::initTextAreas(){
     health->setDimensions(200, 100);
     health->setFontName("MyFont");
 	health->setCharHeight(30);
-	health->setColour(Ogre::ColourValue(1.0,1.0,1.0));
+	health->setColour(Ogre::ColourValue(1.0,0.55,0.0));
     panel->addChild(health);
 
 	fuel = static_cast<Ogre::TextAreaOverlayElement*>(overlayManager->createOverlayElement("TextArea","Fuel"));
@@ -66,7 +66,7 @@ void TextRenderer::initTextAreas(){
     fuel->setDimensions(200, 100);
     fuel->setFontName("MyFont");
 	fuel->setCharHeight(30);
-	fuel->setColour(Ogre::ColourValue(1.0,1.0,1.0));
+	fuel->setColour(Ogre::ColourValue(1.0,0.55,0.0));
     panel->addChild(fuel);
 	
 	fuel_bkp = static_cast<Ogre::TextAreaOverlayElement*>(overlayManager->createOverlayElement("TextArea","fuel_bkp"));
@@ -75,7 +75,7 @@ void TextRenderer::initTextAreas(){
     fuel_bkp->setDimensions(200, 100);
     fuel_bkp->setFontName("MyFont");
 	fuel_bkp->setCharHeight(30);
-	fuel_bkp->setColour(Ogre::ColourValue(1.0,1.0,1.0));
+	fuel_bkp->setColour(Ogre::ColourValue(1.0,0.55,0.0));
     panel->addChild(fuel_bkp);
 
 	fuel_health = static_cast<Ogre::TextAreaOverlayElement*>(overlayManager->createOverlayElement("TextArea","fuel_health"));
@@ -84,7 +84,7 @@ void TextRenderer::initTextAreas(){
     fuel_health->setDimensions(200, 100);
     fuel_health->setFontName("MyFont");
 	fuel_health->setCharHeight(30);
-	fuel_health->setColour(Ogre::ColourValue(1.0,1.0,1.0));
+	fuel_health->setColour(Ogre::ColourValue(1.0,0.55,0.0));
     panel->addChild(fuel_health);
 
 	energy = static_cast<Ogre::TextAreaOverlayElement*>(overlayManager->createOverlayElement("TextArea","Energy"));
@@ -93,7 +93,7 @@ void TextRenderer::initTextAreas(){
     energy->setDimensions(200, 100);
     energy->setFontName("MyFont");
 	energy->setCharHeight(30);
-	energy->setColour(Ogre::ColourValue(1.0,1.0,1.0));
+	energy->setColour(Ogre::ColourValue(1.0,0.55,0.0));
     panel->addChild(energy);
 
 	energy_bkp = static_cast<Ogre::TextAreaOverlayElement*>(overlayManager->createOverlayElement("TextArea","energy_bkp"));
@@ -102,7 +102,7 @@ void TextRenderer::initTextAreas(){
     energy_bkp->setDimensions(200, 100);
     energy_bkp->setFontName("MyFont");
 	energy_bkp->setCharHeight(30);
-	energy_bkp->setColour(Ogre::ColourValue(1.0,1.0,1.0));
+	energy_bkp->setColour(Ogre::ColourValue(1.0,0.55,0.0));
     panel->addChild(energy_bkp);
 
 	artillery_health = static_cast<Ogre::TextAreaOverlayElement*>(overlayManager->createOverlayElement("TextArea","ARTILLERYHEALTH"));
@@ -111,7 +111,7 @@ void TextRenderer::initTextAreas(){
     artillery_health->setDimensions(200, 100);
     artillery_health->setFontName("MyFont");
 	artillery_health->setCharHeight(30);
-	artillery_health->setColour(Ogre::ColourValue(1.0,1.0,1.0));
+	artillery_health->setColour(Ogre::ColourValue(1.0,0.55,0.0));
     panel->addChild(artillery_health);
 
 	speed = static_cast<Ogre::TextAreaOverlayElement*>(overlayManager->createOverlayElement("TextArea","Speed"));
@@ -120,7 +120,7 @@ void TextRenderer::initTextAreas(){
     speed->setDimensions(200, 100);
     speed->setFontName("MyFont");
 	speed->setCharHeight(30);
-	speed->setColour(Ogre::ColourValue(1.0,1.0,1.0));
+	speed->setColour(Ogre::ColourValue(1.0,0.55,0.0));
     panel->addChild(speed);
 
 	defense = static_cast<Ogre::TextAreaOverlayElement*>(overlayManager->createOverlayElement("TextArea","defense"));
@@ -129,7 +129,7 @@ void TextRenderer::initTextAreas(){
     defense->setDimensions(200, 100);
     defense->setFontName("MyFont");
 	defense->setCharHeight(30);
-	defense->setColour(Ogre::ColourValue(1.0,1.0,1.0));
+	defense->setColour(Ogre::ColourValue(1.0,0.55,0.0));
     panel->addChild(defense);
 
 	defense_bkp = static_cast<Ogre::TextAreaOverlayElement*>(overlayManager->createOverlayElement("TextArea","defense_bkp"));
@@ -138,7 +138,7 @@ void TextRenderer::initTextAreas(){
     defense_bkp->setDimensions(200, 100);
     defense_bkp->setFontName("MyFont");
 	defense_bkp->setCharHeight(30);
-	defense_bkp->setColour(Ogre::ColourValue(1.0,1.0,1.0));
+	defense_bkp->setColour(Ogre::ColourValue(1.0,0.55,0.0));
     panel->addChild(defense_bkp);
 
 	navigation = static_cast<Ogre::TextAreaOverlayElement*>(overlayManager->createOverlayElement("TextArea","navigation"));
@@ -146,8 +146,9 @@ void TextRenderer::initTextAreas(){
 	navigation->setPosition((float)w/7*3,(float)h - 30);
     navigation->setDimensions(200, 100);
     navigation->setFontName("MyFont");
+//	navigation->set
 	navigation->setCharHeight(30);
-	navigation->setColour(Ogre::ColourValue(1.0,1.0,1.0));
+	navigation->setColour(Ogre::ColourValue(1.0,0.55,0.0));
     panel->addChild(navigation);
 
 	navigation_bkp = static_cast<Ogre::TextAreaOverlayElement*>(overlayManager->createOverlayElement("TextArea","navigation_bkp"));
@@ -156,7 +157,7 @@ void TextRenderer::initTextAreas(){
     navigation_bkp->setDimensions(200, 100);
     navigation_bkp->setFontName("MyFont");
 	navigation_bkp->setCharHeight(30);
-	navigation_bkp->setColour(Ogre::ColourValue(1.0,1.0,1.0));
+	navigation_bkp->setColour(Ogre::ColourValue(1.0,0.55,0.0));
     panel->addChild(navigation_bkp);
 
 	FPS = static_cast<Ogre::TextAreaOverlayElement*>(overlayManager->createOverlayElement("TextArea","FPS"));
@@ -165,7 +166,7 @@ void TextRenderer::initTextAreas(){
     FPS->setDimensions(200, 100);
     FPS->setFontName("MyFont");
 	FPS->setCharHeight(30);
-	FPS->setColour(Ogre::ColourValue(1.0,1.0,1.0));
+	FPS->setColour(Ogre::ColourValue(1.0,0.55,0.0));
     panel->addChild(FPS);
 
 
@@ -175,7 +176,7 @@ void TextRenderer::initTextAreas(){
     death->setDimensions(200, 100);
     death->setFontName("MyFont");
 	death->setCharHeight(50);
-	death->setColour(Ogre::ColourValue(1.0,1.0,1.0));
+	death->setColour(Ogre::ColourValue(1.0,0.55,0.0));
     panel->addChild(death);
 
 }

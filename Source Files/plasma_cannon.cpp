@@ -1,6 +1,6 @@
 #include "plasma_cannon.h"
 
-PlasmaCannon::PlasmaCannon() : damage(100.0f)
+PlasmaCannon::PlasmaCannon() : damage(500.0f)
 {
 	materialPrefix = "Plasma";
 	cooldown = 5;
