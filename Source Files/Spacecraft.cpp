@@ -304,9 +304,9 @@ void Spacecraft::Update(const Ogre::FrameEvent &fe)
 
 	if(alive)
 	{
-		if (velocity.squaredLength() > 1000000.0f)
+		if (velocity.squaredLength() > 10000.0f)
 		{
-			velocity = velocity.normalisedCopy() * 1000.0f;
+			velocity = velocity.normalisedCopy() * 100.0f;
 		}
         
 		if (type == REACTOR_CRAFT)
