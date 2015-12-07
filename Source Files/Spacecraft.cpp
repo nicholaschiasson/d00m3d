@@ -20,7 +20,34 @@ Spacecraft::~Spacecraft()
 
 void Spacecraft::cleanup(PhysicsEngine &physicsEngine)
 {
-	weapon->detachFrom(physicsEngine);
+	if (leftIdleFlames != 0)
+	{
+		leftIdleFlames->kill();
+		leftIdleFlames->cleanup(physicsEngine);
+		leftIdleFlames = 0;
+	}
+	if (rightIdleFlames != 0)
+	{
+		rightIdleFlames->kill();
+		rightIdleFlames->cleanup(physicsEngine);
+		rightIdleFlames = 0;
+	}
+	if (leftTailFlames != 0)
+	{
+		leftTailFlames->kill();
+		leftTailFlames->cleanup(physicsEngine);
+		leftTailFlames = 0;
+	}
+	if (rightTailFlames != 0)
+	{
+		rightTailFlames->kill();
+		rightTailFlames->cleanup(physicsEngine);
+		rightTailFlames = 0;
+	}
+	if (weapon != 0)
+	{
+		weapon->detachFrom(physicsEngine);
+	}
 	PhysicsEntity::cleanup(physicsEngine);
 }
 

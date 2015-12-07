@@ -21,7 +21,7 @@ class PhysicsEntity : public Entity
 public:
 	PhysicsEntity();
 	virtual ~PhysicsEntity() = 0;
-	virtual void cleanup(PhysicsEngine & physicsEngine);
+	virtual void cleanup(PhysicsEngine &physicsEngine);
 	//detaches itself from the passed in physicsEngine
 	virtual void detachFrom(PhysicsEngine &physicsEngine);
 	virtual void Initialize(Ogre::SceneManager *sceneManager, Ogre::SceneNode* parentNode, PhysicsEngine &physicsEngine, unsigned int parentID = -1);
