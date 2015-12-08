@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>D00m3d by Elephly</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>D00m3d</h1>
+        <h2>COMP3501 Term Group Project - This page was for the lolz</h2>
+        <a href="https://github.com/Elephly/d00m3d" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a id="d00m3d" class="anchor" href="#d00m3d" aria-hidden="true"><span class="octicon octicon-link"></span></a>d00m3d</h1>
+
+<p>COMP3501 Term Group Project</p>
+
+<h3>
+<a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Requirements</h3>
+
+<ul>
+<li>Visual C++ 2012 compiler</li>
+<li>CMake</li>
+<li>Ogre 1.9 SDK for Visual C++ 2012 (32-bit)</li>
+</ul>
+
+<h3>
+<a id="setup" class="anchor" href="#setup" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setup</h3>
+
+<ol>
+<li>Follow installation instructions for Ogre from the <a href="http://www.ogre3d.org/tikiwiki/tiki-index.php?page=Installing+the+Ogre+SDK">Ogre Wiki</a>
+
+<ul>
+<li>The 'OGRE_HOME' environment variable is necessary for the project to compile successfully</li>
+</ul>
+</li>
+<li>Using CMake, generate a Visual Studio 11 2012 project with native compilers using the project root as the source directory, and a binaries directory of your choosing</li>
+<li>Open the generated solution (.sln) file in Visual Studio 11 and set <strong>this</strong> project as the startup project
+
+<ul>
+<li>By default the startup project is the ALL_BUILD project - this is not what we want</li>
+</ul>
+</li>
+<li>At this point, the project should be ready to be modified, built, and run</li>
+</ol>
+
+<h2>
+<a id="wiki-because-im-too-lazy-to-make-an-actual-one" class="anchor" href="#wiki-because-im-too-lazy-to-make-an-actual-one" aria-hidden="true"><span class="octicon octicon-link"></span></a>Wiki (because I'm too lazy to make an actual one)</h2>
+
+<h4>
+<a id="input-manager" class="anchor" href="#input-manager" aria-hidden="true"><span class="octicon octicon-link"></span></a>Input Manager</h4>
+
+<h6>
+<a id="description" class="anchor" href="#description" aria-hidden="true"><span class="octicon octicon-link"></span></a>Description</h6>
+
+<p>Wraps functionality of Ogre's own input manager. Allows a user to register many callbacks to a specific key or mouse event.</p>
+
+<h6>
+<a id="how-to-use" class="anchor" href="#how-to-use" aria-hidden="true"><span class="octicon octicon-link"></span></a>How To Use</h6>
+
+<p>For now, this class only uses a prebuilt Ogre::Mouse and Ogre::Keyboard, thus, the initialization of the Ogre::InputManager, Ogre::Mouse, and Ogre::Keyboard must be done before hand.</p>
+
+<p>Instantiate this class by passing an Ogre::Keyboard and an Ogre::Mouse to the constructor. After that is done, callbacks may be registered (or unregistered).</p>
+
+<p>The RegisterCallback and UnregisterCallback functions have the same parameters. They are used to register a specific callback under a specify context to be called on a specific mouse of keyboard event. The callback being registered must take parameters for a context and an Ogre::FrameEvent, since these will be passed to it when its event is triggered. Should there be no intended context for a callback (intended to be a static function), then 0 may be passed in place of the context.</p>
+
+<p>After callbacks have been registered with the input manager, be sure to call its Update method in an appropriate place. The Update method takes an Ogre::FrameEvent as a parameter so the input manager may pass the elapsed time since the last update to its callback functions.</p>
+
+<h4>
+<a id="game-controls" class="anchor" href="#game-controls" aria-hidden="true"><span class="octicon octicon-link"></span></a>Game Controls</h4>
+
+<ul>
+<li>W            - Forward thrusters</li>
+<li>A            - Left thrusters</li>
+<li>S            - Backward thrusters</li>
+<li>D            - Right thrusters</li>
+<li>Q            - Upward thrusters</li>
+<li>C            - Downward thrusters</li>
+<li>UP           - Pitch up (also mouse up)</li>
+<li>LEFT         - Yaw left (also mouse left)</li>
+<li>DOWN         - Pitch down (also mouse down)</li>
+<li>RIGHT        - Yaw right (also mouse right)</li>
+<li>V            - Roll counter clockwise</li>
+<li>B            - Roll clockwise</li>
+<li>Scroll Wheel - Change camera perspective (scroll in toward first person perspective; scroll out toward third person perspective)</li>
+<li>SPACE        - Fire weapon</li>
+<li>1            - Switch to laser cannon</li>
+<li>2            - Switch to plasma cannon</li>
+<li>3            - Switch to black hole cannon</li>
+<li>Esc          - Exit game</li>
+</ul>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/Elephly/d00m3d/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/Elephly/d00m3d/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/Elephly/d00m3d"></a> is maintained by <a href="https://github.com/Elephly">Elephly</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
