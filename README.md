@@ -15,7 +15,7 @@ COMP3501 Term Group Project
 4. Confirm that the project is configured properly by following the instructions [here](http://www.ogre3d.org/tikiwiki/Setting+Up+An+Application+-+Visual+Studio#Project_Configuration)
 5. At this point, the project should be ready to be modified, built, and run
 
-#### Game Controls
+### Game Controls
 - W            - Forward thrusters
 - A            - Left thrusters
 - S            - Backward thrusters
