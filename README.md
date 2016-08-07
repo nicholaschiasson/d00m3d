@@ -12,7 +12,8 @@ COMP3501 Term Group Project
 2. Using CMake, generate a Visual Studio 11 2012 project with native compilers using the project root as the source directory, and a binaries directory of your choosing
 3. Open the generated solution (.sln) file in Visual Studio 11 and set **this** project as the startup project
   - By default the startup project is the ALL_BUILD project - this is not what we want
-4. At this point, the project should be ready to be modified, built, and run
+4. Confirm that the project is configured properly by following the instructions [here](http://www.ogre3d.org/tikiwiki/Setting+Up+An+Application+-+Visual+Studio#Project_Configuration)
+5. At this point, the project should be ready to be modified, built, and run
 
 ## Wiki (because I'm too lazy to make an actual one)
 #### Input Manager
