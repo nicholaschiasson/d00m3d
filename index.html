@@ -23,12 +23,12 @@
           // Success!
           var data = JSON.parse(request.responseText);
           for (var i = 0; i < data.assets.length; i++) {
-            if (data.assets[i].name === "d00m3d-v0.1-release.7z") {
+            if (data.assets[i].name === "d00m3d-v" + data.tag_name + "-release.7z") {
               release7zButton = document.getElementById("7z-release");
               if (release7zButton) {
                 release7zButton.setAttribute("href", data.assets[i].browser_download_url);
               }
-            } else if (data.assets[i].name === "d00m3d-v0.1-release.zip") { //.browser_download_url.endsWith(".zip")) {
+            } else if (data.assets[i].name === "d00m3d-v" + data.tag_name + "-release.zip") { //.browser_download_url.endsWith(".zip")) {
               releaseZipButton = document.getElementById("zip-release");
               if (releaseZipButton) {
                 releaseZipButton.setAttribute("href", data.assets[i].browser_download_url);
