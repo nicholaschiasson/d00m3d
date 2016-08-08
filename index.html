@@ -12,6 +12,39 @@
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    
+    <script>
+      var request = new XMLHttpRequest();
+      
+      request.open('GET', 'https://api.github.com/repos/elephly/d00m3d/releases/latest', true);
+
+      request.onload = function() {
+        if (request.status >= 200 && request.status < 400) {
+          // Success!
+          var data = JSON.parse(request.responseText);
+          for (var i = 0; i < data.assets.length; i++) {
+            if (data.assets[i].name === "d00m3d-v0.1-release.7z") {
+              release7zButton = document.getElementById("7z-release");
+              if (release7zButton) {
+                release7zButton.setAttribute("href", data.assets[i].browser_download_url);
+              }
+            } else if (data.assets[i].name === "d00m3d-v0.1-release.zip") { //.browser_download_url.endsWith(".zip")) {
+              releaseZipButton = document.getElementById("zip-release");
+              if (releaseZipButton) {
+                releaseZipButton.setAttribute("href", data.assets[i].browser_download_url);
+              }
+            } else {
+              console.error("Found unexpected asset: " + data.assets[i]);
+            }
+          }
+        } else {
+          // We reached our target server, but it returned an error
+          console.error(request);
+        }
+      };
+      
+      request.send();
+    </script>
 
     <title>d00m3d by Elephly</title>
   </head>
@@ -90,9 +123,17 @@
         </section>
 
         <aside id="sidebar">
+          <a id="7z-release" href="https://github.com/Elephly/d00m3d/releases/latest" class="button">
+            <small>Latest Release</small>
+            .7z file
+          </a>
+          <a id="zip-release" href="https://github.com/Elephly/d00m3d/releases/latest" class="button">
+            <small>Latest Release</small>
+            .zip file
+          </a>
           <a href="https://github.com/Elephly/d00m3d/releases/latest" class="button">
-            <small>Download Release</small>
-            Latest
+            <small>Latest Release</small>
+            release notes
           </a>
           <a href="https://github.com/Elephly/d00m3d/zipball/master" class="button">
             <small>Download Source</small>
