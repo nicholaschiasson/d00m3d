@@ -59,33 +59,13 @@
 <li>By default the startup project is the ALL_BUILD project - this is not what we want</li>
 </ul>
 </li>
+<li>Confirm that the project is configured properly by following the instructions <a href="http://www.ogre3d.org/tikiwiki/Setting+Up+An+Application+-+Visual+Studio#Project_Configuration">here</a>
+</li>
 <li>At this point, the project should be ready to be modified, built, and run</li>
 </ol>
 
-<h2>
-<a id="wiki-because-im-too-lazy-to-make-an-actual-one" class="anchor" href="#wiki-because-im-too-lazy-to-make-an-actual-one" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Wiki (because I'm too lazy to make an actual one)</h2>
-
-<h4>
-<a id="input-manager" class="anchor" href="#input-manager" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Input Manager</h4>
-
-<h6>
-<a id="description" class="anchor" href="#description" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Description</h6>
-
-<p>Wraps functionality of Ogre's own input manager. Allows a user to register many callbacks to a specific key or mouse event.</p>
-
-<h6>
-<a id="how-to-use" class="anchor" href="#how-to-use" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How To Use</h6>
-
-<p>For now, this class only uses a prebuilt Ogre::Mouse and Ogre::Keyboard, thus, the initialization of the Ogre::InputManager, Ogre::Mouse, and Ogre::Keyboard must be done before hand.</p>
-
-<p>Instantiate this class by passing an Ogre::Keyboard and an Ogre::Mouse to the constructor. After that is done, callbacks may be registered (or unregistered).</p>
-
-<p>The RegisterCallback and UnregisterCallback functions have the same parameters. They are used to register a specific callback under a specify context to be called on a specific mouse of keyboard event. The callback being registered must take parameters for a context and an Ogre::FrameEvent, since these will be passed to it when its event is triggered. Should there be no intended context for a callback (intended to be a static function), then 0 may be passed in place of the context.</p>
-
-<p>After callbacks have been registered with the input manager, be sure to call its Update method in an appropriate place. The Update method takes an Ogre::FrameEvent as a parameter so the input manager may pass the elapsed time since the last update to its callback functions.</p>
-
-<h4>
-<a id="game-controls" class="anchor" href="#game-controls" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Game Controls</h4>
+<h3>
+<a id="game-controls" class="anchor" href="#game-controls" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Game Controls</h3>
 
 <ul>
 <li>W            - Forward thrusters</li>
