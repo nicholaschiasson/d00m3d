@@ -14,7 +14,7 @@ material SpacecraftThrusterMaterial
 
 			texture_unit
 			{
-				texture Resources/textures/Spacecraft/Thruster/thruster_01_longer.jpg 2d
+				texture textures/Spacecraft/Thruster/thruster_01_longer.jpg 2d
 			}
         } 
     }
@@ -103,7 +103,7 @@ material SpacecraftPanelMaterial
 
 			texture_unit
 			{
-				texture Resources/textures/Spacecraft/Panel/panel_01.jpg 2d
+				texture textures/Spacecraft/Panel/panel_01.jpg 2d
 			}
         } 
     }

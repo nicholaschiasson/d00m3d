@@ -1,4 +1,4 @@
-material PlayerSpacecraftShortMaterial
+material BlackHoleCannonMaterial
 {
     technique
     {
@@ -14,14 +14,14 @@ material PlayerSpacecraftShortMaterial
 
 			texture_unit
 			{
-				texture Resources/textures/Spacecraft/Hull/hull_02_short.jpg 2d
+				texture textures/Weapon/BlackHole/black_hole_cannon_01_short.jpg 2d
 			}
         } 
     }
 }
 
 
-material PlayerSpacecraftMediumMaterial
+material LaserCannonMaterial
 {
     technique
     {
@@ -37,14 +37,14 @@ material PlayerSpacecraftMediumMaterial
 
 			texture_unit
 			{
-				texture Resources/textures/Spacecraft/Hull/hull_02_medium.jpg 2d
+				texture textures/Weapon/Laser/laser_cannon_01_medium.jpg 2d
 			}
         } 
     }
 }
 
 
-material PlayerSpacecraftLongMaterial
+material PlasmaCannonMaterial
 {
     technique
     {
@@ -60,7 +60,7 @@ material PlayerSpacecraftLongMaterial
 
 			texture_unit
 			{
-				texture Resources/textures/Spacecraft/Hull/hull_02_long.jpg 2d
+				texture textures/Weapon/Plasma/plasma_cannon_01_short.jpg 2d
 			}
         } 
     }

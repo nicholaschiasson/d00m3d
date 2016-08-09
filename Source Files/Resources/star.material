@@ -14,7 +14,7 @@ material StarMaterial
             }
 			texture_unit
 			{
-				texture Resources/textures/sun.jpg 2d
+				texture textures/sun.jpg 2d
 			}
         } 
     }

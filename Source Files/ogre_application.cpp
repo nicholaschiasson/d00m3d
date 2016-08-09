@@ -34,8 +34,7 @@ namespace ogre_application
 	Ogre::Vector3 camera_up_g(0.0, 1.0, 0.0);
 
 	/* Materials */
-	const Ogre::String material_directory_g = MATERIAL_DIRECTORY;
-	const Ogre::String resource_directory_g = RESOURCE_DIRECTORY;
+	const Ogre::String resource_directory_g = "./Resources";
 
 
 	OgreApplication::OgreApplication()
@@ -293,7 +292,7 @@ namespace ogre_application
 			Ogre::ResourceGroupManager& resource_group_manager = Ogre::ResourceGroupManager::getSingleton();
 			resource_group_manager.createResourceGroup(resource_group_name);
 			bool is_recursive = true;
-			resource_group_manager.addResourceLocation(material_directory_g, "FileSystem", resource_group_name, is_recursive);
+			resource_group_manager.addResourceLocation(resource_directory_g, "FileSystem", resource_group_name, is_recursive);
 			resource_group_manager.initialiseResourceGroup(resource_group_name);
 			resource_group_manager.loadResourceGroup(resource_group_name);
 

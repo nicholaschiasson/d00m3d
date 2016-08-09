@@ -63,7 +63,7 @@ material SplineParticleMaterial
             }
 
 			texture_unit {
-			    texture Resources/particles/gas.png 2d
+			    texture particles/gas.png 2d
 		    }
         } 
     }
