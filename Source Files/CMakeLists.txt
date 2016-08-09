@@ -128,9 +128,9 @@ if(WIN32)
 
     # Set up names of Ogre libraries
     target_link_libraries(${PROJECT_NAME}
-        "OgreMain.lib"
-        "OIS.lib"
-        "OgreOverlay.lib"
+        optimized "OgreMain.lib"
+        optimized "OIS.lib"
+        optimized "OgreOverlay.lib"
         debug "OgreMain_d.lib"
         debug "OIS_d.lib"
         debug "OgreOverlay_d.lib"
